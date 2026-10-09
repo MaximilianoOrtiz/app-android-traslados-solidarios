@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "868022331672",
+    "project_id": "benitez-ortiz-appmobiletp2",
+    "storage_bucket": "benitez-ortiz-appmobiletp2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:868022331672:android:7349c8713d8d8761f6d66d",
+        "android_client_info": {
+          "package_name": "com.benitez_ortiz.appmobiletp2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD6J3SrF3XQfte9-ltd_jQbjrSpJyzXqAI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
