@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:868022331672:android:7349c8713d8d8761f6d66d",
+        "mobilesdk_app_id": "1:868022331672:android:04538fb6f547df75f6d66d",
         "android_client_info": {
-          "package_name": "com.benitez_ortiz.appmobiletp2"
+          "package_name": "com.benitez_ortiz.ApMobileTP2"
         }
       },
       "oauth_client": [],

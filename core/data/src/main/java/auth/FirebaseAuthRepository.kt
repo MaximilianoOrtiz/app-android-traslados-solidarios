@@ -7,6 +7,8 @@ import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import com.google.firebase.auth.FirebaseUser
+import common.AppResult
+import common.DomainError
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.tasks.await
 import model.User
@@ -16,28 +18,28 @@ class FirebaseAuthRepository(
     private val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
 ) : AuthRepository {
 
-    override suspend fun register(email: String,password: String): Result<User> {
+    override suspend fun register(email: String,password: String): AppResult<User> {
         return try {
             val result = firebaseAuth.createUserWithEmailAndPassword(email,password).await()
             val  firebaseUser = result.user
-                ?: return Result.failure(IllegalStateException("No se pudo crear el usuario"))
-            Result.success(firebaseUser.toDomain())
+                ?: return AppResult.Error(DomainError.Unknow)
+            AppResult.Success(firebaseUser.toDomain())
             //si la pantalla se cierra las corrutinas se cancelan y lanzan la excepción
         } catch (e: CancellationException) {throw e}
         catch (e: Exception) {
-            Result.failure(Exception(e.toFriendlyMessage()))
+            AppResult.Error(e.toDomainError())
         }
     }
 
-    override suspend fun logIn(email: String, password: String): Result<User> {
+    override suspend fun logIn(email: String, password: String): AppResult<User> {
         return try {
             val result = firebaseAuth.signInWithEmailAndPassword(email, password).await()
             val firebaseUser = result.user
-                ?: return Result.failure(IllegalStateException("No se pudo iniciar sesión"))
-            Result.success(firebaseUser.toDomain())
+                ?: return AppResult.Error(DomainError.Unknow)
+            AppResult.Success(firebaseUser.toDomain())
         } catch (e: CancellationException) {throw e}
         catch (e : Exception) {
-            Result.failure(Exception(e.toFriendlyMessage()))
+            AppResult.Error(e.toDomainError())
         }
     }
 
@@ -53,12 +55,12 @@ class FirebaseAuthRepository(
         email = email.orEmpty()
     )
 
-    private fun Exception.toFriendlyMessage(): String = when (this) {
-        is FirebaseAuthWeakPasswordException -> "Contraseña demasiado débil"
-        is FirebaseAuthUserCollisionException -> "Ya existe una cuenta con ese email"
+    private fun Exception.toDomainError(): DomainError = when (this) {
+        is FirebaseAuthWeakPasswordException -> DomainError.WeakPassword
+        is FirebaseAuthUserCollisionException -> DomainError.EmailAlreadyInUse
         is FirebaseAuthInvalidUserException,
-        is FirebaseAuthInvalidCredentialsException -> "Email o contraseña incorrectos"
-        is FirebaseNetworkException -> "Sin conexión a internet"
-        else -> "ocurrió un error inesperado"
+        is FirebaseAuthInvalidCredentialsException -> DomainError.InvalidCredentials
+        is FirebaseNetworkException -> DomainError.Network
+        else -> DomainError.Unknow
     }
 }

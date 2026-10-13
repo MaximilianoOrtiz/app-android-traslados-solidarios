@@ -7,7 +7,7 @@ plugins {
 android {
     namespace = "com.benitez_ortiz.ApMobileTP2"
     compileSdk {
-        version = release(36) {
+        version = release(37) {
             minorApiLevel = 1
         }
     }
@@ -15,7 +15,7 @@ android {
     defaultConfig {
         applicationId = "com.benitez_ortiz.ApMobileTP2"
         minSdk = 26
-        targetSdk = 36
+        targetSdk = 37
         versionCode = 1
         versionName = "1.0"
 
@@ -57,6 +57,7 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     debugImplementation(libs.androidx.compose.ui.tooling)
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.7")
     //para no tener que indicar cada version de FireBase
     implementation(platform("com.google.firebase:firebase-bom:34.19.0"))
     //libreria de autenticación
