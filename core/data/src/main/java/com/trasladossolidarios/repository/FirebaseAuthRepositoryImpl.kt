@@ -1,4 +1,4 @@
-package auth
+package com.trasladossolidarios.repository
 
 import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.auth.FirebaseAuth
@@ -7,16 +7,16 @@ import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import com.google.firebase.auth.FirebaseUser
-import common.AppResult
-import common.DomainError
+import com.trasladossolidarios.domain.common.AppResult
+import com.trasladossolidarios.domain.common.DomainError
+import com.trasladossolidarios.domain.model.User
+import com.trasladossolidarios.domain.repository.FirebaseAuthRepository
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.tasks.await
-import model.User
-import repository.AuthRepository
 
-class FirebaseAuthRepository(
+class FirebaseAuthRepositoryImpl(
     private val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
-) : AuthRepository {
+) : FirebaseAuthRepository {
 
     override suspend fun register(email: String,password: String): AppResult<User> {
         return try {

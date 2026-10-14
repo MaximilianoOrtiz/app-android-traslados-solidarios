@@ -1,4 +1,4 @@
-package com.ui.theme
+package com.trasladossolidarios.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

@@ -1,7 +1,7 @@
 package com.trasladossolidarios.auth
 
 import androidx.annotation.StringRes
-import common.DomainError
+import com.trasladossolidarios.domain.common.DomainError
 
 @StringRes
 fun DomainError.toMessageRes(): Int = when (this){

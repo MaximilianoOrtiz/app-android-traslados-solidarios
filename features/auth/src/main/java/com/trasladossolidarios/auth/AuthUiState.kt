@@ -1,7 +1,7 @@
 package com.trasladossolidarios.auth
 
-import common.DomainError
-import model.User
+import com.trasladossolidarios.domain.common.DomainError
+import com.trasladossolidarios.domain.model.User
 
 sealed interface AuthUiState {
     data object idle : AuthUiState

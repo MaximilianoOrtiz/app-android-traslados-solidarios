@@ -1,16 +1,16 @@
 package com.trasladossolidarios.ApMobileTP2
 
 import androidx.lifecycle.ViewModelProvider
-import auth.FirebaseAuthRepository
+import com.trasladossolidarios.repository.FirebaseAuthRepositoryImpl
 import com.trasladossolidarios.auth.createAuthViewModelFactory
-import repository.AuthRepository
-import usecase.GetCurrentUserUseCase
-import usecase.LoginUserUseCase
-import usecase.LogoutUseCase
-import usecase.RegisterUserUseCase
+import com.trasladossolidarios.domain.repository.FirebaseAuthRepository
+import com.trasladossolidarios.domain.usecase.auth.GetCurrentUserUseCase
+import com.trasladossolidarios.domain.usecase.auth.LoginUserUseCase
+import com.trasladossolidarios.domain.usecase.auth.LogoutUseCase
+import com.trasladossolidarios.domain.usecase.auth.RegisterUserUseCase
 
 class AppContainer {
-    private val authRepository: AuthRepository = FirebaseAuthRepository()
+    private val authRepository: FirebaseAuthRepository = FirebaseAuthRepositoryImpl()
 
     val authViewModelFactory: ViewModelProvider.Factory = createAuthViewModelFactory(
         registerUser = RegisterUserUseCase(authRepository),

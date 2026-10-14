@@ -1,12 +1,12 @@
-package usecase
+package com.trasladossolidarios.domain.usecase.auth
 
-import common.AppResult
-import common.DomainError
-import model.User
-import repository.AuthRepository
+import com.trasladossolidarios.domain.common.AppResult
+import com.trasladossolidarios.domain.common.DomainError
+import com.trasladossolidarios.domain.model.User
+import com.trasladossolidarios.domain.repository.FirebaseAuthRepository
 
 //Uso inyección de dependencias
-class RegisterUserUseCase (private val authRepository : AuthRepository){
+class RegisterUserUseCase (private val authRepository : FirebaseAuthRepository){
     //llama al objeto como si fuera funcion
     suspend operator fun invoke(email: String, password: String) : AppResult<User> {
         //elimina espacios

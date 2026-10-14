@@ -2,17 +2,17 @@ package com.trasladossolidarios.auth
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import common.AppResult
+import com.trasladossolidarios.domain.common.AppResult
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import model.User
-import usecase.GetCurrentUserUseCase
-import usecase.LoginUserUseCase
-import usecase.LogoutUseCase
-import usecase.RegisterUserUseCase
+import com.trasladossolidarios.domain.model.User
+import com.trasladossolidarios.domain.usecase.auth.GetCurrentUserUseCase
+import com.trasladossolidarios.domain.usecase.auth.LoginUserUseCase
+import com.trasladossolidarios.domain.usecase.auth.LogoutUseCase
+import com.trasladossolidarios.domain.usecase.auth.RegisterUserUseCase
 
 class AuthViewModel (
     private val registerUser: RegisterUserUseCase,

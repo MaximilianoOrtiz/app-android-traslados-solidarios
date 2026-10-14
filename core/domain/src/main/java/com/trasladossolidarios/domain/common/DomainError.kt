@@ -1,4 +1,4 @@
-package common
+package com.trasladossolidarios.domain.common
 
 sealed interface DomainError {
     data object InvalidMail : DomainError

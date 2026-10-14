@@ -1,4 +1,4 @@
-package model
+package com.trasladossolidarios.domain.model
 
 data class User (
     val id: String,

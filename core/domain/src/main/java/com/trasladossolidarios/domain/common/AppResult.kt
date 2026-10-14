@@ -1,4 +1,4 @@
-package common
+package com.trasladossolidarios.domain.common
 
 //usa genericos (T), trae el dato. sealed solo se puede implmentar dentro del mismo paquete/modulo
 sealed interface AppResult<out T> {

@@ -1,9 +1,9 @@
-package repository
+package com.trasladossolidarios.domain.repository
 
-import common.AppResult
-import model.User
+import com.trasladossolidarios.domain.common.AppResult
+import com.trasladossolidarios.domain.model.User
 
-interface AuthRepository {
+interface FirebaseAuthRepository {
     //suspend función asincrona. Devuelven User o Error
     suspend fun register (email: String, password: String): AppResult<User>
     suspend fun logIn (email: String, password: String): AppResult<User>
