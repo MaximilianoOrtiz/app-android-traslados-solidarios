@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.benitez_ortiz.auth"
+    namespace = "com.trasladossolidarios.auth"
     compileSdk {
         version = release(36) {
             minorApiLevel = 1

@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "868022331672",
-    "project_id": "benitez-ortiz-appmobiletp2",
-    "storage_bucket": "benitez-ortiz-appmobiletp2.firebasestorage.app"
+    "project_number": "813389437462",
+    "project_id": "traslados-solidarios",
+    "storage_bucket": "traslados-solidarios.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:868022331672:android:04538fb6f547df75f6d66d",
+        "mobilesdk_app_id": "1:813389437462:android:e73042bb062c8e7699b337",
         "android_client_info": {
-          "package_name": "com.benitez_ortiz.ApMobileTP2"
+          "package_name": "com.trasladossolidarios"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyD6J3SrF3XQfte9-ltd_jQbjrSpJyzXqAI"
+          "current_key": "AIzaSyDn_BRq2vkBUMoSp5zXZUEYuqoyymuX_Kw"
         }
       ],
       "services": {

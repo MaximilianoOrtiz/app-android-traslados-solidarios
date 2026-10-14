@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace = "com.benitez_ortiz.data"
+    namespace = "com.trasladossolidarios.data"
     compileSdk {
         version = release(36) {
             minorApiLevel = 1
