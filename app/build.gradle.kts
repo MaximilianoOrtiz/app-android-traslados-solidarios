@@ -42,6 +42,7 @@ dependencies {
     implementation(platform(libs.androidx.compose.bom))
     implementation(project(":core:data"))
     implementation(project(":core:domain"))
+    implementation(project(":core:ui"))
     implementation(project(":features:auth"))
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.compose.material3)

@@ -1,4 +1,4 @@
-package com.trasladossolidarios.ui.theme
+package com.ui.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
