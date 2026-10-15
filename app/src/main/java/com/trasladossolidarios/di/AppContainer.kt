@@ -1,4 +1,4 @@
-package com.trasladossolidarios.ApMobileTP2
+package com.trasladossolidarios.di
 
 import androidx.lifecycle.ViewModelProvider
 import com.trasladossolidarios.repository.FirebaseAuthRepositoryImpl
