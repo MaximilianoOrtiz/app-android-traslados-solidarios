@@ -2,6 +2,8 @@ package com.trasladossolidarios.auth
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
 import com.trasladossolidarios.domain.common.AppResult
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -12,43 +14,133 @@ import com.trasladossolidarios.domain.model.User
 import com.trasladossolidarios.domain.usecase.auth.GetCurrentUserUseCase
 import com.trasladossolidarios.domain.usecase.auth.LoginUserUseCase
 import com.trasladossolidarios.domain.usecase.auth.LogoutUseCase
+import com.trasladossolidarios.domain.usecase.auth.ObserveAuthStateUseCase
 import com.trasladossolidarios.domain.usecase.auth.RegisterUserUseCase
+import kotlin.coroutines.cancellation.CancellationException
 
-class AuthViewModel (
+
+class AuthViewModel(
     private val registerUser: RegisterUserUseCase,
     private val loginUser: LoginUserUseCase,
     private val logoutUser: LogoutUseCase,
-    getCurrentUser: GetCurrentUserUseCase
+    private val getCurrentUser: GetCurrentUserUseCase
 ) : ViewModel() {
-    private val _uiState = MutableStateFlow<AuthUiState>(
-        getCurrentUser()?.let { AuthUiState.Success(it) } ?: AuthUiState.idle
-    )
+
+    private val _uiState = MutableStateFlow(AuthUiState())
     val uiState: StateFlow<AuthUiState> = _uiState.asStateFlow()
 
-    fun register(email: String, password: String) {
-        authenticate { registerUser(email,password) }
+    fun onEmailChange(email: String) {
+        _uiState.update {
+            it.copy(email = email, error = null)
+        }
     }
 
-    fun login(email: String,password: String) {
-        authenticate { loginUser(email,password)}
+    fun onPasswordChange(password: String) {
+        _uiState.update {
+            it.copy(password = password, error = null)
+        }
+    }
+
+    fun register() {
+        authenticate {
+            registerUser(
+                _uiState.value.email.trim(),
+                _uiState.value.password
+            )
+        }
+    }
+
+    fun login() {
+        authenticate {
+            loginUser(
+                _uiState.value.email.trim(),
+                _uiState.value.password
+            )
+        }
     }
 
     fun logout() {
-        logoutUser()
-        _uiState.value = AuthUiState.idle
-    }
-
-    fun onErrorShown() {
-        _uiState.update { if (it is AuthUiState.Error) AuthUiState.idle else it }
-    }
-
-    private fun authenticate(action: suspend () -> AppResult<User>) {
         viewModelScope.launch {
-            _uiState.value = AuthUiState.Loading
-            _uiState.value = when (val  result = action ()) {
-                is AppResult.Success -> AuthUiState.Success(result.data)
-                is AppResult.Error -> AuthUiState.Error(result.error)
+            logoutUser()
+            _uiState.update {
+                it.copy(
+                    password = "",
+                    isLoading = false,
+                    error = null
+                )
             }
         }
     }
+
+    fun onErrorShown() {
+        _uiState.update { it.copy(error = null) }
+    }
+
+    private fun authenticate(
+        action: suspend () -> AppResult<User>
+    ) {
+        if (_uiState.value.isLoading) return
+
+        val current = _uiState.value
+
+        if (current.email.isBlank() || current.password.isBlank()) {
+            _uiState.update {
+                it.copy(error = "Ingresá tu email y contraseña.")
+            }
+            return
+        }
+
+        viewModelScope.launch {
+            _uiState.update {
+                it.copy(isLoading = true, error = null)
+            }
+
+            val result = try {
+                action()
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                _uiState.update {
+                    it.copy(
+                        isLoading = false,
+                        error = "Ocurrió un error inesperado."
+                    )
+                }
+                return@launch
+            }
+
+//            _uiState.update {
+//                when (result) {
+//                    is AppResult.Success -> it.copy(
+//                        isLoading = false,
+//                        password = "",
+//                        error = null
+//                    )
+//
+//                    is AppResult.Error -> it.copy(
+//                        isLoading = false,
+//                        error = result.error.toUiMessage()
+//                    )
+//                }
+//            }
+        }
+    }
+    companion object {
+        fun factory(
+            registerUser: RegisterUserUseCase,
+            loginUser: LoginUserUseCase,
+            logoutUser: LogoutUseCase,
+            getCurrentUser: GetCurrentUserUseCase
+        ) = viewModelFactory {
+            initializer {
+                AuthViewModel(
+                    registerUser = registerUser,
+                    loginUser = loginUser,
+                    logoutUser = logoutUser,
+                    getCurrentUser = getCurrentUser
+                )
+            }
+        }
+    }
+
 }

@@ -12,6 +12,9 @@ import com.trasladossolidarios.domain.common.DomainError
 import com.trasladossolidarios.domain.model.User
 import com.trasladossolidarios.domain.repository.FirebaseAuthRepository
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
 
 class FirebaseAuthRepositoryImpl(
@@ -54,6 +57,19 @@ class FirebaseAuthRepositoryImpl(
         id = uid,
         email = email.orEmpty()
     )
+
+
+    override fun observeAuthState(): Flow<User?> = callbackFlow {
+        val listener = FirebaseAuth.AuthStateListener { auth ->
+            trySend(auth.currentUser?.toDomain())
+        }
+
+        firebaseAuth.addAuthStateListener(listener)
+
+        awaitClose {
+            firebaseAuth.removeAuthStateListener(listener)
+        }
+    }
 
     private fun Exception.toDomainError(): DomainError = when (this) {
         is FirebaseAuthWeakPasswordException -> DomainError.WeakPassword

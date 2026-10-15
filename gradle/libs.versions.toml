@@ -15,7 +15,9 @@ nav3Core = "1.2.0"
 lifecycleViewmodelNav3 = "2.12.0-alpha04"
 kotlinxSerialization = "1.11.0"
 kotlinxSerializationCore = "1.9.0"
+kotlinxCoroutines = "1.11.0"
 material3AdaptiveNav3 = "1.4.0-alpha02"
+playServicesCast = "22.3.1"
 
 
 [libraries]
@@ -41,6 +43,9 @@ androidx-lifecycle-viewmodel-navigation3 = { module = "androidx.lifecycle:lifecy
 kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "kotlinxSerializationCore" }
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
 androidx-compose-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended" }
+kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
+kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinxCoroutines" }
+play-services-cast = { group = "com.google.android.gms", name = "play-services-cast", version.ref = "playServicesCast" }
 
 
 

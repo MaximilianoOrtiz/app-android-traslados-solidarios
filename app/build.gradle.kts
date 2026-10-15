@@ -60,6 +60,7 @@ dependencies {
     // Un ViewModelStore por pantalla del back stack (cada entrada tiene su propio ViewModel)
     implementation(libs.androidx.lifecycle.viewmodel.navigation3)
     implementation(libs.kotlinx.serialization.core)
+    implementation(libs.play.services.cast)
     testImplementation(libs.junit)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
