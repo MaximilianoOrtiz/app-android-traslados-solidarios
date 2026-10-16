@@ -10,8 +10,10 @@ import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberDecoratedNavEntries
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
-import com.trasladossolidarios.auth.AuthViewModel
+
 import com.trasladossolidarios.di.AppContainer
+import com.trasladossolidarios.home.HomeRoute
+import com.trasladossolidarios.home.ProfileViewModel
 
 /**
  * La navegación vive en :app. Las features no se conocen entre sí:
@@ -26,16 +28,15 @@ fun AppNavDisplay(
     // entryProvider: "para esta key, mostrá esta pantalla". La key llega ya tipada:
     val entryProvider = entryProvider<NavKey> {
 
-        entry<AuthDestination> {
+        entry<ProfileDestination> {
             val viewModel = viewModel {
-                AuthViewModel(
-                    registerUser = container.registerUser,
-                    loginUser = container.loginUser,
+                ProfileViewModel(
                     logoutUser = container.logoutUser,
-                    getCurrentUser = container.getCurrentUser
-                ) 
+                )
             }
-
+            HomeRoute(
+                viewModel
+            )
         }
     }
 

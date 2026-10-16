@@ -27,7 +27,8 @@ class AppContainer {
             registerUser = registerUser,
             loginUser = loginUser,
             logoutUser = logoutUser,
-            getCurrentUser = getCurrentUser
+            getCurrentUser = getCurrentUser,
+            observeAuthState = observeAuthStateUseCase
         )
 
     fun sessionViewModelFactory() =

@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">ApMobileTP2</string>
-    <string name="tab_home">Inicio</string>
+    <string name="tab_profile">Perfil</string>
 </resources>

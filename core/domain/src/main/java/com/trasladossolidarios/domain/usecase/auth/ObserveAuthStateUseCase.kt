@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 class ObserveAuthStateUseCase(
     private val repository: FirebaseAuthRepository
 ) {
-    operator fun invoke(): Flow<User?> {
+    operator fun invoke(): Flow<User?> {  // Return Flow<Boolean>
         return repository.observeAuthState()
     }
 }

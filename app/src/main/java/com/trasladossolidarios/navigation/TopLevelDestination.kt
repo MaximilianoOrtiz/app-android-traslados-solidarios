@@ -3,7 +3,9 @@ package com.trasladossolidarios.navigation
 import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.outlined.Home
+import androidx.compose.material.icons.outlined.Person
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation3.runtime.NavKey
 import com.trasladossolidarios.R
@@ -18,10 +20,10 @@ enum class TopLevelDestination(
     val unselectedIcon: ImageVector,
     @StringRes val label: Int
 ) {
-    HOME(
-        startKey = AuthDestination,
-        selectedIcon = Icons.Filled.Home,
-        unselectedIcon = Icons.Outlined.Home,
-        label = R.string.tab_home
+    PROFILE(
+        startKey = ProfileDestination,
+        selectedIcon = Icons.Filled.Person,
+        unselectedIcon = Icons.Outlined.Person,
+        label = R.string.tab_profile
     )
 }

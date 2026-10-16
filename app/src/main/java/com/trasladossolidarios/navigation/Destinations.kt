@@ -8,5 +8,5 @@ import kotlinx.serialization.Serializable
 // @Serializable permite guardar esa lista al rotar la pantalla o si el sistema mata el proceso.
 
 @Serializable
-data object AuthDestination : NavKey{
+data object ProfileDestination : NavKey{
 }

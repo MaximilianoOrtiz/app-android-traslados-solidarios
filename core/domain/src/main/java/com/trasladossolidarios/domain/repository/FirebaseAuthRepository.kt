@@ -10,7 +10,7 @@ interface FirebaseAuthRepository {
     suspend fun register (email: String, password: String): AppResult<User>
     suspend fun logIn (email: String, password: String): AppResult<User>
     fun logout()
-    fun getCurrentUser(): User?
+    fun getCurrentUser(): User? //TODO: No se usa, borrarlo
 
-    fun observeAuthState(): Flow<User?>
+    fun observeAuthState(): Flow<User?> //TODO: Cambiarlo a Flow<Boolean>
 }

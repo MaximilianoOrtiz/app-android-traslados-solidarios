@@ -5,29 +5,44 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.trasladossolidarios.domain.common.AppResult
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
+import com.trasladossolidarios.domain.common.DomainError
 import com.trasladossolidarios.domain.model.User
 import com.trasladossolidarios.domain.usecase.auth.GetCurrentUserUseCase
 import com.trasladossolidarios.domain.usecase.auth.LoginUserUseCase
 import com.trasladossolidarios.domain.usecase.auth.LogoutUseCase
 import com.trasladossolidarios.domain.usecase.auth.ObserveAuthStateUseCase
 import com.trasladossolidarios.domain.usecase.auth.RegisterUserUseCase
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import kotlin.coroutines.cancellation.CancellationException
-
 
 class AuthViewModel(
     private val registerUser: RegisterUserUseCase,
     private val loginUser: LoginUserUseCase,
     private val logoutUser: LogoutUseCase,
-    private val getCurrentUser: GetCurrentUserUseCase
+    private val getCurrentUser: GetCurrentUserUseCase,
+    private val observeAuthState: ObserveAuthStateUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(AuthUiState())
     val uiState: StateFlow<AuthUiState> = _uiState.asStateFlow()
+
+    init {
+        viewModelScope.launch {
+            observeAuthState().collect { user ->
+                if (user == null) {
+                    resetForm()
+                }
+            }
+        }
+    }
+
+    fun resetForm() {
+        _uiState.value = AuthUiState()
+    }
 
     fun onEmailChange(email: String) {
         _uiState.update {
@@ -62,13 +77,7 @@ class AuthViewModel(
     fun logout() {
         viewModelScope.launch {
             logoutUser()
-            _uiState.update {
-                it.copy(
-                    password = "",
-                    isLoading = false,
-                    error = null
-                )
-            }
+            resetForm()
         }
     }
 
@@ -109,38 +118,48 @@ class AuthViewModel(
                 return@launch
             }
 
-//            _uiState.update {
-//                when (result) {
-//                    is AppResult.Success -> it.copy(
-//                        isLoading = false,
-//                        password = "",
-//                        error = null
-//                    )
-//
-//                    is AppResult.Error -> it.copy(
-//                        isLoading = false,
-//                        error = result.error.toUiMessage()
-//                    )
-//                }
-//            }
+            when (result) {
+                is AppResult.Success -> {
+                    resetForm()
+                }
+
+                is AppResult.Error -> {
+                    _uiState.update {
+                        it.copy(
+                            isLoading = false,
+                            error = when (result.error) {
+                                DomainError.InvalidMail -> "Email inválido."
+                                DomainError.WeakPassword -> "La contraseña es muy débil."
+                                DomainError.EmptyCredentials -> "Ingresá email y contraseña."
+                                DomainError.EmailAlreadyInUse -> "El email ya está registrado."
+                                DomainError.InvalidCredentials -> "Credenciales inválidas."
+                                DomainError.Network -> "Error de conexión."
+                                DomainError.Unknow -> "Ocurrió un error inesperado."
+                            }
+                        )
+                    }
+                }
+            }
         }
     }
+
     companion object {
         fun factory(
             registerUser: RegisterUserUseCase,
             loginUser: LoginUserUseCase,
             logoutUser: LogoutUseCase,
-            getCurrentUser: GetCurrentUserUseCase
+            getCurrentUser: GetCurrentUserUseCase,
+            observeAuthState: ObserveAuthStateUseCase
         ) = viewModelFactory {
             initializer {
                 AuthViewModel(
                     registerUser = registerUser,
                     loginUser = loginUser,
                     logoutUser = logoutUser,
-                    getCurrentUser = getCurrentUser
+                    getCurrentUser = getCurrentUser,
+                    observeAuthState = observeAuthState
                 )
             }
         }
     }
-
 }
