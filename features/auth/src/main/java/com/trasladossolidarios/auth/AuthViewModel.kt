@@ -44,6 +44,28 @@ class AuthViewModel(
         _uiState.value = AuthUiState()
     }
 
+    fun toggleAuthMode() {
+        _uiState.update {
+            val newMode = if (it.mode == AuthMode.LOGIN) AuthMode.REGISTER else AuthMode.LOGIN
+            it.copy(
+                mode = newMode,
+                error = null
+            )
+        }
+    }
+
+    fun onNameChange(name: String) {
+        _uiState.update {
+            it.copy(name = name, error = null)
+        }
+    }
+
+    fun onSurnameChange(surname: String) {
+        _uiState.update {
+            it.copy(surname = surname, error = null)
+        }
+    }
+
     fun onEmailChange(email: String) {
         _uiState.update {
             it.copy(email = email, error = null)

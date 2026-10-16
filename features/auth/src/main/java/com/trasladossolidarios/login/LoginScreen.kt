@@ -13,6 +13,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -21,6 +22,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.trasladossolidarios.auth.AuthMode
 import com.trasladossolidarios.auth.AuthViewModel
 
 @Composable
@@ -29,6 +31,7 @@ fun LoginScreen(
     modifier: Modifier = Modifier
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
+    val isRegisterMode = state.mode == AuthMode.REGISTER
 
     Column(
         modifier = modifier
@@ -40,6 +43,14 @@ fun LoginScreen(
         Text(
             text = "Traslados Solidarios",
             style = MaterialTheme.typography.headlineMedium
+        )
+
+        Spacer(Modifier.height(8.dp))
+
+        Text(
+            text = if (isRegisterMode) "Crear cuenta" else "Iniciar sesión",
+            style = MaterialTheme.typography.titleMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
         )
 
         Spacer(Modifier.height(24.dp))
@@ -77,15 +88,36 @@ fun LoginScreen(
         Spacer(Modifier.height(20.dp))
 
         Button(
-            onClick = viewModel::login,
+            onClick = {
+                if (isRegisterMode) {
+                    viewModel.register()
+                } else {
+                    viewModel.login()
+                }
+            },
             enabled = !state.isLoading,
             modifier = Modifier.fillMaxWidth()
         ) {
             if (state.isLoading) {
                 CircularProgressIndicator()
             } else {
-                Text("Iniciar sesión")
+                Text(if (isRegisterMode) "Registrarse" else "Iniciar sesión")
             }
+        }
+
+        Spacer(Modifier.height(12.dp))
+
+        TextButton(
+            onClick = viewModel::toggleAuthMode,
+            enabled = !state.isLoading
+        ) {
+            Text(
+                text = if (isRegisterMode) {
+                    "¿Ya tenés cuenta? Iniciá sesión"
+                } else {
+                    "¿No tenés cuenta? Registrate"
+                }
+            )
         }
     }
 }

@@ -23,7 +23,7 @@ class RegisterUserUseCase (private val authRepository : FirebaseAuthRepository){
 
     private companion object {
         //patron de texto
-        val EMAIL_REGEX = Regex("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\\\.[A-Za-z]{2,}\$")
+        val EMAIL_REGEX = Regex("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")
         const val MIN_PASSWORD_LENGTH = 6
     }
 }
