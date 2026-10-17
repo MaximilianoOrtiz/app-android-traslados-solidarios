@@ -1,4 +1,4 @@
-package com.trasladossolidarios.home
+package com.trasladossolidarios.profile
 
 import org.junit.Test
 

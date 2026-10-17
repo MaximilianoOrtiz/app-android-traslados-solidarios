@@ -23,7 +23,6 @@ class AuthViewModel(
     private val registerUser: RegisterUserUseCase,
     private val loginUser: LoginUserUseCase,
     private val logoutUser: LogoutUseCase,
-    private val getCurrentUser: GetCurrentUserUseCase,
     private val observeAuthState: ObserveAuthStateUseCase
 ) : ViewModel() {
 
@@ -170,7 +169,6 @@ class AuthViewModel(
             registerUser: RegisterUserUseCase,
             loginUser: LoginUserUseCase,
             logoutUser: LogoutUseCase,
-            getCurrentUser: GetCurrentUserUseCase,
             observeAuthState: ObserveAuthStateUseCase
         ) = viewModelFactory {
             initializer {
@@ -178,7 +176,6 @@ class AuthViewModel(
                     registerUser = registerUser,
                     loginUser = loginUser,
                     logoutUser = logoutUser,
-                    getCurrentUser = getCurrentUser,
                     observeAuthState = observeAuthState
                 )
             }

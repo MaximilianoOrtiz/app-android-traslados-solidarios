@@ -1,4 +1,4 @@
-package com.trasladossolidarios.home
+package com.trasladossolidarios.profile
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize

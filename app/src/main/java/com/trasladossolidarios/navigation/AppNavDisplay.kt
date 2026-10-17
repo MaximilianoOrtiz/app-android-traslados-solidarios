@@ -12,8 +12,8 @@ import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 
 import com.trasladossolidarios.di.AppContainer
-import com.trasladossolidarios.home.HomeRoute
-import com.trasladossolidarios.home.ProfileViewModel
+import com.trasladossolidarios.profile.HomeRoute
+import com.trasladossolidarios.profile.ProfileViewModel
 
 /**
  * La navegación vive en :app. Las features no se conocen entre sí:

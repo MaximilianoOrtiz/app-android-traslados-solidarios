@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.trasladossolidarios.home"
+    namespace = "com.trasladossolidarios.profile"
     compileSdk {
         version = release(37) {
             minorApiLevel = 1

@@ -17,7 +17,6 @@ class AppContainer {
     val registerUser = RegisterUserUseCase(authRepository)
     val loginUser = LoginUserUseCase(authRepository)
     val logoutUser = LogoutUseCase(authRepository)
-    val getCurrentUser = GetCurrentUserUseCase(authRepository)
 
     val observeAuthStateUseCase =
         ObserveAuthStateUseCase(authRepository)
@@ -27,7 +26,6 @@ class AppContainer {
             registerUser = registerUser,
             loginUser = loginUser,
             logoutUser = logoutUser,
-            getCurrentUser = getCurrentUser,
             observeAuthState = observeAuthStateUseCase
         )
 
