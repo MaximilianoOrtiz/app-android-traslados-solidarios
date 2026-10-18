@@ -54,6 +54,27 @@ fun LoginScreen(
         )
 
         Spacer(Modifier.height(24.dp))
+        if (isRegisterMode) {
+            OutlinedTextField(
+                value = state.name,
+                onValueChange = viewModel::onNameChange,
+                label = { Text("Nombre") },
+                singleLine = true,
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            Spacer(Modifier.height(12.dp))
+
+            OutlinedTextField(
+                value = state.surname,
+                onValueChange = viewModel::onSurnameChange,
+                label = { Text("Apellido") },
+                singleLine = true,
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            Spacer(Modifier.height(12.dp))
+        }
 
         OutlinedTextField(
             value = state.email,
