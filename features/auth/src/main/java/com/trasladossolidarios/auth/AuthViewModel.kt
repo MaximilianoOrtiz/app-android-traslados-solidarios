@@ -154,7 +154,7 @@ class AuthViewModel(
                                 DomainError.WeakPassword -> "La contraseña es muy débil."
                                 DomainError.EmptyCredentials -> "Ingresá email y contraseña."
                                 DomainError.EmailAlreadyInUse -> "El email ya está registrado."
-                                DomainError.InvalidCredentials -> "Credenciales inválidas."
+                                DomainError.InvalidCredentials -> "Email o contraseña incorrectos."
                                 DomainError.Network -> "Error de conexión."
                                 DomainError.Unknow -> "Ocurrió un error inesperado."
                             }

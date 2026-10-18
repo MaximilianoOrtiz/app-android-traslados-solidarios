@@ -12,7 +12,10 @@ import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 
 import com.trasladossolidarios.di.AppContainer
+import com.trasladossolidarios.home.DisponiblesScreen.DisponibleScreen
 import com.trasladossolidarios.home.HomeRoute
+import com.trasladossolidarios.home.InicioScreen.InicioScreen
+import com.trasladossolidarios.home.MisTrasladosScreen.MisTrasladosScreen
 import com.trasladossolidarios.home.ProfileViewModel
 
 /**
@@ -27,6 +30,12 @@ fun AppNavDisplay(
 ) {
     // entryProvider: "para esta key, mostrá esta pantalla". La key llega ya tipada:
     val entryProvider = entryProvider<NavKey> {
+
+        entry<InicioDestination> { InicioScreen() }
+
+        entry<DisponiblesDestination> { DisponibleScreen() }
+
+        entry<MisTrasladosDestination> { MisTrasladosScreen() }
 
         entry<ProfileDestination> {
             val viewModel = viewModel {

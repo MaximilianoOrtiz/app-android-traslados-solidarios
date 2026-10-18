@@ -2,10 +2,14 @@ package com.trasladossolidarios.navigation
 
 import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.outlined.DateRange
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Person
+import androidx.compose.material.icons.outlined.Search
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation3.runtime.NavKey
 import com.trasladossolidarios.R
@@ -14,7 +18,7 @@ import com.trasladossolidarios.R
  * Los tabs de la bottom bar. Cada uno tiene su propio back stack, que arranca en [startKey].
  * Agregar un tab nuevo = agregar una entrada acá y sus pantallas en AppNavDisplay.
  */
-enum class TopLevelDestination(
+/*enum class TopLevelDestination(
     val startKey: NavKey,
     val selectedIcon: ImageVector,
     val unselectedIcon: ImageVector,
@@ -26,4 +30,16 @@ enum class TopLevelDestination(
         unselectedIcon = Icons.Outlined.Person,
         label = R.string.tab_profile
     )
+} */
+
+enum class TopLevelDestination(
+    val key: NavKey,
+    @StringRes val labelRes: Int,
+    val icon: ImageVector,
+    val selectIcon: ImageVector
+) {
+    PROFILE(InicioDestination, R.string.tab_inicio, Icons.Outlined.Home, Icons.Filled.Home),
+    DISPONIBLES(DisponiblesDestination, R.string.tab_disponibles, Icons.Outlined.Search, Icons.Filled.Search),
+    MIS_TRASLADOS(MisTrasladosDestination, R.string.tab_mis_traslados, Icons.Outlined.DateRange, Icons.Filled.DateRange),
+    PERFIL(ProfileDestination, R.string.tab_perfil, Icons.Outlined.Person, Icons.Filled.Person)
 }

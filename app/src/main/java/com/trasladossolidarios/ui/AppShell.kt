@@ -39,8 +39,8 @@ fun AppShell(
                 exit = slideOutVertically { it }
             ) {
                 AppBottomBar(
-                    currentTab = navigationState.currentTab,
-                    onTabClick = navigationState::selectTab
+                    selected = navigationState.currentTab,
+                    onSelect = navigationState::selectTab
                 )
             }
         }
@@ -58,23 +58,20 @@ fun AppShell(
 }
 
 @Composable
-private fun AppBottomBar(
-    currentTab: TopLevelDestination,
-    onTabClick: (TopLevelDestination) -> Unit
-) {
+fun AppBottomBar(selected: TopLevelDestination, onSelect: (TopLevelDestination) -> Unit) {
     NavigationBar {
         TopLevelDestination.entries.forEach { tab ->
-            val selected = tab == currentTab
+            val isSelected = tab == selected
             NavigationBarItem(
-                selected = selected,
-                onClick = { onTabClick(tab) },
+                selected = isSelected,
+                onClick = { onSelect(tab) },
                 icon = {
                     Icon(
-                        imageVector = if (selected) tab.selectedIcon else tab.unselectedIcon,
-                        contentDescription = null
+                        imageVector = if (isSelected) tab.selectIcon else tab.icon,
+                        contentDescription = null,
                     )
                 },
-                label = { Text(stringResource(tab.label)) }
+                label = { Text(stringResource(tab.labelRes))},
             )
         }
     }

@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">ApMobileTP2</string>
     <string name="tab_profile">Perfil</string>
+
+
+    <string name="tab_inicio">Inicio</string>
+    <string name="tab_disponibles">Disponibles</string>
+    <string name="tab_mis_traslados">Mis Traslados</string>
+    <string name="tab_perfil">Perfil</string>
+
 </resources>

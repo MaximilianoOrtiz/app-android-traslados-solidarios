@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "813389437462",
-    "project_id": "traslados-solidarios",
-    "storage_bucket": "traslados-solidarios.firebasestorage.app"
+    "project_number": "300493251900",
+    "project_id": "trasladossolidarios",
+    "storage_bucket": "trasladossolidarios.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:813389437462:android:e73042bb062c8e7699b337",
+        "mobilesdk_app_id": "1:300493251900:android:4df8a92218c89ba16a6a39",
         "android_client_info": {
           "package_name": "com.trasladossolidarios"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDn_BRq2vkBUMoSp5zXZUEYuqoyymuX_Kw"
+          "current_key": "AIzaSyDFV7MI9wv2htMSh_bfNNnLMTBNqzuS5Rw"
         }
       ],
       "services": {

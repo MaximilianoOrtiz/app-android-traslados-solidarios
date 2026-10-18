@@ -80,6 +80,6 @@ fun rememberNavigationState(
 ): NavigationState {
     // rememberSaveable / rememberNavBackStack: el tab actual y cada back stack sobreviven a la rotación.
     val currentTab = rememberSaveable { mutableStateOf(startTab) }
-    val backStacks = TopLevelDestination.entries.associateWith { tab -> rememberNavBackStack(tab.startKey) }
+    val backStacks = TopLevelDestination.entries.associateWith { tab -> rememberNavBackStack(tab.key) }
     return remember(backStacks) { NavigationState(startTab, currentTab, backStacks) }
 }
