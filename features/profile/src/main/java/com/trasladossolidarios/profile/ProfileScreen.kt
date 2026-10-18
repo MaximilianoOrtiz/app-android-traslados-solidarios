@@ -17,7 +17,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 @Composable
-fun HomeRoute(
+fun ProfileRouter(
     viewModel: ProfileViewModel,
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
