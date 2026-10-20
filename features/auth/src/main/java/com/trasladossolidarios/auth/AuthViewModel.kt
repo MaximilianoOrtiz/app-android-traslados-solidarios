@@ -12,18 +12,20 @@ import com.trasladossolidarios.domain.usecase.auth.LoginUserUseCase
 import com.trasladossolidarios.domain.usecase.auth.LogoutUseCase
 import com.trasladossolidarios.domain.usecase.auth.ObserveAuthStateUseCase
 import com.trasladossolidarios.domain.usecase.auth.RegisterUserUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 import kotlin.coroutines.cancellation.CancellationException
 
-class AuthViewModel(
+@HiltViewModel
+class AuthViewModel @Inject constructor(
     private val registerUser: RegisterUserUseCase,
     private val loginUser: LoginUserUseCase,
     private val logoutUser: LogoutUseCase,
-    private val getCurrentUser: GetCurrentUserUseCase,
     private val observeAuthState: ObserveAuthStateUseCase
 ) : ViewModel() {
 
@@ -161,26 +163,6 @@ class AuthViewModel(
                         )
                     }
                 }
-            }
-        }
-    }
-
-    companion object {
-        fun factory(
-            registerUser: RegisterUserUseCase,
-            loginUser: LoginUserUseCase,
-            logoutUser: LogoutUseCase,
-            getCurrentUser: GetCurrentUserUseCase,
-            observeAuthState: ObserveAuthStateUseCase
-        ) = viewModelFactory {
-            initializer {
-                AuthViewModel(
-                    registerUser = registerUser,
-                    loginUser = loginUser,
-                    logoutUser = logoutUser,
-                    getCurrentUser = getCurrentUser,
-                    observeAuthState = observeAuthState
-                )
             }
         }
     }

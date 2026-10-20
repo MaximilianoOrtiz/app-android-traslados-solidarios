@@ -1,4 +1,4 @@
-package com.trasladossolidarios.repository
+package com.trasladossolidarios.data.repository
 
 import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.auth.FirebaseAuth
@@ -16,9 +16,10 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
+import javax.inject.Inject
 
-class FirebaseAuthRepositoryImpl(
-    private val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
+class FirebaseAuthRepositoryImpl @Inject constructor(
+    private val firebaseAuth: FirebaseAuth
 ) : FirebaseAuthRepository {
 
     override suspend fun register(email: String,password: String): AppResult<User> {

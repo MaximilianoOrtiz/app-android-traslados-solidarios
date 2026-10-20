@@ -1,10 +1,12 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt)
 }
 
 android {
-    namespace = "com.trasladossolidarios.home"
+    namespace = "com.trasladossolidarios.profile"
     compileSdk {
         version = release(37) {
             minorApiLevel = 1
@@ -48,4 +50,9 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.junit)
+
+    // La feature solo necesita Hilt para anotar sus ViewModels (@HiltViewModel).
+    // Quién construye los casos de uso que recibe es problema de otras capas.
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
 }

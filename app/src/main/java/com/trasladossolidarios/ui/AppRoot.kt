@@ -9,14 +9,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.trasladossolidarios.auth.AuthViewModel
-import com.trasladossolidarios.di.AppContainer
 import com.trasladossolidarios.login.SessionState
 import com.trasladossolidarios.login.SessionViewModel
-import com.trasladossolidarios.login.LoginScreen
+import com.trasladossolidarios.login.LoginScrennRoute
 
 @Composable
 fun AppRoot(
-    container: AppContainer,
     sessionViewModel: SessionViewModel,
     authViewModel: AuthViewModel
 ) {
@@ -33,13 +31,13 @@ fun AppRoot(
         }
 
         SessionState.Unauthenticated -> {
-            LoginScreen(
+            LoginScrennRoute(
                 viewModel = authViewModel
             )
         }
 
         is SessionState.Authenticated -> {
-            AppShell(container = container)
+            AppShell()
         }
     }
 }

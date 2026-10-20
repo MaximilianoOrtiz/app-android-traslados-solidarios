@@ -4,9 +4,10 @@ import com.trasladossolidarios.domain.common.AppResult
 import com.trasladossolidarios.domain.common.DomainError
 import com.trasladossolidarios.domain.model.User
 import com.trasladossolidarios.domain.repository.FirebaseAuthRepository
+import javax.inject.Inject
 
 //Uso inyección de dependencias
-class RegisterUserUseCase (private val authRepository : FirebaseAuthRepository){
+class RegisterUserUseCase @Inject constructor (private val authRepository : FirebaseAuthRepository){
     //llama al objeto como si fuera funcion
     suspend operator fun invoke(email: String, password: String) : AppResult<User> {
         //elimina espacios

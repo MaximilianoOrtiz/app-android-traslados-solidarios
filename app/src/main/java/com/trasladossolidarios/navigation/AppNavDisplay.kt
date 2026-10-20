@@ -2,7 +2,7 @@ package com.trasladossolidarios.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.NavEntry
 import androidx.navigation3.runtime.NavKey
@@ -11,12 +11,8 @@ import androidx.navigation3.runtime.rememberDecoratedNavEntries
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 
-import com.trasladossolidarios.di.AppContainer
-import com.trasladossolidarios.home.DisponiblesScreen.DisponibleScreen
-import com.trasladossolidarios.home.HomeRoute
-import com.trasladossolidarios.home.InicioScreen.InicioScreen
-import com.trasladossolidarios.home.MisTrasladosScreen.MisTrasladosScreen
-import com.trasladossolidarios.home.ProfileViewModel
+import com.trasladossolidarios.profile.ProfileRouter
+import com.trasladossolidarios.profile.ProfileViewModel
 
 /**
  * La navegación vive en :app. Las features no se conocen entre sí:
@@ -25,26 +21,15 @@ import com.trasladossolidarios.home.ProfileViewModel
 @Composable
 fun AppNavDisplay(
     navigationState: NavigationState,
-    container: AppContainer,
     modifier: Modifier = Modifier
 ) {
     // entryProvider: "para esta key, mostrá esta pantalla". La key llega ya tipada:
     val entryProvider = entryProvider<NavKey> {
 
-        entry<InicioDestination> { InicioScreen() }
-
-        entry<DisponiblesDestination> { DisponibleScreen() }
-
-        entry<MisTrasladosDestination> { MisTrasladosScreen() }
-
         entry<ProfileDestination> {
-            val viewModel = viewModel {
-                ProfileViewModel(
-                    logoutUser = container.logoutUser,
-                )
-            }
-            HomeRoute(
-                viewModel
+            val profileViewModel: ProfileViewModel = hiltViewModel()
+            ProfileRouter(
+                profileViewModel
             )
         }
     }

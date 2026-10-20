@@ -11,33 +11,29 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.trasladossolidarios.auth.AuthViewModel
 import com.trasladossolidarios.login.SessionViewModel
 import com.trasladossolidarios.ui.AppRoot
 import com.trasladossolidarios.ui.theme.ApMobileTP2Theme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        val container = (application as ComposeTrasladosSolidariosApp).container
         setContent {
             ApMobileTP2Theme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    val authViewModel: AuthViewModel = viewModel(
-                        factory = container.authViewModelFactory()
-                    )
-
-                    val sessionViewModel: SessionViewModel = viewModel(
-                        factory = container.sessionViewModelFactory()
-                    )
+                    val authViewModel: AuthViewModel = hiltViewModel()
+                    val sessionViewModel: SessionViewModel = hiltViewModel()
 
                     AppRoot(
-                        container = container,
                         authViewModel = authViewModel,
                         sessionViewModel = sessionViewModel
                     )

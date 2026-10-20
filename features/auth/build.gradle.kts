@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt)
 }
 
 android {
@@ -28,11 +30,14 @@ android {
 
 dependencies {
     implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.compose.foundation.layout)
     implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.material.icons.extended)
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.ui.graphics)
     implementation(libs.play.services.cast)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
@@ -40,6 +45,8 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
 
     implementation(project(":core:domain"))
+    implementation(project(":core:ui"))
+
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.11.0")
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.core.ktx)
@@ -47,4 +54,9 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.junit)
+
+    // La feature solo necesita Hilt para anotar sus ViewModels (@HiltViewModel).
+    // Quién construye los casos de uso que recibe es problema de otras capas.
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
 }
