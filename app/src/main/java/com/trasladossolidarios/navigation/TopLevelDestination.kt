@@ -38,8 +38,8 @@ enum class TopLevelDestination(
     val icon: ImageVector,
     val selectIcon: ImageVector
 ) {
-    PROFILE(InicioDestination, R.string.tab_inicio, Icons.Outlined.Home, Icons.Filled.Home),
-    DISPONIBLES(DisponiblesDestination, R.string.tab_disponibles, Icons.Outlined.Search, Icons.Filled.Search),
-    MIS_TRASLADOS(MisTrasladosDestination, R.string.tab_mis_traslados, Icons.Outlined.DateRange, Icons.Filled.DateRange),
-    PERFIL(ProfileDestination, R.string.tab_perfil, Icons.Outlined.Person, Icons.Filled.Person)
+    HOME(HomeDestination, R.string.tab_inicio, Icons.Outlined.Home, Icons.Filled.Home),
+    OPENRIDES(OpenRidesDestination, R.string.tab_disponibles, Icons.Outlined.Search, Icons.Filled.Search),
+    MYRIDES(MyRidesDestination, R.string.tab_mis_traslados, Icons.Outlined.DateRange, Icons.Filled.DateRange),
+    PROFILE(ProfileDestination, R.string.tab_perfil, Icons.Outlined.Person, Icons.Filled.Person)
 }

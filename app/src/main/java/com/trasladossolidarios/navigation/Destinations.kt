@@ -11,8 +11,11 @@ import kotlinx.serialization.Serializable
 data object ProfileDestination : NavKey{
 }
 
-@Serializable data object InicioDestination : NavKey
+@Serializable
+data object HomeDestination : NavKey
 
-@Serializable data object DisponiblesDestination : NavKey
+@Serializable
+data object OpenRidesDestination : NavKey
 
-@Serializable data object MisTrasladosDestination : NavKey
+@Serializable
+data object MyRidesDestination : NavKey

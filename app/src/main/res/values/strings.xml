@@ -8,4 +8,10 @@
     <string name="tab_mis_traslados">Mis Traslados</string>
     <string name="tab_perfil">Perfil</string>
 
+    <!-- Placeholders de prueba -->
+    <string name="home_placeholder">Pantalla de Inicio</string>
+    <string name="profile_placeholder">Pantalla de Perfil</string>
+    <string name="my_rides_placeholder">Pantalla de Mis Traslados</string>
+    <string name="open_rides_placeholder">Pantalla de Traslados Disponibles</string>
+
 </resources>
