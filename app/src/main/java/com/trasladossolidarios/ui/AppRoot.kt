@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import com.trasladossolidarios.auth.AuthViewModel
 import com.trasladossolidarios.login.SessionState
 import com.trasladossolidarios.login.SessionViewModel
-import com.trasladossolidarios.login.LoginScreen
+import com.trasladossolidarios.login.LoginScrennRoute
 
 @Composable
 fun AppRoot(
@@ -31,7 +31,7 @@ fun AppRoot(
         }
 
         SessionState.Unauthenticated -> {
-            LoginScreen(
+            LoginScrennRoute(
                 viewModel = authViewModel
             )
         }
