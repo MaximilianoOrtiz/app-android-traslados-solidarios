@@ -7,5 +7,4 @@ import dagger.hilt.android.HiltAndroidApp
 @HiltAndroidApp
 class ComposeTrasladosSolidariosApp : Application() {
 
-   // val container: AppContainer by lazy { AppContainer() }
 }
