@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,6 +19,7 @@ import com.trasladossolidarios.navigation.AppNavDisplay
 import com.trasladossolidarios.navigation.NavigationState
 import com.trasladossolidarios.navigation.TopLevelDestination
 import com.trasladossolidarios.navigation.rememberNavigationState
+import com.trasladossolidarios.ui.theme.AppTheme
 
 
 /** Estructura general de la app: bottom bar + NavDisplay. Cada pantalla tiene su propio Scaffold adentro. */
@@ -56,7 +58,10 @@ fun AppShell(
 
 @Composable
 fun AppBottomBar(selected: TopLevelDestination, onSelect: (TopLevelDestination) -> Unit) {
-    NavigationBar {
+    val colors = AppTheme.colors
+    NavigationBar (
+
+    ){
         TopLevelDestination.entries.forEach { tab ->
             val isSelected = tab == selected
             NavigationBarItem(
@@ -69,6 +74,7 @@ fun AppBottomBar(selected: TopLevelDestination, onSelect: (TopLevelDestination) 
                     )
                 },
                 label = { Text(stringResource(tab.labelRes))},
+
             )
         }
     }

@@ -7,4 +7,33 @@
     <string name="auth_error_invalid_credentials">Email o contraseña incorrectos</string>
     <string name="auth_error_network">Sin conexión a internet</string>
     <string name="auth_error_unknown">Ocurrió un error inesperado</string>
+
+    <!-- Encabezado -->
+    <string name="name_app">Huella</string>
+    <string name="login_header_subtitle">Conectamos personas para ayudar a animales.</string>
+
+    <!-- Bienvenida -->
+    <string name="login_welcome_title">Bienvenido/a a Huella</string>
+    <string name="register_welcome_title">Unite a Huella</string>
+    <string name="login_subtitle">Iniciá sesión para ver los traslados cerca tuyo.</string>
+    <string name="register_subtitle">Creá tu cuenta y ayudá a los animales.</string>
+
+    <!-- Campos del formulario -->
+    <string name="field_name">Nombre</string>
+    <string name="field_surname">Apellido</string>
+    <string name="field_email">Email</string>
+    <string name="field_password">Contraseña</string>
+
+    <!-- Acciones de autenticación -->
+    <string name="forgot_password">¿Olvidaste tu contraseña?</string>
+    <string name="login_button">Iniciar sesión</string>
+    <string name="register_button">Crear cuenta</string>
+    <string name="separator_or">o</string>
+    <string name="login_toggle_register">Crear una cuenta nueva</string>
+    <string name="register_toggle_login">Ya tengo una cuenta</string>
+
+    <!-- Términos y privacidad -->
+    <string name="login_legal_notice">Al usar Huella aceptás nuestros Términos de uso y Política de privacidad.</string>
+    <string name="terms_of_use">Términos de uso</string>
+    <string name="privacy_policy">Política de privacidad</string>
 </resources>

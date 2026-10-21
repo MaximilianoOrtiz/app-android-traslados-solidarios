@@ -1,4 +1,4 @@
-package components
+package com.trasladossolidarios.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -18,6 +18,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import com.trasladossolidarios.ui.theme.AppTheme
 
 @Composable
 fun AppTextField(
@@ -27,22 +28,28 @@ fun AppTextField(
     keyboardType: KeyboardType = KeyboardType.Text,
     isPassword: Boolean = false
 ) {
-    val headerColor = Color(0xFF009688)
-    Column {
+    val colors = AppTheme.colors
+    val spacing = AppTheme.spacing
+
+    Column(
+        modifier = Modifier.fillMaxWidth()
+    ) {
         Text(
             text = label,
-            style = MaterialTheme.typography.labelMedium,
-            color = Color(0xFF424242)
+            style = AppTheme.typography.labelMedium,
+            color = colors.onSurface
         )
 
-        Spacer(Modifier.height(6.dp))
+        Spacer(
+            modifier = Modifier.height(spacing.xs + spacing.xs / 2)
+        )
 
         OutlinedTextField(
             value = value,
             onValueChange = onValueChange,
             modifier = Modifier.fillMaxWidth(),
             singleLine = true,
-            shape = RoundedCornerShape(13.dp),
+            shape = AppTheme.shapes.medium,
             visualTransformation = if (isPassword) {
                 PasswordVisualTransformation()
             } else {
@@ -57,11 +64,18 @@ fun AppTextField(
                 imeAction = ImeAction.Next
             ),
             colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = headerColor,
-                cursorColor = headerColor,
-                focusedLabelColor = headerColor
+                focusedBorderColor = colors.primary,
+                unfocusedBorderColor = colors.outline,
+                focusedTextColor = colors.onSurface,
+                unfocusedTextColor = colors.onSurface,
+                cursorColor = colors.primary,
+                focusedLabelColor = colors.primary,
+                unfocusedLabelColor = colors.onSurfaceVariant
             ),
             label = null
         )
     }
 }
+
+
+

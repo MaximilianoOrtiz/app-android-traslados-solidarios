@@ -20,7 +20,6 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -30,7 +29,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
@@ -40,9 +39,11 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.trasladossolidarios.auth.AuthMode
 import com.trasladossolidarios.auth.AuthUiState
 import com.trasladossolidarios.auth.AuthViewModel
+import com.trasladossolidarios.auth.R
 import com.trasladossolidarios.ui.theme.ApMobileTP2Theme
-import components.AppTextField
-import components.PrimaryButton
+import com.trasladossolidarios.components.AppTextField
+import com.trasladossolidarios.components.PrimaryButton
+import com.trasladossolidarios.ui.theme.AppTheme
 
 @Composable
 fun LoginScrennRoute(
@@ -65,8 +66,8 @@ fun LoginScrennRoute(
     )
 }
 
-
 @OptIn(ExperimentalMaterial3Api::class)
+
 @Composable
 fun LoginScreen(
     state: AuthUiState,
@@ -80,9 +81,14 @@ fun LoginScreen(
     modifier: Modifier = Modifier
 ) {
     val isRegisterMode = state.mode == AuthMode.REGISTER
+    val colors = AppTheme.colors
+    val spacing = AppTheme.spacing
+    val typography = AppTheme.typography
+    val shapes = AppTheme.shapes
 
     Scaffold(
         modifier = modifier,
+        containerColor = colors.background,
         topBar = {
             TopAppBar(
                 title = {
@@ -95,23 +101,24 @@ fun LoginScreen(
                             contentDescription = null,
                             modifier = Modifier.size(30.dp)
                         )
-
+                        Spacer(Modifier.height(spacing.md))
                         Text(
-                            text = "Huella",
-                            style = MaterialTheme.typography.headlineLarge,
+                            text = stringResource(R.string.name_app),
+                            style = AppTheme.typography.headlineMedium,
                             fontWeight = FontWeight.Bold
                         )
-
+                        Spacer(Modifier.height(spacing.md))
                         Text(
-                            text = "Conectamos personas para ayudar a animales.",
-                            style = MaterialTheme.typography.bodyMedium
+                            text = stringResource(R.string.login_header_subtitle),
+                            style = AppTheme.typography.bodyMedium,
+                            textAlign = TextAlign.Center
                         )
                     }
                 },
                 expandedHeight = 175.dp,
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color(0xFF009688),
-                    titleContentColor = Color.White
+                    containerColor = AppTheme.colors.primary,
+                    titleContentColor = AppTheme.colors.onPrimary
                 )
             )
         }
@@ -121,69 +128,74 @@ fun LoginScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-                .verticalScroll(rememberScrollState())
                 .imePadding()
-                .padding(horizontal = 24.dp, vertical = 20.dp),
+                .verticalScroll(rememberScrollState())
+                .padding(
+                    horizontal = spacing.lg,
+                    vertical = spacing.md
+                ),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = if (isRegisterMode) {
-                    "Unite a Huella"
-                } else {
-                    "Bienvenido/a a Huella"
-                },
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.SemiBold,
-                color = Color(0xFF171717)
+                text = stringResource(
+                    if (isRegisterMode) {
+                        R.string.register_welcome_title
+                    } else {
+                        R.string.login_welcome_title
+                    }
+                ),
+                style = typography.titleLarge,
+                color = colors.onBackground
             )
 
-            Spacer(Modifier.height(4.dp))
+            Spacer(Modifier.height(spacing.xs))
 
             Text(
-                text = if (isRegisterMode) {
-                    "Creá tu cuenta y ayudá a los animales."
-                } else {
-                    "Iniciá sesión para ver los traslados cerca tuyo."
-                },
-                style = MaterialTheme.typography.bodyMedium,
-                color = Color(0xFF777777)
+                text = stringResource(
+                    if (isRegisterMode) {
+                        R.string.register_subtitle
+                    } else {
+                        R.string.login_subtitle
+                    }
+                ),
+                style = typography.bodyMedium,
+                color = colors.onSurfaceVariant,
+                textAlign = TextAlign.Center
             )
 
-            Spacer(Modifier.height(22.dp))
+            Spacer(Modifier.height(spacing.lg))
 
             if (isRegisterMode) {
                 AppTextField(
                     value = state.name,
                     onValueChange = onNameChange,
-                    label = "Nombre",
-                    )
+                    label = stringResource(R.string.field_name)
+                )
 
-
-                Spacer(Modifier.height(14.dp))
+                Spacer(Modifier.height(spacing.sm + spacing.xs + spacing.xs))
 
                 AppTextField(
                     value = state.surname,
                     onValueChange = onSurnameChange,
-                    label = "Apellido",
+                    label = stringResource(R.string.field_surname)
+                )
 
-                    )
-
-                Spacer(Modifier.height(14.dp))
+                Spacer(Modifier.height(spacing.sm + spacing.xs + spacing.xs))
             }
 
             AppTextField(
                 value = state.email,
                 onValueChange = onEmailChange,
-                label = "Email",
+                label = stringResource(R.string.field_email),
                 keyboardType = KeyboardType.Email
             )
 
-            Spacer(Modifier.height(14.dp))
+            Spacer(Modifier.height(spacing.sm + spacing.xs + spacing.xs))
 
             AppTextField(
                 value = state.password,
                 onValueChange = onPasswordChange,
-                label = "Contraseña",
+                label = stringResource(R.string.field_password),
                 isPassword = true
             )
 
@@ -191,35 +203,37 @@ fun LoginScreen(
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 12.dp),
+                        .padding(top = spacing.sm + spacing.xs),
                     contentAlignment = Alignment.CenterEnd
                 ) {
                     Text(
-                        text = "¿Olvidaste tu contraseña?",
-                        color = Color(0xFF009688),
-                        style = MaterialTheme.typography.bodyMedium
+                        text = stringResource(R.string.forgot_password),
+                        color = colors.primary,
+                        style = typography.bodyMedium
                     )
                 }
             }
 
             state.error?.let { message ->
-                Spacer(Modifier.height(12.dp))
+                Spacer(Modifier.height(spacing.sm + spacing.xs))
 
                 Text(
                     text = message,
-                    color = MaterialTheme.colorScheme.error,
-                    style = MaterialTheme.typography.bodyMedium
+                    color = colors.error,
+                    style = typography.bodyMedium
                 )
             }
 
-            Spacer(Modifier.height(20.dp))
+            Spacer(Modifier.height(spacing.lg - spacing.xs))
 
             PrimaryButton(
-                text = if (isRegisterMode) {
-                    "Crear cuenta"
-                } else {
-                    "Iniciar sesión"
-                },
+                text = stringResource(
+                    if (isRegisterMode) {
+                        R.string.register_button
+                    } else {
+                        R.string.login_button
+                    }
+                ),
                 onClick = {
                     if (isRegisterMode) {
                         onRegisterClick()
@@ -230,7 +244,7 @@ fun LoginScreen(
                 isLoading = state.isLoading
             )
 
-            Spacer(Modifier.height(18.dp))
+            Spacer(Modifier.height(spacing.md + spacing.xs / 2))
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -238,22 +252,22 @@ fun LoginScreen(
             ) {
                 HorizontalDivider(
                     modifier = Modifier.weight(1f),
-                    color = Color(0xFFE0E0E0)
+                    color = colors.outlineVariant
                 )
 
                 Text(
-                    text = "  o  ",
-                    color = Color(0xFF888888),
-                    style = MaterialTheme.typography.bodySmall
+                    text = "  ${stringResource(R.string.separator_or)}  ",
+                    color = colors.onSurfaceVariant,
+                    style = typography.bodySmall
                 )
 
                 HorizontalDivider(
                     modifier = Modifier.weight(1f),
-                    color = Color(0xFFE0E0E0)
+                    color = colors.outlineVariant
                 )
             }
 
-            Spacer(Modifier.height(14.dp))
+            Spacer(Modifier.height(spacing.sm + spacing.xs + spacing.xs))
 
             OutlinedButton(
                 onClick = onToggleAuthMode,
@@ -261,31 +275,34 @@ fun LoginScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp),
-                shape = RoundedCornerShape(28.dp),
+                shape = shapes.extraLarge,
                 border = BorderStroke(
                     width = 1.dp,
-                    color = Color.Transparent
+                    color = colors.outlineVariant
                 ),
                 colors = ButtonDefaults.outlinedButtonColors(
-                    containerColor = Color(0xFFEFFFFB),
-                    contentColor = Color(0xFF00796B)
+                    containerColor = colors.secondaryContainer,
+                    contentColor = colors.onSecondaryContainer
                 )
             ) {
                 Text(
-                    text = if (isRegisterMode) {
-                        "Ya tengo una cuenta"
-                    } else {
-                        "Crear una cuenta nueva"
-                    }
+                    text = stringResource(
+                        if (isRegisterMode) {
+                            R.string.register_toggle_login
+                        } else {
+                            R.string.login_toggle_register
+                        }
+                    ),
+                    style = typography.labelLarge
                 )
             }
 
-            Spacer(Modifier.height(26.dp))
+            Spacer(Modifier.height(spacing.lg))
 
             Text(
-                text = "Al usar Huella aceptás nuestros Términos de uso y Política de privacidad.",
-                style = MaterialTheme.typography.bodySmall,
-                color = Color(0xFF999999),
+                text = stringResource(R.string.login_legal_notice),
+                style = typography.bodySmall,
+                color = colors.onSurfaceVariant,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth()
             )
@@ -293,10 +310,12 @@ fun LoginScreen(
     }
 }
 
+
+
 @Preview(
     name = "Login",
     showBackground = true,
-    showSystemUi = true
+    showSystemUi = true,
 )
 @Composable
 private fun LoginScreenPreview() {

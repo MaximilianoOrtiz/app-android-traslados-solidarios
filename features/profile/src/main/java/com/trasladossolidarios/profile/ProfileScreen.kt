@@ -15,6 +15,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.trasladossolidarios.ui.theme.AppTheme
 
 @Composable
 fun ProfileRouter(
@@ -46,8 +47,8 @@ fun TestScreen(
                     )
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer,
-                    titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer
+                    containerColor =  AppTheme.colors.primary,
+                    titleContentColor = AppTheme.colors.onPrimary
                 )
             )
         }

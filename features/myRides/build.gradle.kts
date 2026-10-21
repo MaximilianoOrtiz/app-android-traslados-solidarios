@@ -40,6 +40,7 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
 
     implementation(project(":core:domain"))
+    implementation(project(":core:ui"))
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.11.0")
 
     implementation(libs.androidx.appcompat)
