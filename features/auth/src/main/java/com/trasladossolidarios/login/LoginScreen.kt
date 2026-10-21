@@ -1,9 +1,6 @@
 package com.trasladossolidarios.login
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,23 +13,17 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Pets
-import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -40,13 +31,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -55,10 +41,8 @@ import com.trasladossolidarios.auth.AuthMode
 import com.trasladossolidarios.auth.AuthUiState
 import com.trasladossolidarios.auth.AuthViewModel
 import com.trasladossolidarios.ui.theme.ApMobileTP2Theme
-import components.LoadingContent
+import components.AppTextField
 import components.PrimaryButton
-
-
 
 @Composable
 fun LoginScrennRoute(
@@ -81,7 +65,7 @@ fun LoginScrennRoute(
     )
 }
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(
@@ -168,16 +152,16 @@ fun LoginScreen(
             Spacer(Modifier.height(22.dp))
 
             if (isRegisterMode) {
-                AuthTextField(
+                AppTextField(
                     value = state.name,
                     onValueChange = onNameChange,
                     label = "Nombre",
-
                     )
+
 
                 Spacer(Modifier.height(14.dp))
 
-                AuthTextField(
+                AppTextField(
                     value = state.surname,
                     onValueChange = onSurnameChange,
                     label = "Apellido",
@@ -187,7 +171,7 @@ fun LoginScreen(
                 Spacer(Modifier.height(14.dp))
             }
 
-            AuthTextField(
+            AppTextField(
                 value = state.email,
                 onValueChange = onEmailChange,
                 label = "Email",
@@ -196,7 +180,7 @@ fun LoginScreen(
 
             Spacer(Modifier.height(14.dp))
 
-            AuthTextField(
+            AppTextField(
                 value = state.password,
                 onValueChange = onPasswordChange,
                 label = "Contraseña",
@@ -308,54 +292,6 @@ fun LoginScreen(
         }
     }
 }
-
-@Composable
-private fun AuthTextField(
-    value: String,
-    onValueChange: (String) -> Unit,
-    label: String,
-    keyboardType: KeyboardType = KeyboardType.Text,
-    isPassword: Boolean = false
-) {
-    val headerColor = Color(0xFF009688)
-    Column {
-        Text(
-            text = label,
-            style = MaterialTheme.typography.labelMedium,
-            color = Color(0xFF424242)
-        )
-
-        Spacer(Modifier.height(6.dp))
-
-        OutlinedTextField(
-            value = value,
-            onValueChange = onValueChange,
-            modifier = Modifier.fillMaxWidth(),
-            singleLine = true,
-            shape = RoundedCornerShape(13.dp),
-            visualTransformation = if (isPassword) {
-                PasswordVisualTransformation()
-            } else {
-                VisualTransformation.None
-            },
-            keyboardOptions = KeyboardOptions(
-                keyboardType = if (isPassword) {
-                    KeyboardType.Password
-                } else {
-                    keyboardType
-                },
-                imeAction = ImeAction.Next
-            ),
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = headerColor,
-                cursorColor = headerColor,
-                focusedLabelColor = headerColor
-            ),
-            label = null
-        )
-    }
-}
-
 
 @Preview(
     name = "Login",

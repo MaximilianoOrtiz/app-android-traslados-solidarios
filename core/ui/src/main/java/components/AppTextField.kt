@@ -20,7 +20,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 
 @Composable
-private fun AppTextField(
+fun AppTextField(
     value: String,
     onValueChange: (String) -> Unit,
     label: String,
