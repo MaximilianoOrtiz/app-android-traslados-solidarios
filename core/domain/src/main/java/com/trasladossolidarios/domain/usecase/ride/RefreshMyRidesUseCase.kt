@@ -1,4 +1,4 @@
-package com.trasladossolidarios.domain.usecase
+package com.trasladossolidarios.domain.usecase.ride
 
 import com.trasladossolidarios.domain.common.AppResult
 import com.trasladossolidarios.domain.repository.RidesRepository

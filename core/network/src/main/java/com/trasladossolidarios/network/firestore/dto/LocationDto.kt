@@ -1,4 +1,4 @@
-package com.trasladossolidarios.network.dto
+package com.trasladossolidarios.network.firestore.dto
 
 data class LocationDto (
     val latitude: Double? = null,
