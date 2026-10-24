@@ -2,7 +2,9 @@ package com.trasladossolidarios.data.di
 
 import com.google.firebase.auth.FirebaseAuth
 import com.trasladossolidarios.data.repository.FirebaseAuthRepositoryImpl
+import com.trasladossolidarios.data.repository.UserRepositoryImpl
 import com.trasladossolidarios.domain.repository.FirebaseAuthRepository
+import com.trasladossolidarios.domain.repository.UserRepository
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -18,8 +20,11 @@ abstract class DataModule {
     @Singleton
     abstract fun bindFirebaseAuthRepository(impl: FirebaseAuthRepositoryImpl): FirebaseAuthRepository
 
-    companion object {
+    @Binds
+    @Singleton
+    abstract fun bindUserRepository(impl: UserRepositoryImpl): UserRepository
 
+    companion object {
         @Provides
         @Singleton
         fun provideFirebaseAuth(): FirebaseAuth {
