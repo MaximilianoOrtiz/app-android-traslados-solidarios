@@ -11,7 +11,7 @@ data class Ride(
     val origin: Location,
     val destination: Location,
     val notes: String,
-    val acceptedVolunteerId: String?,
+    val acceptedApplicantId: String?,
     val dateOfTransfer: Instant,
     val volunteers: List<Volunteer> = emptyList(),
 )

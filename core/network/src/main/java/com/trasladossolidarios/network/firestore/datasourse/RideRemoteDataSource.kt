@@ -10,6 +10,7 @@ import javax.inject.Inject
 class RideRemoteDataSource @Inject constructor(
     private val firestore: FirebaseFirestore,
 ) {
+    /*
     suspend fun fetchByRequester(userId: String): NetworkResult<List<RideDto>> =
         try {
             val snapshot = firestore.collection(COLLECTION)
@@ -38,4 +39,6 @@ class RideRemoteDataSource @Inject constructor(
     private companion object {
         const val COLLECTION = "Rides"
     }
+    */
+
 }
