@@ -1,20 +1,17 @@
 package com.trasladossolidarios.domain.model
 
+import com.trasladossolidarios.domain.enum.RideStatus
 import java.time.Instant
 
-
-data class Ride (
+data class Ride(
     val id: String,
-    val userId: String,
-    val pet: Pet,
-
+    val ownerId: String,
     val status: RideStatus,
-    val imageUrl: String?,
-    val volunteerId: String? = null,
-    val dateTime: Instant,
-    val specialNotes: String,
-
-    //Puntos Geográficos
+    val animal: Animal,
     val origin: Location,
     val destination: Location,
+    val notes: String,
+    val acceptedVolunteerId: String?,
+    val dateOfTransfer: Instant,
+    val volunteers: List<Volunteer> = emptyList(),
 )
