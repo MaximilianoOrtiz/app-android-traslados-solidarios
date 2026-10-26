@@ -25,6 +25,7 @@ import com.trasladossolidarios.ui.theme.AppTheme
 /** Estructura general de la app: bottom bar + NavDisplay. Cada pantalla tiene su propio Scaffold adentro. */
 @Composable
 fun AppShell(
+    currentUserId: String,
     navigationState: NavigationState = rememberNavigationState()
 ) {
     Scaffold(
@@ -51,7 +52,8 @@ fun AppShell(
             // así las pantallas no vuelven a sumarlo.
             modifier = Modifier
                 .padding(innerPadding)
-                .consumeWindowInsets(innerPadding)
+                .consumeWindowInsets(innerPadding),
+            currentUserId
         )
     }
 }
