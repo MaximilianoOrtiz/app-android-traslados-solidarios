@@ -1,8 +1,8 @@
-package com.trasladossolidarios.network.remote
+package com.trasladossolidarios.network.firestore.datasourse
 
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
-import com.trasladossolidarios.network.dto.RideDto
+import com.trasladossolidarios.network.firestore.dto.RideDto
 import com.trasladossolidarios.network.result.NetworkResult
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject

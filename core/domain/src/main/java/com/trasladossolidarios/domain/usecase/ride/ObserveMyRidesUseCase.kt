@@ -1,4 +1,4 @@
-package com.trasladossolidarios.domain.usecase
+package com.trasladossolidarios.domain.usecase.ride
 
 import com.trasladossolidarios.domain.model.Ride
 import com.trasladossolidarios.domain.model.RideStatus

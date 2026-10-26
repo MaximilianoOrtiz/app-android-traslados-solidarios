@@ -55,7 +55,9 @@ class FirebaseAuthRepositoryImpl @Inject constructor(
 
     //mapea un objeto de la Firebase a User y asi ninguna otra capa conoce a Firebase
     private fun FirebaseUser.toDomain() = User(
-        id = uid,
+        uid = uid,
+        firstName = "",
+        lastName = "",
         email = email.orEmpty()
     )
 

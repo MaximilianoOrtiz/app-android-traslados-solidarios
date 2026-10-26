@@ -83,8 +83,11 @@ class AuthViewModel @Inject constructor(
     fun register() {
         authenticate {
             registerUser(
+                _uiState.value.name,
+                _uiState.value.surname,
                 _uiState.value.email.trim(),
                 _uiState.value.password
+
             )
         }
     }
