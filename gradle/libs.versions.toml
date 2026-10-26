@@ -34,6 +34,7 @@ lifecycleRuntimeCompose = "2.11.0"
 firebaseFirestoreKtx = "27.1.0"
 transportRuntime = "5.0.0"
 media3CommonKtx = "1.11.1"
+playServicesCastTv = "21.1.1"
 
 
 [libraries]
@@ -80,6 +81,7 @@ androidx-lifecycle-runtime-compose = { group = "androidx.lifecycle", name = "lif
 firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx", version.ref = "firebaseFirestoreKtx" }
 transport-runtime = { group = "com.google.android.datatransport", name = "transport-runtime", version.ref = "transportRuntime" }
 androidx-media3-common-ktx = { group = "androidx.media3", name = "media3-common-ktx", version.ref = "media3CommonKtx" }
+play-services-cast-tv = { group = "com.google.android.gms", name = "play-services-cast-tv", version.ref = "playServicesCastTv" }
 
 
 

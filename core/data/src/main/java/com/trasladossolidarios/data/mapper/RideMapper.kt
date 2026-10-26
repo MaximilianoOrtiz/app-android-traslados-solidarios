@@ -9,7 +9,7 @@ fun RideDto.toDomain(id: String): Ride =
     Ride(
         id = id,
         ownerId = ownerId,
-        status = status.toRideStatus(),
+        status = runCatching { RideStatus.valueOf(status)}.getOrDefault(RideStatus.OPEN),
         animal = animal.toDomain(),
         origin = origin.toDomain(),
         destination = destination.toDomain(),

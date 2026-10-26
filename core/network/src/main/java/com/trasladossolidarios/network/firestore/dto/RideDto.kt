@@ -4,7 +4,7 @@ import com.google.firebase.Timestamp
 
 data class RideDto(
     val ownerId: String = "",
-    val status: String = "OPEN",
+    val status: String = "",
     val animal: AnimalDto = AnimalDto(),
     val origin: LocationDto = LocationDto(),
     val destination: LocationDto = LocationDto(),
