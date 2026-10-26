@@ -1,7 +1,7 @@
 package com.trasladossolidarios.domain.usecase.ride
 
 import com.trasladossolidarios.domain.model.Ride
-import com.trasladossolidarios.domain.model.RideStatus
+import com.trasladossolidarios.domain.enum.RideStatus
 import com.trasladossolidarios.domain.repository.RidesRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -15,7 +15,7 @@ class ObserveMyRidesUseCase @Inject constructor(
             rides.sortedWith(
                 compareBy<Ride> {
                     it.status == RideStatus.COMPLETED || it.status == RideStatus.CANCELLED
-                }.thenBy { it.dateTime }
+                }.thenBy { it.dateOfTransfer }
             )
         }
 }

@@ -37,7 +37,9 @@ fun AppRoot(
         }
 
         is SessionState.Authenticated -> {
-            AppShell()
+            AppShell(
+                currentUserId = (session as SessionState.Authenticated).user.uid
+            )
         }
     }
 }

@@ -1,19 +1,15 @@
 package com.trasladossolidarios.network.firestore.dto
 
-import java.util.Date
+import com.google.firebase.Timestamp
 
-data class RideDto (
-    val id: String = "",
-    val userId: String = "",
-    val pet: PetDto = PetDto(),
-
-    val status: String = "",
-    val imageUrl: String?,
-    val volunteerId: String? = null,
-    val dateTime: Date? = null,
-    val specialNotes: String = "",
-
-    //Puntos Geográficos
+data class RideDto(
+    val ownerId: String = "",
+    val status: String = "OPEN",
+    val animal: AnimalDto = AnimalDto(),
     val origin: LocationDto = LocationDto(),
     val destination: LocationDto = LocationDto(),
+    val notes: String = "",
+    val acceptedApplicantId: String? = null,
+    val dateOfTransfer: Timestamp? = null,
+    val volunteers: Map<String, VolunteerDto> = emptyMap(),
 )

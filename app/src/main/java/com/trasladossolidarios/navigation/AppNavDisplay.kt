@@ -19,6 +19,7 @@ import com.trasladossolidarios.openrides.OpenRidesViewModel
 
 import com.trasladossolidarios.profile.ProfileRouter
 import com.trasladossolidarios.profile.ProfileViewModel
+import kotlin.String
 
 /**
  * La navegación vive en :app. Las features no se conocen entre sí:
@@ -27,7 +28,8 @@ import com.trasladossolidarios.profile.ProfileViewModel
 @Composable
 fun AppNavDisplay(
     navigationState: NavigationState,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    currentUserId: String,
 ) {
     // entryProvider: "para esta key, mostrá esta pantalla". La key llega ya tipada:
     val entryProvider = entryProvider<NavKey> {
