@@ -24,7 +24,7 @@ android {
 }
 
 dependencies {
-    // Componentes runtime y anotaciones de Room (@Entity, @Dao, @Database)
+    // Componentes runtime y anotaciones de Room (@Entity, @Database)
     implementation("androidx.room:room-runtime:2.8.5")
 
     // Soporte para Corrutinas y Flow con Kotlin (room-ktx)

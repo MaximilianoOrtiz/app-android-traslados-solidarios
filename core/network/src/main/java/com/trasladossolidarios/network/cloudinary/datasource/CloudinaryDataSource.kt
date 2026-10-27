@@ -16,7 +16,7 @@ import kotlin.coroutines.resumeWithException
 class CloudinaryDataSource @Inject constructor(
     @ApplicationContext private val context: Context
 ){
-    suspend fun unploadImage(fileUri: Uri): String = suspendCancellableCoroutine { continuation ->
+    suspend fun uploadImage(fileUri: Uri): String = suspendCancellableCoroutine { continuation ->
         MediaManager.get().upload(fileUri)
             .unsigned("_present")
             .callback(object: UploadCallback {
@@ -27,14 +27,14 @@ class CloudinaryDataSource @Inject constructor(
                     if (url != null) {
                         continuation.resume(url)
                     } else {
-                        continuation.resumeWithException(Exception("URL no encontrada en respuesta"))
+                        continuation.resumeWithException(Exception("URL no encontrada en respuesta")) //fix
                     }
                 }
                 override fun onError(requestId:String, error: ErrorInfo) {
                     continuation.resumeWithException(Exception(error.description))
                 }
                 override fun onReschedule(requestId: String, error: ErrorInfo) {
-                    continuation.resumeWithException(Exception("Subida reprogramada"))
+                    continuation.resumeWithException(Exception("Subida reprogramada")) //fix
                 }
             })
     }

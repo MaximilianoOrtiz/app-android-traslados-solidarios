@@ -12,4 +12,6 @@
     <string name="ride_card_status_unknown">Sin estado</string>
     <string name="ride_card_date_today">Hoy</string>
     <string name="ride_card_date_tomorrow">Mañana</string>
+
+    <string name="ride_card_address_fallback">Sin Dirección</string>
 </resources>

@@ -111,13 +111,13 @@ fun RideCard(
 
                 LocationLine(
                     icon = Icons.Outlined.TripOrigin,
-                    address = ride.origin.address,
+                    address = ride.origin.address ?: stringResource(R.string.ride_card_address_fallback),
                     tint = AppTheme.colors.primary
                 )
 
                 LocationLine(
                     icon = Icons.Outlined.LocationOn,
-                    address = ride.destination.address,
+                    address = ride.destination.address ?: stringResource(R.string.ride_card_address_fallback),
                     tint = AppTheme.colors.secondary
                 )
 

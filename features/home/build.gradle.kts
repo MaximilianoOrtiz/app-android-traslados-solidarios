@@ -42,6 +42,10 @@ dependencies {
     implementation(project(":core:domain"))
     implementation(project(":core:ui"))
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.11.0")
+    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
+    implementation("androidx.compose.material:material-icons-core")
+    implementation("androidx.compose.material:material-icons-extended")
+
 
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.compose.runtime)

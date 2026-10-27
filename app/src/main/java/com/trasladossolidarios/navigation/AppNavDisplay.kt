@@ -10,6 +10,8 @@ import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberDecoratedNavEntries
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
+import com.trasladossolidarios.createride.CreateRideRouter
+import com.trasladossolidarios.createride.CreateRideViewModel
 import com.trasladossolidarios.home.HomeRouter
 import com.trasladossolidarios.home.HomeViewModel
 import com.trasladossolidarios.myrides.MyRidesRouter
@@ -44,7 +46,19 @@ fun AppNavDisplay(
         entry<HomeDestination> {
             val homeViewModel: HomeViewModel = hiltViewModel()
             HomeRouter(
-                homeViewModel
+                viewModel = homeViewModel,
+                onNavigateToCreateRide = {
+                    navigationState.navigate(CreateRideDestination)
+                }
+            )
+        }
+
+        entry<CreateRideDestination> {
+            val createRideViewModel: CreateRideViewModel = hiltViewModel()
+            CreateRideRouter(
+                onBackClick = navigationState::goBack,
+                onRideCreatedSuccess = navigationState::goBack,
+                viewModel = createRideViewModel
             )
         }
 

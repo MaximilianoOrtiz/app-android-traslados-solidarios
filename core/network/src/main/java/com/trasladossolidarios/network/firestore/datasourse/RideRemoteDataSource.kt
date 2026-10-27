@@ -30,7 +30,7 @@ class RideRemoteDataSource @Inject constructor(
                 if (snapshot == null) {
                     close(
                         IllegalStateException(
-                            "Firestore devolvió una consulta vacía."
+                            "Firestore devolvió una consulta vacía." //fix
                         )
                     )
                     return@addSnapshotListener
@@ -50,6 +50,13 @@ class RideRemoteDataSource @Inject constructor(
         awaitClose {
             registration.remove()
         }
+    }
+
+    suspend fun createRide(rideDto: RideDto) {
+        val documentRef = firestore.collection("rides").document()
+        // Asignamos el ID autogenerado de Firestore al objeto antes de guardar
+        val finalDto = rideDto.copy(id = documentRef.id)
+        documentRef.set(finalDto).await()
     }
 
 

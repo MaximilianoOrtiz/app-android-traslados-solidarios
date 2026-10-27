@@ -2,12 +2,12 @@ package com.trasladossolidarios.data.repository
 
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.trasladossolidarios.data.mapper.toDomain
+import com.trasladossolidarios.data.mapper.toDto
 import com.trasladossolidarios.domain.common.AppResult
 import com.trasladossolidarios.domain.common.DomainError
 import com.trasladossolidarios.domain.model.Ride
 import com.trasladossolidarios.domain.repository.RidesRepository
 import com.trasladossolidarios.network.firestore.datasourse.RideRemoteDataSource
-import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
@@ -24,6 +24,10 @@ class RideRepositoryImpl @Inject constructor(
 
     override suspend fun refreshMyRides(userId: String): AppResult<Unit> {
         TODO("Not yet implemented")
+    }
+
+    override suspend fun createRide(ride: Ride) {
+        rideRemoteDataSource.createRide(ride.toDto())
     }
 
     override suspend fun observeAvailableRides(currentUserId: String): Flow<AppResult<List<Ride>>> {

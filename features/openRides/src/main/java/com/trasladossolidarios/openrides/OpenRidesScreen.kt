@@ -151,11 +151,11 @@ fun OpenRidesList(
         ) {
             items(
                 items = state.rides,
-                key = { ride -> ride.id }
+                key = { ride -> ride.id ?: ride.hashCode() }
             ) { ride ->
                 RideCard(
                     ride = ride,
-                    onClick = { onRideClick(ride.id) }
+                    onClick = { ride.id?.let { id -> onRideClick(id) }}
                 )
             }
         }

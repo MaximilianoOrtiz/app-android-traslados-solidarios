@@ -29,6 +29,7 @@ fun RideDto.toDomain(id: String): Ride =
 
 fun Ride.toDto(): RideDto =
     RideDto(
+        id = id ?: "",
         ownerId = ownerId,
         status = status.name,
         animal = animal.toDto(),

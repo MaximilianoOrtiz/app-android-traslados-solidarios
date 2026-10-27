@@ -14,5 +14,5 @@ fun Location.toDto(): LocationDto =
     LocationDto(
         latitude = latitude,
         longitude = longitude,
-        address = address,
+        address = address ?: "",
     )
