@@ -9,10 +9,12 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.CalendarToday
 import androidx.compose.material.icons.outlined.ChevronRight
@@ -33,11 +35,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
+import com.ui.R
 import com.trasladossolidarios.domain.enum.AnimalSpecies
 import com.trasladossolidarios.domain.enum.RideStatus
 import com.trasladossolidarios.domain.model.Animal
@@ -71,13 +75,18 @@ fun RideCard(
             .clickable(onClick = onClick),
         shape = AppTheme.shapes.large,
         colors = CardDefaults.cardColors(
-            containerColor = AppTheme.colors.background   // o el color que quieras
+            containerColor = AppTheme.colors.background
         ),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
-        Row(modifier = Modifier.padding(AppTheme.spacing.md)) {
-            AnimalPhoto(animal = ride.animal)
 
+        Row(modifier = Modifier.padding(AppTheme.spacing.xs)) {
+            AnimalPhoto(
+                animal = ride.animal,
+                modifier = Modifier
+                    .width(100.dp)
+                    .height(130.dp)
+            )
             Spacer(modifier = Modifier.width(AppTheme.spacing.md))
 
             Column(verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)) {
@@ -92,7 +101,7 @@ fun RideCard(
                     Spacer(modifier = Modifier.width(AppTheme.spacing.xs))
 
                     Text(
-                        text = ride.animal.name.ifBlank { "Animal sin nombre" },
+                        text = ride.animal.name.ifBlank { stringResource(R.string.ride_card_animal_name_fallback) },
                         style = AppTheme.typography.titleMedium,
                         fontWeight = FontWeight.SemiBold,
                         maxLines = 1,
@@ -137,7 +146,7 @@ fun RideCard(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = "Ver traslado",
+                        text = stringResource(R.string.ride_card_view_action),
                         style = AppTheme.typography.labelLarge,
                         fontWeight = FontWeight.SemiBold,
                         color = AppTheme.colors.primary
@@ -163,7 +172,14 @@ private fun AnimalPhoto(animal: Animal, modifier: Modifier = Modifier) {
                 color = AppTheme.colors.primaryContainer,
                 shape = AppTheme.shapes.medium
             )
-            .clip(AppTheme.shapes.medium),
+            .clip(
+                RoundedCornerShape(
+                    topStart = 16.dp,
+                    bottomStart = 0.dp,
+                    topEnd = 0.dp,
+                    bottomEnd = 0.dp
+                )
+            ),
         contentAlignment = Alignment.Center
     ) {
         Icon(
@@ -247,13 +263,16 @@ fun RideStatusChip(
     }
 }
 
-fun RideStatus.label(): String = when (this) {
-    RideStatus.OPEN -> "Buscando voluntario"
-    RideStatus.ASSIGNED -> "Voluntario asignado"
-    RideStatus.COMPLETED -> "Completado"
-    RideStatus.CANCELLED -> "Cancelado"
-    RideStatus.UNKNOWN -> "Sin estado"
-}
+@Composable
+fun RideStatus.label(): String = stringResource(
+    when (this) {
+        RideStatus.OPEN -> R.string.ride_card_status_open
+        RideStatus.ASSIGNED -> R.string.ride_card_status_assigned
+        RideStatus.COMPLETED -> R.string.ride_card_status_completed
+        RideStatus.CANCELLED -> R.string.ride_card_status_cancelled
+        RideStatus.UNKNOWN -> R.string.ride_card_status_unknown
+    }
+)
 
 @Composable
 fun RideStatus.containerColor(): Color = when (this) {
@@ -271,16 +290,19 @@ fun RideStatus.contentColor(): Color = when (this) {
     RideStatus.UNKNOWN -> Outline
 }
 
+@Composable
 fun formatTransferDateTime(
     instant: Instant,
     today: LocalDate = LocalDate.now(),
     zoneId: ZoneId = ZoneId.systemDefault()
 ): String {
+    val todayLabel = stringResource(R.string.ride_card_date_today)
+    val tomorrowLabel = stringResource(R.string.ride_card_date_tomorrow)
     val dateTime = instant.atZone(zoneId)
     val date = dateTime.toLocalDate()
     val dayLabel = when (date) {
-        today -> "Hoy"
-        today.plusDays(1) -> "Mañana"
+        today -> todayLabel
+        today.plusDays(1) -> tomorrowLabel
         else -> date.format(DateTimeFormatter.ofPattern("d MMM", Locale.getDefault()))
     }
     val time = dateTime.format(DateTimeFormatter.ofPattern("HH:mm", Locale.getDefault()))

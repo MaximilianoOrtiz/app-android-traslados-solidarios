@@ -2,4 +2,14 @@
 
 <resources>
     <string name="core_ui_retry">Reintentar</string>
+
+    <string name="ride_card_animal_name_fallback">Animal sin nombre</string>
+    <string name="ride_card_view_action">Ver traslado</string>
+    <string name="ride_card_status_open">Buscando voluntario</string>
+    <string name="ride_card_status_assigned">Voluntario asignado</string>
+    <string name="ride_card_status_completed">Completado</string>
+    <string name="ride_card_status_cancelled">Cancelado</string>
+    <string name="ride_card_status_unknown">Sin estado</string>
+    <string name="ride_card_date_today">Hoy</string>
+    <string name="ride_card_date_tomorrow">Mañana</string>
 </resources>

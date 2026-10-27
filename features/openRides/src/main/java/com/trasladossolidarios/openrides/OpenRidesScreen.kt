@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -23,10 +24,15 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.trasladossolidarios.components.RideCard
 import com.trasladossolidarios.ui.theme.AppTheme
+import com.trasladossolidarios.ui.theme.AppTheme.spacing
+import components.ErrorContent
+import components.LoadingContent
 
 @Composable
 fun OpenRidesRouter(
@@ -59,11 +65,23 @@ fun OpenRidesScreen(
         modifier = modifier,
         topBar = {
             TopAppBar(
+
                 title = {
-                    Text(
-                        text = "Traslados Disponibles",
-                        fontWeight = FontWeight.Bold
-                    )
+                    Column(
+                        modifier = Modifier.fillMaxWidth(),
+                    ){
+                        Text(
+                            text = stringResource(R.string.open_rides_title),
+                            style = AppTheme.typography.headlineMedium,
+                            fontWeight = FontWeight.Bold
+                        )
+                        Spacer(Modifier.height(spacing.xs))
+                        Text(
+                            text = stringResource(R.string.open_rides_subtitle),
+                            style = AppTheme.typography.bodyMedium,
+                            textAlign = TextAlign.Center
+                        )
+                    }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = AppTheme.colors.primary,
@@ -80,66 +98,65 @@ fun OpenRidesScreen(
                     modifier = contentModifier.fillMaxSize(),
                     contentAlignment = Alignment.Center
                 ) {
-                    CircularProgressIndicator()
+                    LoadingContent(stringResource(R.string.open_rides_loading))
                 }
             }
 
             is OpenRidesState.Error -> {
-                Column(
+                ErrorContent(
+                    title = stringResource(R.string.open_rides_error_title),
+                    message = state.error.toString(),
+                    onRetry = onRetry,
                     modifier = contentModifier
                         .fillMaxSize()
-                        .padding(AppTheme.spacing.lg),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    Text(
-                        text = "No pudimos cargar los traslados.",
-                        style = AppTheme.typography.titleMedium
-                    )
-
-                    Spacer(modifier = Modifier.height(AppTheme.spacing.sm))
-
-                    Text(text = state.error.toString())
-
-                    Spacer(modifier = Modifier.height(AppTheme.spacing.md))
-
-                    Button(onClick = onRetry) {
-                        Text("Reintentar")
-                    }
-                }
+                        .padding(AppTheme.spacing.lg)
+                )
             }
 
-            is OpenRidesState.Success -> {
-                if (state.rides.isEmpty()) {
-                    Box(
-                        modifier = contentModifier
-                            .fillMaxSize()
-                            .padding(AppTheme.spacing.lg),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(
-                            text = "No hay traslados disponibles por el momento.",
-                            style = AppTheme.typography.bodyLarge,
-                            color = AppTheme.colors.onSurfaceVariant
-                        )
-                    }
-                } else {
-                    LazyColumn(
-                        modifier = contentModifier.fillMaxSize(),
-                        contentPadding = PaddingValues(AppTheme.spacing.md),
-                        verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm + AppTheme.spacing.xs)
-                    ) {
-                        items(
-                            items = state.rides,
-                            key = { ride -> ride.id }
-                        ) { ride ->
-                            RideCard(
-                                ride = ride,
-                                onClick = { onRideClick(ride.id) }
-                            )
-                        }
-                    }
-                }
+            is OpenRidesState.Success -> OpenRidesList(
+                state = state,
+                onRideClick = onRideClick,
+                modifier = contentModifier
+            )
+        }
+    }
+}
+
+@Composable
+fun OpenRidesList(
+    state: OpenRidesState.Success,
+    onRideClick: (String) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    if (state.rides.isEmpty()) {
+        Box(
+            modifier = modifier
+                .fillMaxSize()
+                .padding(AppTheme.spacing.lg),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = stringResource(R.string.open_rides_empty),
+                style = AppTheme.typography.bodyLarge,
+                color = AppTheme.colors.onSurfaceVariant
+            )
+        }
+    } else {
+        LazyColumn(
+            modifier = modifier.fillMaxSize(),
+            contentPadding = PaddingValues(AppTheme.spacing.md),
+            verticalArrangement = Arrangement.spacedBy(
+                AppTheme.spacing.sm + AppTheme.spacing.xs
+            )
+        ) {
+            items(
+                items = state.rides,
+                key = { ride -> ride.id }
+            ) { ride ->
+                RideCard(
+                    ride = ride,
+                    onClick = { onRideClick(ride.id) }
+                )
             }
         }
     }

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="open_rides_title">Animales que puedes ayudar</string>
+    <string name="open_rides_subtitle">Encontrá un traslado disponible</string>
+    <string name="open_rides_loading">Cargando traslados disponibles</string>
+    <string name="open_rides_error_title">No pudimos cargar los traslados</string>
+    <string name="open_rides_empty">No hay traslados disponibles por el momento.</string>
+</resources>
