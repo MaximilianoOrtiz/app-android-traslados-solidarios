@@ -17,7 +17,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.CalendarToday
 import androidx.compose.material.icons.outlined.ChevronRight
 import androidx.compose.material.icons.outlined.LocationOn
-
 import androidx.compose.material.icons.outlined.Pets
 import androidx.compose.material.icons.outlined.QuestionMark
 import androidx.compose.material.icons.outlined.TripOrigin
@@ -30,12 +29,15 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import coil3.compose.AsyncImage
 import com.trasladossolidarios.domain.enum.AnimalSpecies
 import com.trasladossolidarios.domain.enum.RideStatus
 import com.trasladossolidarios.domain.model.Animal
@@ -160,7 +162,8 @@ private fun AnimalPhoto(animal: Animal, modifier: Modifier = Modifier) {
             .background(
                 color = AppTheme.colors.primaryContainer,
                 shape = AppTheme.shapes.medium
-            ),
+            )
+            .clip(AppTheme.shapes.medium),
         contentAlignment = Alignment.Center
     ) {
         Icon(
@@ -172,6 +175,15 @@ private fun AnimalPhoto(animal: Animal, modifier: Modifier = Modifier) {
             tint = AppTheme.colors.onPrimaryContainer,
             modifier = Modifier.size(40.dp)
         )
+
+        if (!animal.photoUrl.isNullOrBlank()) {
+            AsyncImage(
+                model = animal.photoUrl,
+                contentDescription = animal.name,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.fillMaxSize()
+            )
+        }
     }
 }
 
@@ -289,7 +301,7 @@ private fun RideCardPreview() {
                         name = "Luna",
                         species = AnimalSpecies.CAT,
                         description = "Gris, tranquila",
-                        photoUrl = null
+                        photoUrl = "https://img.magnific.com/foto-gratis/nina-juega-conejo-domestico-calle-concepto-mascota_169016-63700.jpg?semt=ais_hybrid&w=740&q=80"
                     ),
                     origin = Location(latitude = null, longitude = null, address = "Villa del Parque, CABA"),
                     destination = Location(latitude = null, longitude = null, address = "Clínica Veterinaria Mascotas"),

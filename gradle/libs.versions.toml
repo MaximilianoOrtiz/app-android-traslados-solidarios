@@ -34,6 +34,9 @@ lifecycleRuntimeCompose = "2.11.0"
 firebaseFirestoreKtx = "27.1.0"
 transportRuntime = "5.0.0"
 media3CommonKtx = "1.11.1"
+# Coil 3.6.x compila con Kotlin 2.4 (trae stdlib 2.4, incompatible con el compilador 2.2 del proyecto).
+# 3.4.0 es la última versión compatible con metadata 2.3.
+coil = "3.4.0"
 
 
 [libraries]
@@ -80,6 +83,11 @@ androidx-lifecycle-runtime-compose = { group = "androidx.lifecycle", name = "lif
 firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx", version.ref = "firebaseFirestoreKtx" }
 transport-runtime = { group = "com.google.android.datatransport", name = "transport-runtime", version.ref = "transportRuntime" }
 androidx-media3-common-ktx = { group = "androidx.media3", name = "media3-common-ktx", version.ref = "media3CommonKtx" }
+
+# --- Carga de imágenes ---
+# Coil 3 separa la red en un artefacto propio (coil-network-okhttp).
+coil-compose = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil" }
+coil-network-okhttp = { group = "io.coil-kt.coil3", name = "coil-network-okhttp", version.ref = "coil" }
 
 
 
