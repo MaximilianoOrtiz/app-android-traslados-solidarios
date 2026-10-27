@@ -160,6 +160,7 @@ class AuthViewModel @Inject constructor(
                                 DomainError.EmailAlreadyInUse -> "El email ya está registrado."
                                 DomainError.InvalidCredentials -> "Email o contraseña incorrectos."
                                 DomainError.Network -> "Error de conexión."
+                                DomainError.NotFound -> "Usuario no encontrado."
                                 DomainError.Unknow -> "Ocurrió un error inesperado."
                             }
                         )

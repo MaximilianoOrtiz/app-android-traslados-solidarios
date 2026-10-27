@@ -16,4 +16,7 @@ interface RidesRepository {
 
     suspend fun observeAvailableRides(currentUserId: String):  Flow<AppResult<List<Ride>>>
 
+    /** Trae un traslado puntual por su id (para la pantalla de detalle) */
+    suspend fun getRideById(rideId: String): AppResult<Ride>
+
 }

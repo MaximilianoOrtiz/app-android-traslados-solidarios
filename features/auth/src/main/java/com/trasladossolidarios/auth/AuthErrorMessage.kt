@@ -11,5 +11,6 @@ fun DomainError.toMessageRes(): Int = when (this){
     DomainError.EmailAlreadyInUse -> R.string.auth_error_email_in_use
     DomainError.InvalidCredentials -> R.string.auth_error_invalid_credentials
     DomainError.Network -> R.string.auth_error_network
+    DomainError.NotFound -> R.string.auth_error_unknown
     DomainError.Unknow -> R.string.auth_error_unknown
 }

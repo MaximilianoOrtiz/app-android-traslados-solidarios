@@ -7,5 +7,6 @@ sealed interface DomainError {
     data object EmailAlreadyInUse : DomainError
     data object InvalidCredentials : DomainError
     data object Network : DomainError
+    data object NotFound : DomainError
     data object Unknow : DomainError
 }

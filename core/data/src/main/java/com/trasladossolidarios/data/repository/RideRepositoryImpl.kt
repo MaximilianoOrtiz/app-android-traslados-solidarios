@@ -57,4 +57,23 @@ class RideRepositoryImpl @Inject constructor(
                 emit(AppResult.Error(domainError))
             }
     }
+
+    override suspend fun getRideById(rideId: String): AppResult<Ride> =
+        try {
+            val response = rideRemoteDataSource.getRideById(rideId)
+                ?: return AppResult.Error(DomainError.NotFound)
+
+            AppResult.Success(response.ride.toDomain(response.id))
+        } catch (exception: CancellationException) {
+            throw exception
+        } catch (exception: FirebaseFirestoreException) {
+            AppResult.Error(
+                when (exception.code) {
+                    FirebaseFirestoreException.Code.UNAVAILABLE -> DomainError.Network
+                    else -> DomainError.Unknow
+                }
+            )
+        } catch (exception: Exception) {
+            AppResult.Error(DomainError.Unknow)
+        }
 }
