@@ -58,7 +58,9 @@ fun AppNavDisplay(
         entry<OpenRidesDestination> {
             val openRidesViewModel: OpenRidesViewModel = hiltViewModel()
             OpenRidesRouter(
-                openRidesViewModel
+                currentUserId,
+                viewModel = openRidesViewModel,
+                onRideClick = {}
             )
         }
     }
