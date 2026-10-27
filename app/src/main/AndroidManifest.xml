@@ -2,13 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!--Permiso de cámara-->
-    <uses-permission android:name="android.permission.CAMERA" />
-
-    <!--La cámara es opcional para que la app se pueda instalar en dispositivos/emuladores sin cámara física-->
-    <uses-feature
-        android:name="android.hardware.camera"
-        android:required="false" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".ComposeTrasladosSolidariosApp"
@@ -32,17 +26,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <!-- 3. Provider para compartir URIs de archivos de foto con la app nativa de Cámara -->
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="${applicationId}.fileprovider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
-        </provider>
     </application>
 
 </manifest>

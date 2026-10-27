@@ -7,7 +7,6 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.trasladossolidarios.domain.common.AppResult
 import com.trasladossolidarios.domain.common.DomainError
 import com.trasladossolidarios.domain.model.User
-import com.trasladossolidarios.domain.usecase.auth.GetCurrentUserUseCase
 import com.trasladossolidarios.domain.usecase.auth.LoginUserUseCase
 import com.trasladossolidarios.domain.usecase.auth.LogoutUseCase
 import com.trasladossolidarios.domain.usecase.auth.ObserveAuthStateUseCase

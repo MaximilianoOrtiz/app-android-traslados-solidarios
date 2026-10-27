@@ -28,7 +28,7 @@ abstract class DataModule {
 
     @Binds
     @Singleton
-    abstract fun bindRideRepository(implementation: RideRepositoryImpl): RidesRepository
+    abstract fun bindRideRepository(impl: RideRepositoryImpl): RidesRepository
 
     companion object {
         @Provides
