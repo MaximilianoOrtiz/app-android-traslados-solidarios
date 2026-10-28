@@ -29,6 +29,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.trasladossolidarios.components.RideCard
+import com.trasladossolidarios.components.toMessage
 import com.trasladossolidarios.ui.theme.AppTheme
 import com.trasladossolidarios.ui.theme.AppTheme.spacing
 import components.ErrorContent
@@ -105,7 +106,7 @@ fun OpenRidesScreen(
             is OpenRidesState.Error -> {
                 ErrorContent(
                     title = stringResource(R.string.open_rides_error_title),
-                    message = state.error.toString(),
+                    message = state.error.toMessage(),
                     onRetry = onRetry,
                     modifier = contentModifier
                         .fillMaxSize()
