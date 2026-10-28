@@ -12,4 +12,13 @@
     <string name="ride_card_status_unknown">Sin estado</string>
     <string name="ride_card_date_today">Hoy</string>
     <string name="ride_card_date_tomorrow">Mañana</string>
+
+
+    <string name="auth_error_invalid_email">El email no es válido</string>
+    <string name="auth_error_weak_password">La contraseña debe tener al menos 6 caracteres</string>
+    <string name="auth_error_empty_credentials">Completa el email y la contraseña</string>
+    <string name="auth_error_email_in_use">Ya existe una cuenta con ese email</string>
+    <string name="auth_error_invalid_credentials">Email o contraseña incorrectos</string>
+    <string name="auth_error_network">Sin conexión a internet</string>
+    <string name="auth_error_unknown">Ocurrió un error inesperado</string>
 </resources>
