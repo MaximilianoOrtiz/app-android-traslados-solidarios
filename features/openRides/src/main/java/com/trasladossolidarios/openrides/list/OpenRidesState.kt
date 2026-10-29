@@ -1,4 +1,4 @@
-package com.trasladossolidarios.openrides
+package com.trasladossolidarios.openrides.list
 
 import com.trasladossolidarios.domain.common.DomainError
 import com.trasladossolidarios.domain.model.Ride

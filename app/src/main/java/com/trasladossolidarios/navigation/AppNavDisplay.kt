@@ -14,8 +14,10 @@ import com.trasladossolidarios.home.HomeRouter
 import com.trasladossolidarios.home.HomeViewModel
 import com.trasladossolidarios.myrides.MyRidesRouter
 import com.trasladossolidarios.myrides.MyRidesViewModel
-import com.trasladossolidarios.openrides.OpenRidesRouter
-import com.trasladossolidarios.openrides.OpenRidesViewModel
+import com.trasladossolidarios.openrides.detail.RideDetailRoute
+import com.trasladossolidarios.openrides.detail.RideDetailViewModel
+import com.trasladossolidarios.openrides.list.OpenRidesRouter
+import com.trasladossolidarios.openrides.list.OpenRidesViewModel
 
 import com.trasladossolidarios.profile.ProfileRouter
 import com.trasladossolidarios.profile.ProfileViewModel
@@ -60,9 +62,23 @@ fun AppNavDisplay(
             OpenRidesRouter(
                 currentUserId,
                 viewModel = openRidesViewModel,
-                onRideClick = {}
+                onRideClick = { rideId -> navigationState.navigate(RideDetailDestination(rideId)) }
             )
         }
+        entry<RideDetailDestination> { key ->
+            // El detalle necesita un dato que Hilt NO puede conocer: el id que eligió el
+            // usuario. Se lo pasamos con la @AssistedFactory del ViewModel; el resto de
+            // las dependencias las sigue poniendo el grafo.
+            //
+            // No hace falta un `key` string para distinguir instancias: el
+            // rememberViewModelStoreNavEntryDecorator de abajo le da a cada entrada del
+            // back stack su propio ViewModelStore (usa NavEntry.contentKey).
+            val viewModel = hiltViewModel<RideDetailViewModel, RideDetailViewModel.Factory>(
+                creationCallback = { factory -> factory.create(key.rideId) }
+            )
+            RideDetailRoute (viewModel = viewModel, onBack = { navigationState.goBackFrom(key) })
+        }
+
     }
 
     NavDisplay(

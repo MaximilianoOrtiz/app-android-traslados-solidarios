@@ -1,4 +1,4 @@
-package com.trasladossolidarios.openrides
+package com.trasladossolidarios.openrides.list
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -11,10 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Button
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -30,6 +27,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.trasladossolidarios.components.RideCard
 import com.trasladossolidarios.components.toMessage
+import com.trasladossolidarios.openrides.R
 import com.trasladossolidarios.ui.theme.AppTheme
 import com.trasladossolidarios.ui.theme.AppTheme.spacing
 import components.ErrorContent
@@ -110,7 +108,7 @@ fun OpenRidesScreen(
                     onRetry = onRetry,
                     modifier = contentModifier
                         .fillMaxSize()
-                        .padding(AppTheme.spacing.lg)
+                        .padding(spacing.lg)
                 )
             }
 
@@ -133,7 +131,7 @@ fun OpenRidesList(
         Box(
             modifier = modifier
                 .fillMaxSize()
-                .padding(AppTheme.spacing.lg),
+                .padding(spacing.lg),
             contentAlignment = Alignment.Center
         ) {
             Text(
@@ -145,9 +143,9 @@ fun OpenRidesList(
     } else {
         LazyColumn(
             modifier = modifier.fillMaxSize(),
-            contentPadding = PaddingValues(AppTheme.spacing.md),
+            contentPadding = PaddingValues(spacing.md),
             verticalArrangement = Arrangement.spacedBy(
-                AppTheme.spacing.sm + AppTheme.spacing.xs
+                spacing.sm + spacing.xs
             )
         ) {
             items(

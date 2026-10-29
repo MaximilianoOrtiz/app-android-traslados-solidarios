@@ -18,4 +18,9 @@ data object HomeDestination : NavKey
 data object OpenRidesDestination : NavKey
 
 @Serializable
+data class RideDetailDestination(val rideId : String) : NavKey{
+
+}
+
+@Serializable
 data object MyRidesDestination : NavKey

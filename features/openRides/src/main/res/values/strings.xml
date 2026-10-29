@@ -5,4 +5,16 @@
     <string name="open_rides_loading">Cargando traslados disponibles</string>
     <string name="open_rides_error_title">No pudimos cargar los traslados</string>
     <string name="open_rides_empty">No hay traslados disponibles por el momento.</string>
+    <string name="ride_detail_title">Detalle del Traslado</string>
+    <string name="ride_detail_loading">Cargando Traslado</string>
+    <string name="ride_detail_error_title">No pudimos Cargar el Traslado</string>
+    <string name="books_back">Volver</string>
+
+
+
+
+
+
+
+
 </resources>

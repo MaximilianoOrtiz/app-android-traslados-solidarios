@@ -1,4 +1,4 @@
-package com.trasladossolidarios.openrides
+package com.trasladossolidarios.openrides.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
