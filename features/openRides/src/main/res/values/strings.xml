@@ -9,19 +9,6 @@
     <string name="ride_detail_title">Detalle del Traslado</string>
     <string name="ride_detail_loading">Cargando Traslado</string>
     <string name="ride_detail_error_title">No pudimos Cargar el Traslado</string>
-    <string name="books_back">Volver</string>
 
-    <string name="ride_detail_about_title">Sobre %1$s</string>
-    <string name="ride_detail_transfer_info_title">Información del traslado</string>
-    <string name="ride_detail_origin">Origen</string>
-    <string name="ride_detail_destination">Destino</string>
     <string name="ride_detail_accept_action">Quiero realizar este traslado</string>
-    <string name="ride_detail_publisher">Publicado por %1$s</string>
-    <string name="ride_detail_publisher_placeholder">Carlos Ruiz</string>
-    <string name="ride_detail_animal_name_fallback">Animal sin nombre</string>
-
-    <string name="animal_species_dog">Perro</string>
-    <string name="animal_species_cat">Gato</string>
-    <string name="animal_species_other">Otro</string>
-    <string name="animal_species_unknown">Sin especie</string>
 </resources>

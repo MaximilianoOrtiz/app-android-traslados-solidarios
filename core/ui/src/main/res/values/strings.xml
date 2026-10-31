@@ -2,6 +2,7 @@
 
 <resources>
     <string name="core_ui_retry">Reintentar</string>
+    <string name="core_ui_back">Volver</string>
 
     <string name="ride_card_animal_name_fallback">Animal sin nombre</string>
     <string name="ride_card_view_action">Ver traslado</string>
@@ -13,6 +14,18 @@
     <string name="ride_card_date_today">Hoy</string>
     <string name="ride_card_date_tomorrow">Mañana</string>
 
+    <string name="ride_detail_origin">Origen</string>
+    <string name="ride_detail_destination">Destino</string>
+    <string name="ride_detail_publisher">Publicado por %1$s</string>
+    <string name="ride_detail_publisher_placeholder">Carlos Ruiz</string>
+
+    <string name="about_animal_card_title">Sobre %1$s</string>
+    <string name="transfer_info_card_title">Información del traslado</string>
+
+    <string name="animal_species_dog">Perro</string>
+    <string name="animal_species_cat">Gato</string>
+    <string name="animal_species_other">Otro</string>
+    <string name="animal_species_unknown">Sin especie</string>
 
     <string name="auth_error_invalid_email">El email no es válido</string>
     <string name="auth_error_weak_password">La contraseña debe tener al menos 6 caracteres</string>
