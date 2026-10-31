@@ -23,6 +23,8 @@ import com.trasladossolidarios.domain.enum.RideStatus
 import com.trasladossolidarios.domain.model.Animal
 import com.trasladossolidarios.domain.model.Location
 import com.trasladossolidarios.domain.model.Ride
+import com.trasladossolidarios.domain.model.RideDetail
+import com.trasladossolidarios.domain.model.User
 import com.trasladossolidarios.openrides.R
 import com.trasladossolidarios.ui.theme.ApMobileTP2Theme
 import com.trasladossolidarios.ui.theme.AppTheme
@@ -96,43 +98,51 @@ fun RideDetailScreen(
             )
 
             is RideDetailState.Success -> RideDetailContent(
-                ride = uiState.ride,
+                ride = uiState.rideDetail.ride,
+                owner = uiState.rideDetail.owner,
                 onBack = onBack,
                 modifier = Modifier.padding(paddingValues)
             )
         }
     }
 }
-
 @Preview(showBackground = true)
 @Composable
 private fun RideDetailScreenPreview() {
     ApMobileTP2Theme {
         RideDetailScreen(
             uiState = RideDetailState.Success(
-                Ride(
-                    id = "1",
-                    ownerId = "owner",
-                    status = RideStatus.OPEN,
-                    animal = Animal(
-                        name = "Luna",
-                        species = AnimalSpecies.CAT,
-                        description = "Gatita gris tabulada, muy asustada. Fue encontrada bajo un auto en el barrio",
-                        photoUrl = null
+                RideDetail(
+                    ride = Ride(
+                        id = "1",
+                        ownerId = "owner",
+                        status = RideStatus.OPEN,
+                        animal = Animal(
+                            name = "Luna",
+                            species = AnimalSpecies.CAT,
+                            description = "Gatita gris tabulada, muy asustada. Fue encontrada bajo un auto en el barrio",
+                            photoUrl = null
+                        ),
+                        origin = Location(
+                            latitude = null,
+                            longitude = null,
+                            address = "Villa del Parque, CABA"
+                        ),
+                        destination = Location(
+                            latitude = null,
+                            longitude = null,
+                            address = "Clínica Veterinaria Mascotas - Veterinaria - Palermo"
+                        ),
+                        notes = "Necesita transportadora obligatoriamente. Está asustada, requiere manejo suave.",
+                        acceptedApplicantId = null,
+                        dateOfTransfer = Instant.now().plusSeconds(86_400)
                     ),
-                    origin = Location(
-                        latitude = null,
-                        longitude = null,
-                        address = "Villa del Parque, CABA"
-                    ),
-                    destination = Location(
-                        latitude = null,
-                        longitude = null,
-                        address = "Clínica Veterinaria Mascotas - Veterinaria - Palermo"
-                    ),
-                    notes = "Necesita transportadora obligatoriamente. Está asustada, requiere manejo suave.",
-                    acceptedApplicantId = null,
-                    dateOfTransfer = Instant.now().plusSeconds(86_400)
+                    owner = User(
+                        uid = "owner",
+                        firstName = "Carlos",
+                        lastName = "Ruiz",
+                        email = "carlos@email.com"
+                    )
                 )
             ),
             onBack = {},

@@ -31,6 +31,7 @@ import com.trasladossolidarios.domain.enum.RideStatus
 import com.trasladossolidarios.domain.model.Animal
 import com.trasladossolidarios.domain.model.Location
 import com.trasladossolidarios.domain.model.Ride
+import com.trasladossolidarios.domain.model.User
 import com.trasladossolidarios.ui.theme.ApMobileTP2Theme
 import com.trasladossolidarios.ui.theme.AppTheme
 import com.ui.R
@@ -45,6 +46,7 @@ import java.time.Instant
 @Composable
 fun RideDetailContent(
     ride: Ride,
+    owner: User,
     onBack: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -134,7 +136,7 @@ fun RideDetailContent(
 
             Spacer(modifier = Modifier.height(AppTheme.spacing.md))
 
-            PublisherRow(name = stringResource(R.string.ride_detail_publisher_placeholder))
+            PublisherRow(owner)
         }
     }
 }
@@ -168,7 +170,13 @@ private fun RideDetailContentPreview() {
                 acceptedApplicantId = null,
                 dateOfTransfer = Instant.now().plusSeconds(86_400)
             ),
-            onBack = {}
+            onBack = {},
+            owner = User(
+                uid = "123",
+                firstName = "Carlos",
+                lastName = "Ruiz",
+                email = "carlos@email.com"
+            ),
         )
     }
 }

@@ -3,7 +3,7 @@ package com.trasladossolidarios.openrides.detail
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.trasladossolidarios.domain.common.AppResult
-import com.trasladossolidarios.domain.usecase.ride.GetRideByIdUseCase
+import com.trasladossolidarios.domain.usecase.ride.GetRideDetailByIdUseCase
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 @HiltViewModel(assistedFactory = RideDetailViewModel.Factory::class)
 class RideDetailViewModel @AssistedInject constructor(
     @Assisted private val rideId: String,
-    private val getRide: GetRideByIdUseCase
+    private val getRideDetail: GetRideDetailByIdUseCase
 ): ViewModel(){
 
     @AssistedFactory
@@ -36,7 +36,7 @@ class RideDetailViewModel @AssistedInject constructor(
     private fun load() {
         viewModelScope.launch {
             _uiState.value = RideDetailState.Loading
-            _uiState.value = when (val result = getRide(rideId)) {
+            _uiState.value = when (val result = getRideDetail(rideId)) {
                 is AppResult.Success -> RideDetailState.Success(result.data)
                 is AppResult.Error -> RideDetailState.Error(result.error)
             }

@@ -2,6 +2,7 @@ package com.trasladossolidarios.network.firestore.datasourse
 
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.toObject
 import com.trasladossolidarios.network.firestore.dto.UserDto
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
@@ -24,5 +25,15 @@ class UserFirestoreDataSource @Inject constructor(
                 tx.set(ref, userDto)
             }
         }.await()
+    }
+
+    suspend fun getById(uid: String): UserDto? {
+        val document = firestore
+            .collection("users")
+            .document(uid)
+            .get()
+            .await()
+
+        return document.toObject<UserDto>()
     }
 }

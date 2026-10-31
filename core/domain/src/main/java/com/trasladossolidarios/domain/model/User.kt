@@ -6,3 +6,5 @@ data class User(
     val lastName: String,
     val email: String,
 )
+
+fun User.getFullName(): String = "$firstName $lastName".trim()
