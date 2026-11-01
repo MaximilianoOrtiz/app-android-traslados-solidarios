@@ -9,4 +9,5 @@ sealed interface DomainError {
     data object Network : DomainError
     data object NotFound : DomainError
     data object Unknow : DomainError
+
 }

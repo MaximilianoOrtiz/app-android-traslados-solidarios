@@ -4,9 +4,11 @@ import com.google.firebase.auth.FirebaseAuth
 import com.trasladossolidarios.data.repository.FirebaseAuthRepositoryImpl
 import com.trasladossolidarios.data.repository.RideRepositoryImpl
 import com.trasladossolidarios.data.repository.UserRepositoryImpl
+import com.trasladossolidarios.data.repository.VolunteerRepositoryImpl
 import com.trasladossolidarios.domain.repository.FirebaseAuthRepository
 import com.trasladossolidarios.domain.repository.RidesRepository
 import com.trasladossolidarios.domain.repository.UserRepository
+import com.trasladossolidarios.domain.repository.VolunteerRepository
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -29,6 +31,10 @@ abstract class DataModule {
     @Binds
     @Singleton
     abstract fun bindRideRepository(impl: RideRepositoryImpl): RidesRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindVolunteerRepository(impl: VolunteerRepositoryImpl): VolunteerRepository
 
     companion object {
         @Provides

@@ -11,5 +11,4 @@ data class RideDto(
     val notes: String = "",
     val acceptedApplicantId: String? = null,
     val dateOfTransfer: Timestamp? = null,
-    val volunteers: Map<String, VolunteerDto> = emptyMap(),
 )

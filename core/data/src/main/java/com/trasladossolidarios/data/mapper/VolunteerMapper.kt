@@ -1,40 +1,36 @@
 package com.trasladossolidarios.data.mapper
 
+import com.google.firebase.Timestamp
 import com.trasladossolidarios.domain.enum.VolunteerStatus
 import com.trasladossolidarios.domain.model.Volunteer
 import com.trasladossolidarios.network.firestore.dto.VolunteerDto
 import java.time.Instant
+import java.util.Date
 
-fun VolunteerDto.toDomain(
-    volunteerId: String,
-    rideId: String,
-): Volunteer =
-    Volunteer(
+fun VolunteerDto.toDomain(rideId: String): Volunteer {
+    return Volunteer(
         volunteerId = volunteerId,
         rideId = rideId,
-        name = volunteerName,
-        status = status.toVolunteerStatus(),
+        name = name,
+        status = VolunteerStatus.valueOf(status),
         message = message,
         contact = contact,
-        createdAt = createdAt
-            ?.toDate()
+        createdAt = createdAt?.toDate()
             ?.toInstant()
-            ?: Instant.EPOCH,
+            ?: Instant.EPOCH
     )
+}
 
-fun Volunteer.toDto(): VolunteerDto =
-    VolunteerDto(
-        applicantId = volunteerId,
-        volunteerName = name,
+fun Volunteer.toDto(
+    rideOwnerId: String,
+): VolunteerDto {
+    return VolunteerDto(
+        volunteerId = volunteerId,
+        name = name,
         status = status.name,
         message = message,
         contact = contact,
-        createdAt = com.google.firebase.Timestamp(
-            java.util.Date.from(createdAt)
-        ),
+        rideOwnerId = rideOwnerId,
+        createdAt = Timestamp(Date.from(createdAt))
     )
-
-private fun String.toVolunteerStatus(): VolunteerStatus =
-    runCatching {
-        VolunteerStatus.valueOf(trim().uppercase())
-    }.getOrDefault(VolunteerStatus.UNKNOWN)
+}
