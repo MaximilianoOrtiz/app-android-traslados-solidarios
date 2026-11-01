@@ -35,4 +35,21 @@ class VolunteerRepositoryImpl @Inject constructor(
             AppResult.Error(DomainError.Unknow)
         }
     }
+
+    override suspend fun hasAppliedToRide(
+        rideId: String,
+        volunteerId: String,
+    ): AppResult<Boolean> {
+        return try {
+            AppResult.Success(
+                volunteerDataSource.hasApplied(rideId, volunteerId)
+            )
+        } catch (e: CancellationException) {
+            throw e
+        } catch (e: Exception) {
+            Log.e("Huella", "Fallo al verificar postulación", e)
+
+            AppResult.Error(DomainError.Unknow)
+        }
+    }
 }

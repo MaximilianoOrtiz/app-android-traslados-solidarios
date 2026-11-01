@@ -11,6 +11,7 @@
     <string name="ride_detail_error_title">No pudimos Cargar el Traslado</string>
 
     <string name="ride_detail_accept_action">Quiero realizar este traslado</string>
+    <string name="ride_detail_applied_action">Ya postulado</string>
 
     <string name="ride_detail_apply_sheet_title">¿Querés ayudar con este traslado?</string>
     <string name="ride_detail_apply_sheet_subtitle">Tu solicitud llegará al responsable para que te acepte.</string>

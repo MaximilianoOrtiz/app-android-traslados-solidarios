@@ -9,6 +9,7 @@ interface RideDetailState {
     data object Loading : RideDetailState
     data class Success(
         val rideDetail: RideDetail,
+        val hasApplied: Boolean = false,
         val isSheetOpen: Boolean = false,
         val isSubmitting: Boolean = false
     ) : RideDetailState

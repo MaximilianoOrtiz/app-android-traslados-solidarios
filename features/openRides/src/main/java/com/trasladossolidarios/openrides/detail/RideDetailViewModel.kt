@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.trasladossolidarios.domain.common.AppResult
 import com.trasladossolidarios.domain.usecase.ride.GetRideDetailByIdUseCase
 import com.trasladossolidarios.domain.usecase.volunteer.ApplyToRideUseCase
+import com.trasladossolidarios.domain.usecase.volunteer.HasAppliedToRideUseCase
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
@@ -25,7 +26,8 @@ sealed interface RideDetailEvent {
 class RideDetailViewModel @AssistedInject constructor(
     @Assisted private val rideId: String,
     private val getRideDetail: GetRideDetailByIdUseCase,
-    private val applyToRide: ApplyToRideUseCase
+    private val applyToRide: ApplyToRideUseCase,
+    private val hasAppliedToRide: HasAppliedToRideUseCase
 ): ViewModel(){
 
     @AssistedFactory
@@ -69,7 +71,7 @@ class RideDetailViewModel @AssistedInject constructor(
             when (applyToRide(rideId, message, contact)) {
                 is AppResult.Success -> {
                     _uiState.value = (_uiState.value as? RideDetailState.Success)
-                        ?.copy(isSheetOpen = false, isSubmitting = false)
+                        ?.copy(isSheetOpen = false, isSubmitting = false, hasApplied = true)
                         ?: RideDetailState.Loading
                     _events.send(RideDetailEvent.ApplySuccess)
                 }
@@ -86,9 +88,18 @@ class RideDetailViewModel @AssistedInject constructor(
     private fun load() {
         viewModelScope.launch {
             _uiState.value = RideDetailState.Loading
-            _uiState.value = when (val result = getRideDetail(rideId)) {
-                is AppResult.Success -> RideDetailState.Success(result.data)
-                is AppResult.Error -> RideDetailState.Error(result.error)
+            when (val result = getRideDetail(rideId)) {
+                is AppResult.Success -> {
+                    val applied = when (val appliedResult = hasAppliedToRide(rideId)) {
+                        is AppResult.Success -> appliedResult.data
+                        is AppResult.Error -> false
+                    }
+                    _uiState.value = RideDetailState.Success(
+                        rideDetail = result.data,
+                        hasApplied = applied
+                    )
+                }
+                is AppResult.Error -> _uiState.value = RideDetailState.Error(result.error)
             }
         }
     }

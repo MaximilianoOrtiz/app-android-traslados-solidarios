@@ -19,4 +19,14 @@ class VolunteerFirestoreDataSource @Inject constructor (
             .set(volunteerDto)
             .await()
     }
+
+    suspend fun hasApplied(rideId: String, volunteerId: String): Boolean {
+        return firestore.collection("rides")
+            .document(rideId)
+            .collection("volunteers")
+            .document(volunteerId)
+            .get()
+            .await()
+            .exists()
+    }
 }

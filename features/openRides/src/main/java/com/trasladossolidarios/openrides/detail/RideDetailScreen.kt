@@ -125,8 +125,13 @@ fun RideDetailScreen(
                             .padding(AppTheme.spacing.md)
                     ) {
                         PrimaryButton(
-                            text = stringResource(R.string.ride_detail_accept_action),
+                            text = if (uiState.hasApplied) {
+                                stringResource(R.string.ride_detail_applied_action)
+                            } else {
+                                stringResource(R.string.ride_detail_accept_action)
+                            },
                             onClick = onAccept,
+                            enabled = !uiState.hasApplied,
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .height(50.dp)
