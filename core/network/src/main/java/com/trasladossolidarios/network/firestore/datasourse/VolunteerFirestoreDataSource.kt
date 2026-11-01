@@ -9,10 +9,11 @@ class VolunteerFirestoreDataSource @Inject constructor (
     private val firestore: FirebaseFirestore
 ){
     suspend fun applyToRide(
+        rideid: String,
         volunteerDto: VolunteerDto
     ) {
         firestore.collection("rides")
-            .document(volunteerDto.rideOwnerId)
+            .document(rideid)
             .collection("volunteers")
             .document(volunteerDto.volunteerId)
             .set(volunteerDto)

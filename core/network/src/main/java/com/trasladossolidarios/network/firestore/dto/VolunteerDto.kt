@@ -8,6 +8,5 @@ data class VolunteerDto(
     val status: String = "PENDING",
     val message: String = "",
     val contact: String = "",
-    val rideOwnerId: String = "",
     val createdAt: Timestamp? = null
 )

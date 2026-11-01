@@ -11,4 +11,16 @@
     <string name="ride_detail_error_title">No pudimos Cargar el Traslado</string>
 
     <string name="ride_detail_accept_action">Quiero realizar este traslado</string>
+
+    <string name="ride_detail_apply_sheet_title">¿Querés ayudar con este traslado?</string>
+    <string name="ride_detail_apply_sheet_subtitle">Tu solicitud llegará al responsable para que te acepte.</string>
+    <string name="ride_detail_apply_contact_label">Contacto</string>
+    <string name="ride_detail_apply_message_label">Comentario</string>
+    <string name="ride_detail_apply_submit">Enviar oferta de ayuda</string>
+    <string name="ride_detail_apply_cancel">Cancelar</string>
+
+    <string name="ride_detail_apply_success_title">¡Postulación enviada!</string>
+    <string name="ride_detail_apply_success_message">Tu solicitud fue enviada al responsable del traslado.</string>
+    <string name="ride_detail_apply_success_ok">Entendido</string>
+    <string name="ride_detail_apply_error">No se pudo enviar la postulación. Intentalo nuevamente.</string>
 </resources>

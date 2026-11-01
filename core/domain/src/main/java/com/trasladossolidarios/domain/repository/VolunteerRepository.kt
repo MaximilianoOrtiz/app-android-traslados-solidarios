@@ -5,5 +5,5 @@ import com.trasladossolidarios.domain.model.Volunteer
 
 interface VolunteerRepository {
 
-    suspend fun applyToRide(volunteer: Volunteer): AppResult<Unit>
+    suspend fun applyToRide(volunteer: Volunteer, rideId: String): AppResult<Unit>
 }

@@ -22,7 +22,6 @@ fun VolunteerDto.toDomain(rideId: String): Volunteer {
 }
 
 fun Volunteer.toDto(
-    rideOwnerId: String,
 ): VolunteerDto {
     return VolunteerDto(
         volunteerId = volunteerId,
@@ -30,7 +29,6 @@ fun Volunteer.toDto(
         status = status.name,
         message = message,
         contact = contact,
-        rideOwnerId = rideOwnerId,
         createdAt = Timestamp(Date.from(createdAt))
     )
 }

@@ -76,7 +76,11 @@ fun AppNavDisplay(
             val viewModel = hiltViewModel<RideDetailViewModel, RideDetailViewModel.Factory>(
                 creationCallback = { factory -> factory.create(key.rideId) }
             )
-            RideDetailRoute (viewModel = viewModel, onBack = { navigationState.goBackFrom(key) })
+            RideDetailRoute(
+                viewModel = viewModel,
+                onBack = { navigationState.goBackFrom(key) },
+                onApplied = { navigationState.goBackFrom(key) }
+            )
         }
 
     }
