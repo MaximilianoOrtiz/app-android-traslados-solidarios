@@ -24,3 +24,6 @@ data class RideDetailDestination(val rideId : String) : NavKey{
 
 @Serializable
 data object MyRidesDestination : NavKey
+
+@Serializable
+data object CreateRideDestination : NavKey

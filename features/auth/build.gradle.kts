@@ -48,6 +48,8 @@ dependencies {
     implementation(project(":core:ui"))
 
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.11.0")
+
+
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.core.ktx)
     implementation(libs.material)

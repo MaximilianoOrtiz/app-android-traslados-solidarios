@@ -26,7 +26,9 @@ android {
 dependencies {
     implementation(project(":core:domain"))
 
+    implementation("androidx.activity:activity-compose:1.13.0")
     implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.compose.runtime)
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)

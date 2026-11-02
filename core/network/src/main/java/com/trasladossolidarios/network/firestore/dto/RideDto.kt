@@ -3,8 +3,9 @@ package com.trasladossolidarios.network.firestore.dto
 import com.google.firebase.Timestamp
 
 data class RideDto(
+    val id: String = "",
     val ownerId: String = "",
-    val status: String = "OPEN",
+    val status: String = "",
     val animal: AnimalDto = AnimalDto(),
     val origin: LocationDto = LocationDto(),
     val destination: LocationDto = LocationDto(),

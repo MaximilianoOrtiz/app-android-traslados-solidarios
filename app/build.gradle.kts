@@ -45,9 +45,13 @@ android {
 dependencies {
     implementation(platform(libs.androidx.compose.bom))
     implementation(project(":core:data"))
+    implementation(project(":core:database"))
     implementation(project(":core:domain"))
+    implementation(project(":core:location"))
+    implementation(project(":core:network"))
     implementation(project(":core:ui"))
     implementation(project(":features:auth"))
+    implementation(project(":features:createRide"))
     implementation(project(":features:home"))
     implementation(project(":features:myRides"))
     implementation(project(":features:openRides"))
@@ -82,7 +86,7 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     debugImplementation(libs.androidx.compose.ui.tooling)
 
-
+    implementation("com.cloudinary:cloudinary-android:2.5.0")
 
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.7")
     //para no tener que indicar cada version de FireBase

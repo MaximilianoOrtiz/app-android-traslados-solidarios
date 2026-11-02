@@ -14,4 +14,7 @@
     <string name="my_rides_placeholder">Pantalla de Mis Traslados</string>
     <string name="open_rides_placeholder">Pantalla de Traslados Disponibles</string>
 
+    <!-- CreateRideViewModel -->
+    <string name="error_fill_animal_name_and_description">Por favor completá el nombre y la descripción del animal.</string>
+
 </resources>

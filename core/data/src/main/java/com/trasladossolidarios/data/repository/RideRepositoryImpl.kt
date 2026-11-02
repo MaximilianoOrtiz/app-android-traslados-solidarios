@@ -2,6 +2,7 @@ package com.trasladossolidarios.data.repository
 
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.trasladossolidarios.data.mapper.toDomain
+import com.trasladossolidarios.data.mapper.toDto
 import com.trasladossolidarios.domain.common.AppResult
 import com.trasladossolidarios.domain.common.DomainError
 import com.trasladossolidarios.domain.model.Ride
@@ -27,6 +28,10 @@ class RideRepositoryImpl @Inject constructor(
             }
             .catch { emit(AppResult.Error(DomainError.Unknow))}
 
+
+    override suspend fun createRide(ride: Ride) {
+        rideRemoteDataSource.createRide(ride.toDto())
+    }
 
     override suspend fun observeAvailableRides(currentUserId: String): Flow<AppResult<List<Ride>>> {
         return rideRemoteDataSource
