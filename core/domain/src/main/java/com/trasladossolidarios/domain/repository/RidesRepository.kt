@@ -6,13 +6,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface RidesRepository {
 
-
-    /** Lo que muestra la pantalla: siempre proviene de la base de datos local */
-    fun observeMyRides(userId: String): Flow<List<Ride>>
-
-    /** Descarga los datos más recientes del servidor y los guarda localmente */
-    suspend fun refreshMyRides(userId: String): AppResult<Unit>
-
+    fun observeRidesByOwner(ownerId: String): Flow<AppResult<List<Ride>>>
 
     suspend fun observeAvailableRides(currentUserId: String):  Flow<AppResult<List<Ride>>>
 

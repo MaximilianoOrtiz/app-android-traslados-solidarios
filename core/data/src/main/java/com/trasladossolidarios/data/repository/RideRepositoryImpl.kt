@@ -18,13 +18,15 @@ class RideRepositoryImpl @Inject constructor(
     private val rideRemoteDataSource: RideRemoteDataSource
 ): RidesRepository {
 
-    override fun observeMyRides(userId: String): Flow<List<Ride>> {
-        TODO("Not yet implemented")
-    }
+    override fun observeRidesByOwner(ownerId: String): Flow<AppResult<List<Ride>>> =
+        rideRemoteDataSource.observeRidesByOwner(ownerId)
+            .map { documents ->
+                AppResult.Success(
+                    documents.map { it.ride.toDomain(it.id) }
+                ) as AppResult<List<Ride>>
+            }
+            .catch { emit(AppResult.Error(DomainError.Unknow))}
 
-    override suspend fun refreshMyRides(userId: String): AppResult<Unit> {
-        TODO("Not yet implemented")
-    }
 
     override suspend fun observeAvailableRides(currentUserId: String): Flow<AppResult<List<Ride>>> {
         return rideRemoteDataSource

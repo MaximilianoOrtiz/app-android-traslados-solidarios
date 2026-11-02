@@ -53,7 +53,9 @@ fun AppNavDisplay(
         entry<MyRidesDestination> {
             val myRidesViewModel: MyRidesViewModel = hiltViewModel()
             MyRidesRouter(
-                myRidesViewModel
+                currentUserId,
+                myRidesViewModel,
+                onRideClick = { rideId -> navigationState.navigate(RideDetailDestination(rideId)) },
             )
         }
 

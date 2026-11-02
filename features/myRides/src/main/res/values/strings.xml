@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="my_rides_title">Mis traslados</string>
+    <string name="my_rides_subtitle">Tu actividad en Huella</string>
+    <string name="my_rides_tab_published">Publicados</string>
+    <string name="my_rides_tab_as_volunteer">Como voluntario</string>
+    <string name="my_rides_loading">Cargando tus traslados…</string>
+    <string name="my_rides_error_title">No pudimos cargar tus traslados</string>
+    <string name="my_rides_published_empty">Todavía no publicaste ningún traslado</string>
+    <string name="my_rides_coming_soon">Próximamente</string>
+</resources>
