@@ -230,6 +230,7 @@ class CreateRideViewModel @Inject constructor(
                 }
 
                 val ride = Ride(
+                    id= "",
                     ownerId = ownerId,
                     animal = animal,
                     origin = state.originLocation ?: Location(

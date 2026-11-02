@@ -2,7 +2,6 @@ package com.trasladossolidarios.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -54,7 +53,7 @@ fun TransferTimeline(
 @Composable
 private fun TimelineEntry(
     label: String,
-    address: String,
+    address: String?,
     isLast: Boolean
 ) {
     Row(
@@ -102,12 +101,14 @@ private fun TimelineEntry(
                 style = AppTheme.typography.labelSmall,
                 color = AppTheme.colors.onSurfaceVariant
             )
-            Text(
-                text = address,
-                style = AppTheme.typography.titleSmall,
-                fontWeight = FontWeight.Medium,
-                color = AppTheme.colors.onSurface
-            )
+            if (address != null) {
+                Text(
+                    text = address,
+                    style = AppTheme.typography.titleSmall,
+                    fontWeight = FontWeight.Medium,
+                    color = AppTheme.colors.onSurface
+                )
+            }
         }
     }
 }

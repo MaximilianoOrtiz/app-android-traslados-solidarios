@@ -4,7 +4,7 @@ import com.trasladossolidarios.domain.enum.RideStatus
 import java.time.Instant
 
 data class Ride(
-    val id: String? = null,
+    val id: String,
     val ownerId: String = "",
     val status: RideStatus = RideStatus.OPEN,
     val animal: Animal,

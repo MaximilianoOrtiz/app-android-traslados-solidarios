@@ -13,6 +13,7 @@
     <string name="ride_card_status_unknown">Sin estado</string>
     <string name="ride_card_date_today">Hoy</string>
     <string name="ride_card_date_tomorrow">Mañana</string>
+    <string name="ride_card_address_fallback">Sin dirección</string>
 
     <string name="ride_detail_origin">Origen</string>
     <string name="ride_detail_destination">Destino</string>
@@ -34,4 +35,9 @@
     <string name="auth_error_invalid_credentials">Email o contraseña incorrectos</string>
     <string name="auth_error_network">Sin conexión a internet</string>
     <string name="auth_error_unknown">Ocurrió un error inesperado</string>
+
+
+
 </resources>
+
+
