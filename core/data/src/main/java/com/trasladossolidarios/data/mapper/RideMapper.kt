@@ -19,12 +19,6 @@ fun RideDto.toDomain(id: String): Ride =
             ?.toDate()
             ?.toInstant()
             ?: Instant.EPOCH,
-        volunteers = volunteers.map { (volunteerId, dto) ->
-            dto.toDomain(
-                volunteerId = volunteerId,
-                rideId = id,
-            )
-        },
     )
 
 fun Ride.toDto(): RideDto =
@@ -40,9 +34,6 @@ fun Ride.toDto(): RideDto =
         dateOfTransfer = com.google.firebase.Timestamp(
             java.util.Date.from(dateOfTransfer)
         ),
-        volunteers = volunteers.associate { volunteer ->
-            volunteer.volunteerId to volunteer.toDto()
-        },
     )
 
 private fun String.toRideStatus(): RideStatus =

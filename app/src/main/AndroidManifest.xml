@@ -6,12 +6,14 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <!--Permisos de para la camara y opcional para dispositivos sin camara-->
-    <uses-permission android:name="android.permission.CAMERA" />
     <uses-feature android:name="android.hardware.camera" android:required="false" />
 
-    <!--Permisos de ubicación precisa y aproximada-->
+    <!-- Permiso para GPS de alta precisión -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!-- Permiso para ubicación aproximada (triangulación por antenas/Wi-Fi) -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- Permiso de red para que Geocoder consulte la dirección de las coordenadas -->
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".ComposeTrasladosSolidariosApp"

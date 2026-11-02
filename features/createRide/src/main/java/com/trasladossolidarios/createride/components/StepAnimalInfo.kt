@@ -1,8 +1,10 @@
 package com.trasladossolidarios.createride.components
 
+import android.content.Context
 import android.net.Uri
-import androidx.activity.result.contract.ActivityResultContracts
+import android.os.Environment
 import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -11,13 +13,17 @@ import androidx.compose.material.icons.filled.CameraAlt
 import androidx.compose.material.icons.filled.PhotoLibrary
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.trasladossolidarios.ui.theme.AppTheme
+import androidx.core.content.FileProvider
 import com.trasladossolidarios.createride.CreateRideUiState
 import com.trasladossolidarios.domain.enum.AnimalSpecies
+import com.trasladossolidarios.ui.theme.AppTheme
+import java.io.File
 
 @Composable
 fun StepAnimalInfo(
@@ -26,10 +32,21 @@ fun StepAnimalInfo(
     onPhotoSelected: (Uri) -> Unit,
     onNext: () -> Unit
 ) {
-    var name by remember { mutableStateOf(uiState.animalName) }
-    var species by remember { mutableStateOf(uiState.animalSpecies) }
-    var description by remember { mutableStateOf(uiState.animalDescription) }
+    val context = LocalContext.current
+    // Guardar la URI como String en rememberSaveable para que sobreviva a la recreación de la Activity
+    var tempCameraUriString by rememberSaveable { mutableStateOf<String?>(null) }
 
+    // Launcher para la cámara del sistema
+    val cameraLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.TakePicture()
+    ) { success ->
+        if (success && !tempCameraUriString.isNullOrEmpty()) {
+            val savedUri = Uri.parse(tempCameraUriString)
+            onPhotoSelected(savedUri)
+        }
+    }
+
+    // Launcher para la galería
     val galleryLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
@@ -40,22 +57,28 @@ fun StepAnimalInfo(
         modifier = Modifier
             .fillMaxSize()
             .padding(AppTheme.spacing.md)
-            .verticalScroll(rememberScrollState())
+            .verticalScroll(rememberScrollState()),
+        verticalArrangement = Arrangement.spacedBy(AppTheme.spacing.md)
     ) {
+        // --- 1. FOTO DEL ANIMAL ---
         Text(
-            text = "FOTO DEL ANIMAL",
+            text = "FOTO DEL ANIMAL",//fix
             style = AppTheme.typography.labelMedium,
             fontWeight = FontWeight.Bold,
             color = AppTheme.colors.onSurfaceVariant
         )
-        Spacer(modifier = Modifier.height(AppTheme.spacing.xs))
 
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.sm)
         ) {
+            // Botón Tomar Foto (Cámara)
             OutlinedCard(
-                onClick = { /* Lógica de Cámara */ },
+                onClick = {
+                    val uri = createImageUri(context)
+                    tempCameraUriString = uri.toString()
+                    cameraLauncher.launch(uri)
+                },
                 modifier = Modifier.weight(1f).height(100.dp),
                 shape = AppTheme.shapes.medium
             ) {
@@ -73,6 +96,7 @@ fun StepAnimalInfo(
                 }
             }
 
+            // Botón Elegir de Galería
             OutlinedCard(
                 onClick = { galleryLauncher.launch("image/*") },
                 modifier = Modifier.weight(1f).height(100.dp),
@@ -93,75 +117,85 @@ fun StepAnimalInfo(
             }
         }
 
-        Spacer(modifier = Modifier.height(AppTheme.spacing.md))
-
+        // --- 2. TIPO DE ANIMAL ---
         Text(
-            text = "TIPO DE ANIMAL",
+            text = "TIPO DE ANIMAL *",
             style = AppTheme.typography.labelMedium,
             fontWeight = FontWeight.Bold,
             color = AppTheme.colors.onSurfaceVariant
         )
-        Spacer(modifier = Modifier.height(AppTheme.spacing.xs))
 
         Row(horizontalArrangement = Arrangement.spacedBy(AppTheme.spacing.xs)) {
-            FilterChip(
-                selected = species == AnimalSpecies.DOG,
-                onClick = { species = AnimalSpecies.DOG },
-                label = { Text("Perro", style = AppTheme.typography.bodyMedium) }
+            AnimalSpecies.entries.forEach { speciesItem ->
+                FilterChip(
+                    selected = uiState.animalSpecies == speciesItem,
+                    onClick = {
+                        onUpdateInfo(uiState.animalName, speciesItem, uiState.animalDescription)
+                    },
+                    label = {
+                        val labelText = when (speciesItem) {
+                            AnimalSpecies.DOG -> "Perro"
+                            AnimalSpecies.CAT -> "Gato"
+                            else -> "Otro"
+                        }
+                        Text(labelText, style = AppTheme.typography.bodyMedium)
+                    }
+                )
+            }
+        }
+
+        // --- 3. NOMBRE DEL ANIMAL ---
+        Column {
+            Text(
+                text = "Nombre del animal *",
+                style = AppTheme.typography.labelMedium,
+                fontWeight = FontWeight.Bold,
+                color = AppTheme.colors.onSurfaceVariant
             )
-            FilterChip(
-                selected = species == AnimalSpecies.CAT,
-                onClick = { species = AnimalSpecies.CAT },
-                label = { Text("Gato", style = AppTheme.typography.bodyMedium) }
+            Spacer(modifier = Modifier.height(AppTheme.spacing.xs))
+            OutlinedTextField(
+                value = uiState.animalName,
+                onValueChange = { newName ->
+                    onUpdateInfo(newName, uiState.animalSpecies, uiState.animalDescription)
+                },
+                placeholder = { Text("¿Cómo se llama?") },
+                modifier = Modifier.fillMaxWidth(),
+                shape = AppTheme.shapes.medium,
+                singleLine = true
             )
-            FilterChip(
-                selected = species == AnimalSpecies.OTHER,
-                onClick = { species = AnimalSpecies.OTHER },
-                label = { Text("Otro", style = AppTheme.typography.bodyMedium) }
+        }
+
+        // --- 4. DESCRIPCIÓN ---
+        Column {
+            Text(
+                text = "Descripción *",
+                style = AppTheme.typography.labelMedium,
+                fontWeight = FontWeight.Bold,
+                color = AppTheme.colors.onSurfaceVariant
+            )
+            Spacer(modifier = Modifier.height(AppTheme.spacing.xs))
+            OutlinedTextField(
+                value = uiState.animalDescription,
+                onValueChange = { newDesc ->
+                    onUpdateInfo(uiState.animalName, uiState.animalSpecies, newDesc)
+                },
+                placeholder = { Text("Contanos un poco sobre el animal...") },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(120.dp),
+                shape = AppTheme.shapes.medium
             )
         }
 
         Spacer(modifier = Modifier.height(AppTheme.spacing.md))
 
-        Text(
-            text = "Nombre del animal",
-            style = AppTheme.typography.labelMedium,
-            fontWeight = FontWeight.Bold,
-            color = AppTheme.colors.onSurfaceVariant
-        )
-        OutlinedTextField(
-            value = name,
-            onValueChange = { name = it },
-            placeholder = { Text("¿Cómo se llama?") },
-            modifier = Modifier.fillMaxWidth(),
-            shape = AppTheme.shapes.medium
-        )
-
-        Spacer(modifier = Modifier.height(AppTheme.spacing.md))
-
-        Text(
-            text = "Descripción",
-            style = AppTheme.typography.labelMedium,
-            fontWeight = FontWeight.Bold,
-            color = AppTheme.colors.onSurfaceVariant
-        )
-        OutlinedTextField(
-            value = description,
-            onValueChange = { description = it },
-            placeholder = { Text("Contanos un poco sobre el animal...") },
-            modifier = Modifier.fillMaxWidth().height(120.dp),
-            shape = AppTheme.shapes.medium
-        )
-
-        Spacer(modifier = Modifier.weight(1f))
-        Spacer(modifier = Modifier.height(AppTheme.spacing.lg))
-
+        // --- 5. BOTÓN CONTINUAR ---
         Button(
-            onClick = {
-                onUpdateInfo(name, species, description)
-                onNext()
-            },
-            modifier = Modifier.fillMaxWidth().height(54.dp),
+            onClick = onNext,
+            enabled = uiState.isStep0Valid,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(54.dp),
             shape = AppTheme.shapes.large,
             colors = ButtonDefaults.buttonColors(
                 containerColor = AppTheme.colors.primary,
@@ -175,4 +209,18 @@ fun StepAnimalInfo(
             )
         }
     }
+}
+
+// Función auxiliar para crear un archivo temporal y obtener su URI seguro
+private fun createImageUri(context: Context): Uri {
+    val file = File.createTempFile(
+        "animal_${System.currentTimeMillis()}",
+        ".jpg",
+        context.cacheDir
+    )
+    return FileProvider.getUriForFile(
+        context,
+        "${context.packageName}.fileprovider",
+        file
+    )
 }

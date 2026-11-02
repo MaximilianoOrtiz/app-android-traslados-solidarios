@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Errores de validación de pasos -->
+    <string name="error_fill_animal_name_and_description">Por favor completá el nombre y la descripción del animal.</string>
+    <string name="error_fill_origin_destination_date_time">Por favor completá el origen, destino, fecha y hora.</string>
+
+    <!-- Errores de publicación -->
+    <string name="error_auth_required">Debés iniciar sesión para publicar un traslado.</string>
+    <string name="error_fill_required_fields">Por favor completá el nombre del animal, origen y destino.</string>
+    <string name="error_unexpected">Ocurrió un error inesperado al publicar.</string>
+
+    <!-- Valores por defecto -->
+    <string name="current_location">Ubicación actual</string>
+</resources>

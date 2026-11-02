@@ -16,6 +16,7 @@ import com.trasladossolidarios.createride.components.StepAnimalInfo
 import com.trasladossolidarios.createride.components.StepRideDetails
 import com.trasladossolidarios.createride.components.StepReview
 import com.trasladossolidarios.domain.enum.AnimalSpecies
+import com.trasladossolidarios.domain.model.Location
 
 @Composable
 fun CreateRideRouter(
@@ -43,8 +44,13 @@ fun CreateRideRouter(
         onUpdateAnimalInfo = viewModel::updateAnimalInfo,
         onPhotoSelected = viewModel::setAnimalPhoto,
         onUpdateRideDetails = viewModel::updateRideDetails,
+        onOriginAddressChanged = viewModel::onOriginAddressChanged,
+        onOriginSuggestionSelected = viewModel::onOriginSuggestionSelected,
+        onDestinationAddressChange = viewModel::onDestinationAddressChanged,
+        onDestinationSuggestionSelected = viewModel::onDestinationSuggestionSelected,
         onFetchLocation = viewModel::fetchCurrentLocation,
         onNextStep = viewModel::nextStep,
+        previousStep = viewModel::previousStep,
         onPublishRide = viewModel::publishRide
     )
 }
@@ -57,8 +63,13 @@ fun CreateRideScreen(
     onUpdateAnimalInfo: (String, AnimalSpecies, String) -> Unit,
     onPhotoSelected: (Uri) -> Unit,
     onUpdateRideDetails: (String, String, String, String, String) -> Unit,
+    onOriginAddressChanged:(String) -> Unit,
+    onOriginSuggestionSelected:(Location) -> Unit,
+    onDestinationAddressChange: (String) -> Unit,
+    onDestinationSuggestionSelected: (Location) -> Unit,
     onFetchLocation: () -> Unit,
     onNextStep: () -> Unit,
+    previousStep : () -> Unit,
     onPublishRide: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -68,7 +79,7 @@ fun CreateRideScreen(
             TopAppBar(
                 title = {
                     Text(
-                        text = "Necesito un traslado",
+                        text = "Necesito un traslado",//fix
                         style = AppTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold
                     )
@@ -126,9 +137,48 @@ fun CreateRideScreen(
                 )
                 1 -> StepRideDetails(
                     uiState = uiState,
-                    onUpdateDetails = onUpdateRideDetails,
-                    onFetchLocation = onFetchLocation,
-                    onNext = onNextStep
+                    originAddress = uiState.originAddress,
+                    originSuggestions = uiState.originSuggestions,
+                    destinationAddress = uiState.destinationAddress,
+                    destinationSuggestions = uiState.destinationSuggestions,
+                    date = uiState.date,
+                    time = uiState.time,
+                    observations = uiState.observations,
+                    isLoadingLocation = uiState.isLoadingLocation,
+                    onOriginAddressChange = onOriginAddressChanged,
+                    onOriginSuggestionSelected = onOriginSuggestionSelected,
+                    onDestinationAddressChange = onDestinationAddressChange,
+                    onDestinationSuggestionSelected = onDestinationSuggestionSelected,
+                    onDateChange = { date ->
+                        onUpdateRideDetails(
+                            uiState.originAddress,
+                            uiState.destinationAddress,
+                            date,
+                            uiState.time,
+                            uiState.observations
+                        )
+                    },
+                    onTimeChange = { time ->
+                        onUpdateRideDetails(
+                            uiState.originAddress,
+                            uiState.destinationAddress,
+                            uiState.date,
+                            time,
+                            uiState.observations
+                        )
+                    },
+                    onObservationsChange = { obs ->
+                        onUpdateRideDetails(
+                            uiState.originAddress,
+                            uiState.destinationAddress,
+                            uiState.date,
+                            uiState.time,
+                            obs
+                        )
+                    },
+                    onFetchCurrentLocation = onFetchLocation,
+                    onNext = onNextStep,
+                    previousStep = previousStep,
                 )
                 2 -> StepReview(
                     uiState = uiState,

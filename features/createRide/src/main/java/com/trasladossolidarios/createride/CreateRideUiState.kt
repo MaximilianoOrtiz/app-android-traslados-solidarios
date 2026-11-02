@@ -1,6 +1,7 @@
 package com.trasladossolidarios.createride
 
 import android.net.Uri
+import androidx.annotation.StringRes
 import com.trasladossolidarios.domain.enum.AnimalSpecies
 import com.trasladossolidarios.domain.model.Location
 
@@ -17,13 +18,22 @@ data class CreateRideUiState(
     val originAddress: String = "",
     val originLocation: Location? = null,
     val destinationAddress: String = "",
+    val originSuggestions: List<Location> = emptyList(),
     val destinationLocation: Location? = null,
+    val destinationSuggestions: List<Location> = emptyList(),
     val date: String = "",
     val time: String = "",
     val observations: String = "",
 
     // Estados de carga e interacción
+    val isLoadingLocation: Boolean = false,
     val isLoading: Boolean = false,
     val isSuccess: Boolean = false,
-    val errorMessage: String? = null
-)
+    @StringRes val errorMessage: Int? = null
+) {
+    val isStep0Valid: Boolean
+        get() = animalName.isNotBlank() && animalDescription.isNotBlank()
+
+    val isStep1Valid: Boolean
+        get() = originAddress.isNotBlank() && destinationAddress.isNotBlank() && date.isNotBlank() && time.isNotBlank()
+}
