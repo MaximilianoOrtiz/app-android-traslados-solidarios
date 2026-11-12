@@ -6,9 +6,8 @@ import com.trasladossolidarios.domain.enum.RideStatus
 import com.trasladossolidarios.domain.repository.RidesRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import javax.inject.Inject
 
-class ObserveMyRidesUseCase @Inject constructor(
+class ObserveMyRidesUseCase constructor(
     private val ridesRepository: RidesRepository,
 ) {
     operator fun invoke(ownerId: String): Flow<AppResult<List<Ride>>> =

@@ -12,10 +12,9 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
-import javax.inject.Inject
 
 
-class RideRepositoryImpl @Inject constructor(
+class RideRepositoryImpl constructor(
     private val rideRemoteDataSource: RideRemoteDataSource
 ): RidesRepository {
 

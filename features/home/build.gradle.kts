@@ -1,8 +1,6 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.ksp)
-    alias(libs.plugins.hilt)
 }
 
 android {
@@ -42,7 +40,6 @@ dependencies {
     implementation(project(":core:domain"))
     implementation(project(":core:ui"))
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.11.0")
-    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
     implementation("androidx.compose.material:material-icons-core")
     implementation("androidx.compose.material:material-icons-extended")
 
@@ -57,8 +54,8 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.junit)
 
-    // La feature solo necesita Hilt para anotar sus ViewModels (@HiltViewModel).
-    // Quién construye los casos de uso que recibe es problema de otras capas.
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.compiler)
+    // La feature registra su ViewModel con viewModel { } y HomeRouter usa
+    // koinViewModel() como parámetro por defecto del composable.
+    implementation(libs.koin.android)
+    implementation(libs.koin.compose.viewmodel)
 }

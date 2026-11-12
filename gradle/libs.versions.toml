@@ -20,13 +20,11 @@ material3AdaptiveNav3 = "1.4.0-alpha02"
 playServicesCast = "22.3.1"
 material3 = "1.4.0"
 roomKtx = "2.8.5"
-# KSP procesa las anotaciones de Hilt y genera el código del grafo.
+# KSP genera el código de Room (core:database).
 # Desde 2.3.0 KSP tiene versionado propio (antes era "<kotlin>-<ksp>").
 ksp = "2.3.12"
-hilt = "2.60.1"
-# androidx.hilt: el puente entre Hilt y Compose/Navigation (hiltViewModel()).
-androidxHilt = "1.4.0"
-javaxInject = "1"
+# Koin: DI multiplataforma (koin-core es KMP-ready para la migración).
+koin = "4.2.2"
 uiGraphics = "1.12.1"
 foundationLayout = "1.12.1"
 runtime = "1.12.1"
@@ -68,14 +66,13 @@ play-services-cast = { group = "com.google.android.gms", name = "play-services-c
 androidx-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material3" }
 androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomKtx" }
 
-# --- Inyección de dependencias ---
-# javax.inject: solo las anotaciones (@Inject, @Qualifier). Lo usa :core:domain,
-# que es Kotlin puro y no debe conocer Android ni Hilt.
-javax-inject = { group = "javax.inject", name = "javax.inject", version.ref = "javaxInject" }
-hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
-hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
-hilt-android-testing = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "hilt" }
-androidx-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-lifecycle-viewmodel-compose", version.ref = "androidxHilt" }
+# --- Inyección de dependencias (Koin) ---
+# koin-core: DSL multiplataforma (module/single/get).
+# koin-android: androidContext() + DSL viewModel (trae koin-core-viewmodel).
+# koin-compose-viewmodel: koinViewModel() en Compose.
+koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
+koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
+koin-compose-viewmodel = { group = "io.insert-koin", name = "koin-compose-viewmodel", version.ref = "koin" }
 androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics", version.ref = "uiGraphics" }
 androidx-compose-foundation-layout = { group = "androidx.compose.foundation", name = "foundation-layout", version.ref = "foundationLayout" }
 androidx-compose-runtime = { group = "androidx.compose.runtime", name = "runtime", version.ref = "runtime" }
@@ -99,5 +96,4 @@ jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrai
 android-library = { id = "com.android.library", version.ref = "agp" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
-hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 

@@ -5,9 +5,8 @@ import com.trasladossolidarios.domain.model.Ride
 import com.trasladossolidarios.domain.model.RideDetail
 import com.trasladossolidarios.domain.repository.RidesRepository
 import com.trasladossolidarios.domain.repository.UserRepository
-import javax.inject.Inject
 
-class GetRideDetailByIdUseCase @Inject constructor(
+class GetRideDetailByIdUseCase constructor(
     private val rideRepository: RidesRepository,
     private val userRepository: UserRepository
 ) {

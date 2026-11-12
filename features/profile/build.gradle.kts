@@ -1,8 +1,6 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.ksp)
-    alias(libs.plugins.hilt)
 }
 
 android {
@@ -52,8 +50,7 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.junit)
 
-    // La feature solo necesita Hilt para anotar sus ViewModels (@HiltViewModel).
+    // La feature solo registra su ViewModel con el DSL viewModel { } de Koin.
     // Quién construye los casos de uso que recibe es problema de otras capas.
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.compiler)
+    implementation(libs.koin.android)
 }

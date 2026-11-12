@@ -5,14 +5,11 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.trasladossolidarios.domain.usecase.auth.ObserveAuthStateUseCase
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import javax.inject.Inject
 
-@HiltViewModel
-class SessionViewModel @Inject constructor(
+class SessionViewModel(
     observeAuthState: ObserveAuthStateUseCase
 ) : ViewModel() {
 

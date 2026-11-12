@@ -4,16 +4,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.trasladossolidarios.domain.common.AppResult
 import com.trasladossolidarios.domain.usecase.ride.ObserveAvailableRidesUseCase
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-class OpenRidesViewModel @Inject constructor(
+class OpenRidesViewModel(
     private  val observeAvailableRides: ObserveAvailableRidesUseCase
 ) : ViewModel() {
 

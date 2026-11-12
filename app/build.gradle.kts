@@ -4,8 +4,6 @@ plugins {
     id("com.google.gms.google-services")
     // Genera el código de serialización de las rutas de navegación type-safe (@Serializable)
     alias(libs.plugins.kotlin.serialization)
-    alias(libs.plugins.ksp)
-    alias(libs.plugins.hilt)
 }
 
 android {
@@ -72,10 +70,10 @@ dependencies {
     implementation(libs.kotlinx.serialization.core)
     implementation(libs.play.services.cast)
 
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.compiler)
-    // hiltViewModel(): el puente entre el grafo de Hilt y los ViewModel de Compose
-    implementation(libs.androidx.hilt.navigation.compose)
+    // Koin: startKoin() + androidContext() en la Application
+    implementation(libs.koin.android)
+    // koinViewModel(): puente entre Koin y los ViewModel de Compose
+    implementation(libs.koin.compose.viewmodel)
 
 
     testImplementation(libs.junit)

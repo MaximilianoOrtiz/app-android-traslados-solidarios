@@ -5,16 +5,11 @@ import android.net.Uri
 import com.cloudinary.android.MediaManager
 import com.cloudinary.android.callback.ErrorInfo
 import com.cloudinary.android.callback.UploadCallback
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.suspendCancellableCoroutine
-import javax.inject.Inject
-import javax.inject.Singleton
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
-
-@Singleton
-class CloudinaryDataSource @Inject constructor(
-    @ApplicationContext private val context: Context
+class CloudinaryDataSource constructor(
+    private val context: Context
 ) {
     suspend fun uploadImage(fileUri: Uri): String = suspendCancellableCoroutine { continuation ->
         val requestId = MediaManager.get().upload(fileUri)

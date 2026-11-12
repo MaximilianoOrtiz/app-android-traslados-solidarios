@@ -8,7 +8,6 @@ import com.google.android.gms.location.Priority
 import com.google.android.gms.tasks.CancellationTokenSource
 import com.trasladossolidarios.domain.location.LocationTracker
 import com.trasladossolidarios.domain.model.Location
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
@@ -17,10 +16,9 @@ import org.json.JSONObject
 import java.net.HttpURLConnection
 import java.net.URL
 import java.net.URLEncoder
-import javax.inject.Inject
 
-class LocationTrackerImpl @Inject constructor(
-    @ApplicationContext private val context: Context,
+class LocationTrackerImpl constructor(
+    private val context: Context,
     private val fusedLocationClient: FusedLocationProviderClient
 ) : LocationTracker {
 

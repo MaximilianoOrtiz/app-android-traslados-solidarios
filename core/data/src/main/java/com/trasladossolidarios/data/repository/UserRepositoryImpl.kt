@@ -8,10 +8,9 @@ import com.trasladossolidarios.domain.common.DomainError
 import com.trasladossolidarios.domain.model.User
 import com.trasladossolidarios.domain.repository.UserRepository
 import com.trasladossolidarios.network.firestore.datasourse.UserFirestoreDataSource
-import javax.inject.Inject
 import kotlin.coroutines.cancellation.CancellationException
 
-class UserRepositoryImpl  @Inject constructor(
+class UserRepositoryImpl  constructor(
     private val userDataSourse: UserFirestoreDataSource
 ): UserRepository{
 

@@ -4,9 +4,8 @@ import com.trasladossolidarios.domain.common.AppResult
 import com.trasladossolidarios.domain.model.Ride
 import com.trasladossolidarios.domain.repository.RidesRepository
 import kotlinx.coroutines.flow.Flow
-import javax.inject.Inject
 
-class ObserveAvailableRidesUseCase @Inject constructor(
+class ObserveAvailableRidesUseCase constructor(
     private val rideRepository: RidesRepository,
 ) {
     suspend operator fun invoke(

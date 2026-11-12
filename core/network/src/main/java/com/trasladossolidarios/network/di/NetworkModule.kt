@@ -1,19 +1,20 @@
 package com.trasladossolidarios.network.di
 
 import com.google.firebase.firestore.FirebaseFirestore
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
+import com.trasladossolidarios.network.cloudinary.datasource.CloudinaryDataSource
+import com.trasladossolidarios.network.firestore.datasourse.RideRemoteDataSource
+import com.trasladossolidarios.network.firestore.datasourse.UserFirestoreDataSource
+import com.trasladossolidarios.network.firestore.datasourse.VolunteerFirestoreDataSource
+import org.koin.android.ext.koin.androidContext
+import org.koin.dsl.module
 
-@Module
-@InstallIn(SingletonComponent::class)
-object NetworkModule {
+val networkModule = module {
 
-    @Provides
-    @Singleton
-    fun provideFirebaseFirestore(): FirebaseFirestore {
-        return FirebaseFirestore.getInstance()
-    }
+    single<FirebaseFirestore> { FirebaseFirestore.getInstance() }
+
+    single { CloudinaryDataSource(androidContext()) }
+
+    single { RideRemoteDataSource(get()) }
+    single { UserFirestoreDataSource(get()) }
+    single { VolunteerFirestoreDataSource(get()) }
 }

@@ -15,11 +15,9 @@ kotlin {
 
 dependencies {
     implementation(libs.kotlinx.coroutines.core)
-    // Solo las ANOTACIONES de inyección (@Inject, @Qualifier), no una librería de DI.
-    // El dominio declara "necesito un Repository" sin saber quién se lo va a dar
-    // ni con qué framework: por eso acá no hay Hilt, ni Android.
-    // Es `api` para que los módulos que lo consumen vean las anotaciones.
-    api(libs.javax.inject)
+    // Koin (koin-core es multiplataforma): domainModule registra los use cases.
+    // El dominio no conoce Android ni frameworks de UI; Koin core es puro Kotlin/JVM.
+    implementation(libs.koin.core)
 
     testImplementation(libs.junit)
     testImplementation(libs.kotlinx.coroutines.test)

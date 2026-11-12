@@ -10,9 +10,8 @@ import com.trasladossolidarios.domain.repository.FirebaseAuthRepository
 import com.trasladossolidarios.domain.repository.UserRepository
 import com.trasladossolidarios.domain.repository.VolunteerRepository
 import java.time.Instant
-import javax.inject.Inject
 
-class ApplyToRideUseCase @Inject constructor(
+class ApplyToRideUseCase constructor(
     private val  volunteerRepository: VolunteerRepository,
     private  val authRepositoy : FirebaseAuthRepository,
     private  val userRepository: UserRepository

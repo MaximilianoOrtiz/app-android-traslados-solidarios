@@ -4,9 +4,8 @@ import com.trasladossolidarios.domain.common.AppResult
 import com.trasladossolidarios.domain.common.DomainError
 import com.trasladossolidarios.domain.model.User
 import com.trasladossolidarios.domain.repository.FirebaseAuthRepository
-import javax.inject.Inject
 
-class LoginUserUseCase @Inject constructor (private val authRepository: FirebaseAuthRepository){
+class LoginUserUseCase constructor (private val authRepository: FirebaseAuthRepository){
 
     suspend operator fun invoke (email: String, password: String): AppResult<User>{
         //isBlack es true si el texto esta vacio o solo tiene espacios

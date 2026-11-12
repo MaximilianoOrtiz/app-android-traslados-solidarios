@@ -2,9 +2,8 @@ package com.trasladossolidarios.domain.usecase.ride
 
 import com.trasladossolidarios.domain.common.AppResult
 import com.trasladossolidarios.domain.repository.RidesRepository
-import javax.inject.Inject
 /*
-class RefreshMyRidesUseCase @Inject constructor(
+class RefreshMyRidesUseCase constructor(
     private val repository: RidesRepository,
 ) {
     suspend operator fun invoke(userId: String): AppResult<Unit> =

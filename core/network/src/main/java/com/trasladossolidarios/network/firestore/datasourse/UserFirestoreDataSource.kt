@@ -5,9 +5,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.toObject
 import com.trasladossolidarios.network.firestore.dto.UserDto
 import kotlinx.coroutines.tasks.await
-import javax.inject.Inject
 
-class UserFirestoreDataSource @Inject constructor(
+class UserFirestoreDataSource constructor(
     private val firestore: FirebaseFirestore)
 {
 

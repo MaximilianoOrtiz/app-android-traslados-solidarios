@@ -2,7 +2,6 @@ package com.trasladossolidarios.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.navigation3.rememberViewModelStoreNavEntryDecorator
 import androidx.navigation3.runtime.NavEntry
 import androidx.navigation3.runtime.NavKey
@@ -23,6 +22,8 @@ import com.trasladossolidarios.openrides.list.OpenRidesViewModel
 
 import com.trasladossolidarios.profile.ProfileRouter
 import com.trasladossolidarios.profile.ProfileViewModel
+import org.koin.compose.viewmodel.koinViewModel
+import org.koin.core.parameter.parametersOf
 import kotlin.String
 
 /**
@@ -39,14 +40,14 @@ fun AppNavDisplay(
     val entryProvider = entryProvider<NavKey> {
 
         entry<ProfileDestination> {
-            val profileViewModel: ProfileViewModel = hiltViewModel()
+            val profileViewModel: ProfileViewModel = koinViewModel()
             ProfileRouter(
                 profileViewModel
             )
         }
 
         entry<HomeDestination> {
-            val homeViewModel: HomeViewModel = hiltViewModel()
+            val homeViewModel: HomeViewModel = koinViewModel()
             HomeRouter(
                 viewModel = homeViewModel,
                 onNavigateToCreateRide = {
@@ -56,7 +57,7 @@ fun AppNavDisplay(
         }
 
         entry<CreateRideDestination> {
-            val createRideViewModel: CreateRideViewModel = hiltViewModel()
+            val createRideViewModel: CreateRideViewModel = koinViewModel()
             CreateRideRouter(
                 onBackClick = navigationState::goBack,
                 onRideCreatedSuccess = navigationState::goBack,
@@ -65,7 +66,7 @@ fun AppNavDisplay(
         }
 
         entry<MyRidesDestination> {
-            val myRidesViewModel: MyRidesViewModel = hiltViewModel()
+            val myRidesViewModel: MyRidesViewModel = koinViewModel()
             MyRidesRouter(
                 currentUserId,
                 myRidesViewModel,
@@ -74,7 +75,7 @@ fun AppNavDisplay(
         }
 
         entry<OpenRidesDestination> {
-            val openRidesViewModel: OpenRidesViewModel = hiltViewModel()
+            val openRidesViewModel: OpenRidesViewModel = koinViewModel()
             OpenRidesRouter(
                 currentUserId,
                 viewModel = openRidesViewModel,
@@ -82,16 +83,17 @@ fun AppNavDisplay(
             )
         }
         entry<RideDetailDestination> { key ->
-            // El detalle necesita un dato que Hilt NO puede conocer: el id que eligió el
-            // usuario. Se lo pasamos con la @AssistedFactory del ViewModel; el resto de
-            // las dependencias las sigue poniendo el grafo.
+            // El detalle necesita un dato que Koin no puede adivinar: el id que eligió
+            // el usuario. Se lo pasamos como parámetro de la definición viewModel { }
+            // del módulo openRidesViewModelModule; el resto de las dependencias las
+            // resuelve Koin con get().
             //
             // No hace falta un `key` string para distinguir instancias: el
             // rememberViewModelStoreNavEntryDecorator de abajo le da a cada entrada del
             // back stack su propio ViewModelStore (usa NavEntry.contentKey).
-            val viewModel = hiltViewModel<RideDetailViewModel, RideDetailViewModel.Factory>(
-                creationCallback = { factory -> factory.create(key.rideId) }
-            )
+            val viewModel = koinViewModel<RideDetailViewModel> {
+                parametersOf(key.rideId)
+            }
             RideDetailRoute(
                 viewModel = viewModel,
                 onBack = { navigationState.goBackFrom(key) },

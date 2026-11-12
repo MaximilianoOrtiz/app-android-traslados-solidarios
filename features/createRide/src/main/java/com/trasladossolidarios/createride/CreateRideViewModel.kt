@@ -7,30 +7,27 @@ import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
-import com.trasladossolidarios.data.repository.RideRepositoryImpl
 import com.trasladossolidarios.domain.enum.AnimalSpecies
 import com.trasladossolidarios.domain.location.LocationTracker
 import com.trasladossolidarios.domain.model.Animal
 import com.trasladossolidarios.domain.model.Location
 import com.trasladossolidarios.domain.model.Ride
 import com.trasladossolidarios.network.cloudinary.datasource.CloudinaryDataSource
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 import android.util.Log
 import com.trasladossolidarios.domain.repository.FirebaseAuthRepository
+import com.trasladossolidarios.domain.repository.RidesRepository
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 
-@HiltViewModel
-class CreateRideViewModel @Inject constructor(
+class CreateRideViewModel(
     private val locationTracker: LocationTracker,
     private val cloudinaryDataSource: CloudinaryDataSource,
-    private val rideRepositoryImpl: RideRepositoryImpl,
+    private val rideRepository: RidesRepository,
     private val firebaseAuthRepository: FirebaseAuthRepository
 ) : ViewModel() {
 
@@ -249,7 +246,7 @@ class CreateRideViewModel @Inject constructor(
                 )
 
                 // 3. Invocar la abstracción de Dominio (UseCase o Repositorio inyectado por interfaz)
-                rideRepositoryImpl.createRide(ride)
+                rideRepository.createRide(ride)
                 _uiState.update { it.copy(isLoading = false, isSuccess = true) }
 
             } catch (e: Exception) {

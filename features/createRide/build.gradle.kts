@@ -1,8 +1,6 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.hilt)
-    alias(libs.plugins.ksp)
     alias(libs.plugins.kotlin.serialization)
 }
 
@@ -27,17 +25,15 @@ android {
 }
 
 dependencies {
-    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
     implementation(project(":core:data"))
     implementation(project(":core:network"))
     implementation(project(":core:ui"))
     implementation(libs.androidx.material3)
     implementation(libs.androidx.navigation3.runtime)
     implementation(libs.androidx.room.ktx)
-    implementation(libs.hilt.android)
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.11.0")
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.compiler)
+    // La feature registra su ViewModel con el DSL viewModel { } de Koin.
+    implementation(libs.koin.android)
     implementation(platform(libs.androidx.compose.bom))
     implementation("androidx.compose.material:material-icons-core")
     implementation("androidx.compose.material:material-icons-extended")

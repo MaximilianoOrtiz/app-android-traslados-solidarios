@@ -9,38 +9,14 @@ import com.trasladossolidarios.domain.repository.FirebaseAuthRepository
 import com.trasladossolidarios.domain.repository.RidesRepository
 import com.trasladossolidarios.domain.repository.UserRepository
 import com.trasladossolidarios.domain.repository.VolunteerRepository
-import dagger.Binds
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
+import org.koin.dsl.module
 
-@Module
-@InstallIn(SingletonComponent::class)
-abstract class DataModule {
+val dataModule = module {
 
-    @Binds
-    @Singleton
-    abstract fun bindFirebaseAuthRepository(impl: FirebaseAuthRepositoryImpl): FirebaseAuthRepository
+    single<FirebaseAuth> { FirebaseAuth.getInstance() }
 
-    @Binds
-    @Singleton
-    abstract fun bindUserRepository(impl: UserRepositoryImpl): UserRepository
-
-    @Binds
-    @Singleton
-    abstract fun bindRideRepository(impl: RideRepositoryImpl): RidesRepository
-
-    @Binds
-    @Singleton
-    abstract fun bindVolunteerRepository(impl: VolunteerRepositoryImpl): VolunteerRepository
-
-    companion object {
-        @Provides
-        @Singleton
-        fun provideFirebaseAuth(): FirebaseAuth {
-            return FirebaseAuth.getInstance()
-        }
-    }
+    single<FirebaseAuthRepository> { FirebaseAuthRepositoryImpl(get()) }
+    single<UserRepository> { UserRepositoryImpl(get()) }
+    single<RidesRepository> { RideRepositoryImpl(get()) }
+    single<VolunteerRepository> { VolunteerRepositoryImpl(get()) }
 }

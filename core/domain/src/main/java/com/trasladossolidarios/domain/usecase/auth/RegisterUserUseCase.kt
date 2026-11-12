@@ -5,10 +5,9 @@ import com.trasladossolidarios.domain.common.DomainError
 import com.trasladossolidarios.domain.model.User
 import com.trasladossolidarios.domain.repository.FirebaseAuthRepository
 import com.trasladossolidarios.domain.repository.UserRepository
-import javax.inject.Inject
 
 
-class RegisterUserUseCase @Inject constructor(
+class RegisterUserUseCase constructor(
     private val authRepository: FirebaseAuthRepository,
     private val userRepository: UserRepository
 ) {

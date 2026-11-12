@@ -1,6 +1,5 @@
 plugins {
     alias(libs.plugins.android.library)
-    alias(libs.plugins.ksp)
 }
 
 android {
@@ -29,9 +28,8 @@ dependencies {
     implementation("com.google.android.gms:play-services-location:21.3.0")
     // Soporte para await() en tareas de Play Services
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.8.1")
-    // Hilt Injection
-    implementation("com.google.dagger:hilt-android:2.51.1")
-    ksp("com.google.dagger:hilt-compiler:2.60.1")
+    // Koin: locationModule (LocationTracker + FusedLocationProviderClient) — usa androidContext()
+    implementation(libs.koin.android)
 
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.core.ktx)

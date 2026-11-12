@@ -2,9 +2,8 @@ package com.trasladossolidarios.domain.usecase.ride
 
 import com.trasladossolidarios.domain.model.Ride
 import com.trasladossolidarios.domain.repository.RidesRepository
-import javax.inject.Inject
 
-class CreateRideUseCase @Inject constructor(
+class CreateRideUseCase constructor(
     private val ridesRepository: RidesRepository
 ) {
     suspend operator fun invoke(ride: Ride) {

@@ -1,8 +1,6 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.ksp)
-    alias(libs.plugins.hilt)
 }
 
 android {
@@ -51,8 +49,7 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.junit)
 
-    // La feature solo necesita Hilt para anotar sus ViewModels (@HiltViewModel).
-    // Quién construye los casos de uso que recibe es problema de otras capas.
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.compiler)
+    // La feature registra sus ViewModels con viewModel { } (RideDetail recibe
+    // rideId como parámetro vía parametersOf en el call site).
+    implementation(libs.koin.android)
 }

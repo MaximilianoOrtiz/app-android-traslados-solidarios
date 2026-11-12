@@ -9,9 +9,8 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
-import javax.inject.Inject
 // network/datasource/RideRemoteDataSource.kt
-class RideRemoteDataSource @Inject constructor(
+class RideRemoteDataSource constructor(
     private val firestore: FirebaseFirestore,
 ) {
     private val rides get() = firestore.collection("rides")
