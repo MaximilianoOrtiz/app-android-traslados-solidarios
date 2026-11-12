@@ -1,6 +1,5 @@
 package com.trasladossolidarios.data.repository
 
-import com.google.firebase.firestore.FirebaseFirestoreException
 import com.trasladossolidarios.data.mapper.toDomain
 import com.trasladossolidarios.data.mapper.toDto
 import com.trasladossolidarios.domain.common.AppResult
@@ -8,6 +7,8 @@ import com.trasladossolidarios.domain.common.DomainError
 import com.trasladossolidarios.domain.model.Ride
 import com.trasladossolidarios.domain.repository.RidesRepository
 import com.trasladossolidarios.network.firestore.datasourse.RideRemoteDataSource
+import dev.gitlive.firebase.firestore.FirebaseFirestoreException
+import dev.gitlive.firebase.firestore.FirestoreExceptionCode
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -50,7 +51,7 @@ class RideRepositoryImpl constructor(
                 val domainError = when (exception) {
                     is FirebaseFirestoreException -> {
                         when (exception.code) {
-                            FirebaseFirestoreException.Code.UNAVAILABLE ->
+                            FirestoreExceptionCode.UNAVAILABLE ->
                                 DomainError.Network
 
                             else -> DomainError.Unknow
@@ -75,7 +76,7 @@ class RideRepositoryImpl constructor(
         } catch (exception: FirebaseFirestoreException) {
             AppResult.Error(
                 when (exception.code) {
-                    FirebaseFirestoreException.Code.UNAVAILABLE -> DomainError.Network
+                    FirestoreExceptionCode.UNAVAILABLE -> DomainError.Network
                     else -> DomainError.Unknow
                 }
             )

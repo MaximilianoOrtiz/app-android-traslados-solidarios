@@ -1,8 +1,7 @@
 package com.trasladossolidarios.network.firestore.datasourse
 
-import com.google.firebase.firestore.FirebaseFirestore
 import com.trasladossolidarios.network.firestore.dto.VolunteerDto
-import kotlinx.coroutines.tasks.await
+import dev.gitlive.firebase.firestore.FirebaseFirestore
 
 class VolunteerFirestoreDataSource constructor (
     private val firestore: FirebaseFirestore
@@ -16,7 +15,6 @@ class VolunteerFirestoreDataSource constructor (
             .collection("volunteers")
             .document(volunteerDto.volunteerId)
             .set(volunteerDto)
-            .await()
     }
 
     suspend fun hasApplied(rideId: String, volunteerId: String): Boolean {
@@ -25,7 +23,6 @@ class VolunteerFirestoreDataSource constructor (
             .collection("volunteers")
             .document(volunteerId)
             .get()
-            .await()
-            .exists()
+            .exists
     }
 }

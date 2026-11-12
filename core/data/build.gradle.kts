@@ -27,10 +27,10 @@ dependencies {
     implementation(project(":core:network"))
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.core.ktx)
-    implementation(platform("com.google.firebase:firebase-bom:34.19.0"))
-    implementation("com.google.firebase:firebase-auth")
-    implementation("com.google.firebase:firebase-firestore")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.11.0")
+    // GitLive Firebase (KMP): Firestore y Auth con API multiplataforma
+    // (excepciones y Timestamp viven en estos artefactos).
+    implementation(libs.gitlive.firestore)
+    implementation(libs.gitlive.auth)
     implementation(libs.material)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.espresso.core)

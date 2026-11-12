@@ -29,7 +29,9 @@ uiGraphics = "1.12.1"
 foundationLayout = "1.12.1"
 runtime = "1.12.1"
 lifecycleRuntimeCompose = "2.11.0"
-firebaseFirestoreKtx = "27.1.0"
+# GitLive Firebase: SDK Kotlin Multiplatform que reemplaza al SDK de Android
+# (Firestore/Auth/... con API suspend + Flow, compilable para iOS).
+gitliveFirebase = "2.8.0"
 transportRuntime = "5.0.0"
 media3CommonKtx = "1.11.1"
 # Coil 3.6.x compila con Kotlin 2.4 (trae stdlib 2.4, incompatible con el compilador 2.2 del proyecto).
@@ -77,7 +79,9 @@ androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics", ve
 androidx-compose-foundation-layout = { group = "androidx.compose.foundation", name = "foundation-layout", version.ref = "foundationLayout" }
 androidx-compose-runtime = { group = "androidx.compose.runtime", name = "runtime", version.ref = "runtime" }
 androidx-lifecycle-runtime-compose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "lifecycleRuntimeCompose" }
-firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx", version.ref = "firebaseFirestoreKtx" }
+gitlive-firestore = { group = "dev.gitlive", name = "firebase-firestore", version.ref = "gitliveFirebase" }
+gitlive-auth = { group = "dev.gitlive", name = "firebase-auth", version.ref = "gitliveFirebase" }
+gitlive-app = { group = "dev.gitlive", name = "firebase-app", version.ref = "gitliveFirebase" }
 transport-runtime = { group = "com.google.android.datatransport", name = "transport-runtime", version.ref = "transportRuntime" }
 androidx-media3-common-ktx = { group = "androidx.media3", name = "media3-common-ktx", version.ref = "media3CommonKtx" }
 

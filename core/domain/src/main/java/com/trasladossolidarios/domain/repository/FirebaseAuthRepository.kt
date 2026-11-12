@@ -9,7 +9,7 @@ interface FirebaseAuthRepository {
     //suspend función asincrona. Devuelven User o Error
     suspend fun register (email: String, password: String): AppResult<User>
     suspend fun logIn (email: String, password: String): AppResult<User>
-    fun logout()
+    suspend fun logout()
     fun getCurrentUser(): User?
 
     fun observeAuthState(): Flow<User?> //TODO: Cambiarlo a Flow<Boolean>

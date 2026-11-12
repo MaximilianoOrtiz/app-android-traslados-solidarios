@@ -1,11 +1,15 @@
 package com.trasladossolidarios.network.firestore.dto
 
-import com.google.firebase.firestore.ServerTimestamp
-import com.google.firebase.Timestamp
+import dev.gitlive.firebase.firestore.BaseTimestamp
+import dev.gitlive.firebase.firestore.Timestamp
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class UserDto(
     val firstName: String = "",
     val lastName: String = "",
     val email: String = "",
-    @ServerTimestamp val createdAt: Timestamp? = null,
+    // Sentinel de servidor: al escribirlo, Firestore lo reemplaza con la fecha
+    // real (equivalente Kotlin-first de @ServerTimestamp del SDK de Android).
+    val createdAt: BaseTimestamp = Timestamp.ServerTimestamp,
 )

@@ -3,6 +3,9 @@ package com.trasladossolidarios.data.mapper
 import com.trasladossolidarios.domain.enum.RideStatus
 import com.trasladossolidarios.domain.model.Ride
 import com.trasladossolidarios.network.firestore.dto.RideDto
+import dev.gitlive.firebase.firestore.Timestamp
+import dev.gitlive.firebase.firestore.fromMilliseconds
+import dev.gitlive.firebase.firestore.toMilliseconds
 import java.time.Instant
 
 fun RideDto.toDomain(id: String): Ride =
@@ -16,8 +19,8 @@ fun RideDto.toDomain(id: String): Ride =
         notes = notes,
         acceptedApplicantId = acceptedApplicantId,
         dateOfTransfer = dateOfTransfer
-            ?.toDate()
-            ?.toInstant()
+            ?.toMilliseconds()
+            ?.let { Instant.ofEpochMilli(it.toLong()) }
             ?: Instant.EPOCH,
 
     )
@@ -32,9 +35,7 @@ fun Ride.toDto(): RideDto =
         destination = destination.toDto(),
         notes = notes,
         acceptedApplicantId = acceptedApplicantId,
-        dateOfTransfer = com.google.firebase.Timestamp(
-            java.util.Date.from(dateOfTransfer)
-        ),
+        dateOfTransfer = Timestamp.fromMilliseconds(dateOfTransfer.toEpochMilli().toDouble()),
     )
 
 private fun String.toRideStatus(): RideStatus =

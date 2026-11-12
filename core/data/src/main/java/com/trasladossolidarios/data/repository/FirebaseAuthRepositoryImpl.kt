@@ -1,21 +1,19 @@
 package com.trasladossolidarios.data.repository
 
 import com.google.firebase.FirebaseNetworkException
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
-import com.google.firebase.auth.FirebaseAuthInvalidUserException
-import com.google.firebase.auth.FirebaseAuthUserCollisionException
-import com.google.firebase.auth.FirebaseAuthWeakPasswordException
-import com.google.firebase.auth.FirebaseUser
 import com.trasladossolidarios.domain.common.AppResult
 import com.trasladossolidarios.domain.common.DomainError
 import com.trasladossolidarios.domain.model.User
 import com.trasladossolidarios.domain.repository.FirebaseAuthRepository
+import dev.gitlive.firebase.auth.FirebaseAuth
+import dev.gitlive.firebase.auth.FirebaseAuthInvalidCredentialsException
+import dev.gitlive.firebase.auth.FirebaseAuthInvalidUserException
+import dev.gitlive.firebase.auth.FirebaseAuthUserCollisionException
+import dev.gitlive.firebase.auth.FirebaseAuthWeakPasswordException
+import dev.gitlive.firebase.auth.FirebaseUser
 import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.callbackFlow
-import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.flow.map
 
 class FirebaseAuthRepositoryImpl constructor(
     private val firebaseAuth: FirebaseAuth
@@ -23,7 +21,7 @@ class FirebaseAuthRepositoryImpl constructor(
 
     override suspend fun register(email: String,password: String): AppResult<User> {
         return try {
-            val result = firebaseAuth.createUserWithEmailAndPassword(email,password).await()
+            val result = firebaseAuth.createUserWithEmailAndPassword(email,password)
             val  firebaseUser = result.user
                 ?: return AppResult.Error(DomainError.Unknow)
             AppResult.Success(firebaseUser.toDomain())
@@ -36,7 +34,7 @@ class FirebaseAuthRepositoryImpl constructor(
 
     override suspend fun logIn(email: String, password: String): AppResult<User> {
         return try {
-            val result = firebaseAuth.signInWithEmailAndPassword(email, password).await()
+            val result = firebaseAuth.signInWithEmailAndPassword(email, password)
             val firebaseUser = result.user
                 ?: return AppResult.Error(DomainError.Unknow)
             AppResult.Success(firebaseUser.toDomain())
@@ -46,7 +44,7 @@ class FirebaseAuthRepositoryImpl constructor(
         }
     }
 
-    override fun logout() {
+    override suspend fun logout() {
         firebaseAuth.signOut()
     }
 
@@ -61,16 +59,8 @@ class FirebaseAuthRepositoryImpl constructor(
     )
 
 
-    override fun observeAuthState(): Flow<User?> = callbackFlow {
-        val listener = FirebaseAuth.AuthStateListener { auth ->
-            trySend(auth.currentUser?.toDomain())
-        }
-
-        firebaseAuth.addAuthStateListener(listener)
-
-        awaitClose {
-            firebaseAuth.removeAuthStateListener(listener)
-        }
+    override fun observeAuthState(): Flow<User?> = firebaseAuth.authStateChanged.map { user ->
+        user?.toDomain()
     }
 
     private fun Exception.toDomainError(): DomainError = when (this) {

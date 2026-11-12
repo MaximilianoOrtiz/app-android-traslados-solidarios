@@ -1,5 +1,8 @@
 package com.trasladossolidarios.network.firestore.dto
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class AnimalDto(
     val type: String = "",
     val name: String = "",

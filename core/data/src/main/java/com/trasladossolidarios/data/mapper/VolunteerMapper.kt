@@ -1,11 +1,12 @@
 package com.trasladossolidarios.data.mapper
 
-import com.google.firebase.Timestamp
 import com.trasladossolidarios.domain.enum.VolunteerStatus
 import com.trasladossolidarios.domain.model.Volunteer
 import com.trasladossolidarios.network.firestore.dto.VolunteerDto
+import dev.gitlive.firebase.firestore.Timestamp
+import dev.gitlive.firebase.firestore.fromMilliseconds
+import dev.gitlive.firebase.firestore.toMilliseconds
 import java.time.Instant
-import java.util.Date
 
 fun VolunteerDto.toDomain(rideId: String): Volunteer {
     return Volunteer(
@@ -15,8 +16,9 @@ fun VolunteerDto.toDomain(rideId: String): Volunteer {
         status = VolunteerStatus.valueOf(status),
         message = message,
         contact = contact,
-        createdAt = createdAt?.toDate()
-            ?.toInstant()
+        createdAt = createdAt
+            ?.toMilliseconds()
+            ?.let { Instant.ofEpochMilli(it.toLong()) }
             ?: Instant.EPOCH
     )
 }
@@ -29,6 +31,6 @@ fun Volunteer.toDto(
         status = status.name,
         message = message,
         contact = contact,
-        createdAt = Timestamp(Date.from(createdAt))
+        createdAt = Timestamp.fromMilliseconds(createdAt.toEpochMilli().toDouble())
     )
 }

@@ -1,7 +1,9 @@
 package com.trasladossolidarios.network.firestore.dto
 
-import com.google.firebase.Timestamp
+import dev.gitlive.firebase.firestore.Timestamp
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class VolunteerDto(
     val volunteerId: String = "",
     val name: String = "",

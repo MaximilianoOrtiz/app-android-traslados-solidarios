@@ -1,5 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
+    // Serializa los DTO de Firestore (@Serializable) con kotlinx-serialization.
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -16,8 +18,10 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        // GitLive Firebase (dev.gitlive:*) está compilado con bytecode JVM 17;
+        // sus funciones inline (data<T>(), set(), ...) exigen target >= 17 aquí.
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
 }
@@ -27,11 +31,11 @@ dependencies {
     implementation(project(":core:domain"))
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.core.ktx)
-    implementation(platform("com.google.firebase:firebase-bom:34.19.0"))
-    implementation("com.google.firebase:firebase-auth")
-    implementation("com.google.firebase:firebase-firestore")
+    // GitLive Firebase (KMP): API multiplataforma de Firestore (suspend + Flow)
+    // en lugar del SDK de Android; en Android se apoya en el SDK oficial por debajo.
+    implementation(libs.gitlive.firestore)
+    implementation(libs.kotlinx.serialization.json)
     //implementation(libs.play.services.cast.tv)
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.11.0")
     implementation(libs.material)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.espresso.core)

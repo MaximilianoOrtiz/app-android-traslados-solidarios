@@ -1,10 +1,8 @@
 package com.trasladossolidarios.network.firestore.datasourse
 
-import com.google.firebase.firestore.FieldValue
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.toObject
 import com.trasladossolidarios.network.firestore.dto.UserDto
-import kotlinx.coroutines.tasks.await
+import dev.gitlive.firebase.firestore.FieldValue
+import dev.gitlive.firebase.firestore.FirebaseFirestore
 
 class UserFirestoreDataSource constructor(
     private val firestore: FirebaseFirestore)
@@ -12,18 +10,16 @@ class UserFirestoreDataSource constructor(
 
     suspend fun insert(uid: String, userDto: UserDto) {
         val ref = firestore.collection("users").document(uid)
-        firestore.runTransaction { tx ->
-            if (tx.get(ref).exists()) {
-                tx.update(
-                    ref, mapOf(
-                        "email" to userDto.email,
-                        "lastLoginAt" to FieldValue.serverTimestamp()
-                    )
-                )
+        firestore.runTransaction {
+            if (get(ref).exists) {
+                updateFields(ref) {
+                    "email" to userDto.email
+                    "lastLoginAt" to FieldValue.serverTimestamp
+                }
             } else {
-                tx.set(ref, userDto)
+                set(ref, UserDto.serializer(), userDto)
             }
-        }.await()
+        }
     }
 
     suspend fun getById(uid: String): UserDto? {
@@ -31,8 +27,8 @@ class UserFirestoreDataSource constructor(
             .collection("users")
             .document(uid)
             .get()
-            .await()
 
-        return document.toObject<UserDto>()
+        if (!document.exists) return null
+        return document.data<UserDto>()
     }
 }

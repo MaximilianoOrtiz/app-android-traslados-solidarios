@@ -1,14 +1,11 @@
 package com.trasladossolidarios.network.firestore.datasourse
 
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
-import com.google.firebase.firestore.toObject
 import com.trasladossolidarios.network.firestore.dto.RideDto
 import com.trasladossolidarios.network.firestore.dto.RideResponseDto
-import kotlinx.coroutines.channels.awaitClose
+import dev.gitlive.firebase.firestore.FirebaseFirestore
+import dev.gitlive.firebase.firestore.Query
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.callbackFlow
-import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.flow.map
 // network/datasource/RideRemoteDataSource.kt
 class RideRemoteDataSource constructor(
     private val firestore: FirebaseFirestore,
@@ -16,42 +13,32 @@ class RideRemoteDataSource constructor(
     private val rides get() = firestore.collection("rides")
 
     fun observeOpenRides(): Flow<List<RideResponseDto>> =
-        rides.whereEqualTo("status", "OPEN").observeRideDtos()
+        rides.where { "status" equalTo "OPEN" }.observeRideDtos()
 
     fun observeRidesByOwner(ownerId: String): Flow<List<RideResponseDto>> =
-        rides.whereEqualTo("ownerId", ownerId).observeRideDtos()
+        rides.where { "ownerId" equalTo ownerId }.observeRideDtos()
 
     suspend fun getRideById(rideId: String): RideResponseDto? {
-        val document = rides.document(rideId).get().await()
-        val dto = document.toObject<RideDto>() ?: return null
-        return RideResponseDto(id = document.id, ride = dto)
+        val document = rides.document(rideId).get()
+        if (!document.exists) return null
+        return RideResponseDto(id = document.id, ride = document.data<RideDto>())
     }
 
-    private fun Query.observeRideDtos(): Flow<List<RideResponseDto>> = callbackFlow {
-        val registration = addSnapshotListener { snapshot, error ->
-            if (error != null) {
-                close(error)
-                return@addSnapshotListener
+    private fun Query.observeRideDtos(): Flow<List<RideResponseDto>> = snapshots.map { snapshot ->
+        snapshot.documents.mapNotNull { document ->
+            if (document.exists) {
+                RideResponseDto(id = document.id, ride = document.data<RideDto>())
+            } else {
+                null
             }
-            if (snapshot == null) {
-                close(IllegalStateException("Firestore devolvió una consulta vacía."))
-                return@addSnapshotListener
-            }
-            val dtos = snapshot.documents.mapNotNull { document ->
-                document.toObject<RideDto>()?.let {
-                    RideResponseDto(id = document.id, ride = it)
-                }
-            }
-            trySend(dtos)
         }
-        awaitClose { registration.remove() }
     }
 
     suspend fun createRide(rideDto: RideDto) {
-        val documentRef = firestore.collection("rides").document()
+        val documentRef = firestore.collection("rides").document
         // Asignamos el ID autogenerado de Firestore al objeto antes de guardar
         val finalDto = rideDto.copy(id = documentRef.id)
-        documentRef.set(finalDto).await()
+        documentRef.set(finalDto)
     }
 
     /*

@@ -87,10 +87,4 @@ dependencies {
     implementation("com.cloudinary:cloudinary-android:2.5.0")
 
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.7")
-    //para no tener que indicar cada version de FireBase
-    implementation(platform("com.google.firebase:firebase-bom:34.19.0"))
-    //libreria de autenticación
-    implementation("com.google.firebase:firebase-auth")
-    //para usar funciones asincronas (await)
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.11.0")
 }
