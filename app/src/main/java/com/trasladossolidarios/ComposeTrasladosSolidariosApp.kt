@@ -10,6 +10,7 @@ import com.trasladossolidarios.home.di.homeViewModelModule
 import com.trasladossolidarios.location.di.locationModule
 import com.trasladossolidarios.myrides.di.myRidesViewModelModule
 import com.trasladossolidarios.network.di.networkModule
+import com.trasladossolidarios.network.di.networkModuleAndroid
 import com.trasladossolidarios.openrides.di.openRidesViewModelModule
 import com.trasladossolidarios.profile.di.profileViewModelModule
 import org.koin.android.ext.koin.androidContext
@@ -31,7 +32,8 @@ class ComposeTrasladosSolidariosApp : Application() {
                 myRidesViewModelModule,
                 openRidesViewModelModule,
                 profileViewModelModule,
-                createRideViewModelModule
+                createRideViewModelModule,
+                networkModuleAndroid
             )
         }
 
