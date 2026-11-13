@@ -6,7 +6,7 @@ import com.trasladossolidarios.network.firestore.dto.RideDto
 import dev.gitlive.firebase.firestore.Timestamp
 import dev.gitlive.firebase.firestore.fromMilliseconds
 import dev.gitlive.firebase.firestore.toMilliseconds
-import java.time.Instant
+import kotlin.time.Instant
 
 fun RideDto.toDomain(id: String): Ride =
     Ride(
@@ -20,8 +20,8 @@ fun RideDto.toDomain(id: String): Ride =
         acceptedApplicantId = acceptedApplicantId,
         dateOfTransfer = dateOfTransfer
             ?.toMilliseconds()
-            ?.let { Instant.ofEpochMilli(it.toLong()) }
-            ?: Instant.EPOCH,
+            ?.let { Instant.fromEpochMilliseconds(it.toLong()) }
+            ?: Instant.fromEpochMilliseconds(0),
 
     )
 
@@ -35,7 +35,7 @@ fun Ride.toDto(): RideDto =
         destination = destination.toDto(),
         notes = notes,
         acceptedApplicantId = acceptedApplicantId,
-        dateOfTransfer = Timestamp.fromMilliseconds(dateOfTransfer.toEpochMilli().toDouble()),
+        dateOfTransfer = Timestamp.fromMilliseconds(dateOfTransfer.toEpochMilliseconds().toDouble()),
     )
 
 private fun String.toRideStatus(): RideStatus =

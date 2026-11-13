@@ -37,7 +37,8 @@ import com.trasladossolidarios.ui.theme.ApMobileTP2Theme
 import com.trasladossolidarios.ui.theme.AppTheme
 import components.ErrorContent
 import components.LoadingContent
-import java.time.Instant
+import kotlin.time.Clock
+import kotlin.time.Duration.Companion.seconds
 
 
 @Composable
@@ -202,7 +203,7 @@ private fun RideDetailScreenPreview() {
                         ),
                         notes = "Necesita transportadora obligatoriamente. Está asustada, requiere manejo suave.",
                         acceptedApplicantId = null,
-                        dateOfTransfer = Instant.now().plusSeconds(86_400)
+                        dateOfTransfer = Clock.System.now() + 86_400.seconds
                     ),
                     owner = User(
                         uid = "owner",

@@ -1,7 +1,7 @@
 package com.trasladossolidarios.domain.model
 
 import com.trasladossolidarios.domain.enum.RideStatus
-import java.time.Instant
+import kotlin.time.Instant
 
 data class Ride(
     val id: String,

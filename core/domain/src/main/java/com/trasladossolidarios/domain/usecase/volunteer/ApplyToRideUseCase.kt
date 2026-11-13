@@ -2,14 +2,12 @@ package com.trasladossolidarios.domain.usecase.volunteer
 
 import com.trasladossolidarios.domain.common.AppResult
 import com.trasladossolidarios.domain.enum.VolunteerStatus
-import com.trasladossolidarios.domain.model.RideDetail
-import com.trasladossolidarios.domain.model.User
 import com.trasladossolidarios.domain.model.Volunteer
 import com.trasladossolidarios.domain.model.getFullName
 import com.trasladossolidarios.domain.repository.FirebaseAuthRepository
 import com.trasladossolidarios.domain.repository.UserRepository
 import com.trasladossolidarios.domain.repository.VolunteerRepository
-import java.time.Instant
+import kotlin.time.Clock
 
 class ApplyToRideUseCase constructor(
     private val  volunteerRepository: VolunteerRepository,
@@ -35,7 +33,7 @@ class ApplyToRideUseCase constructor(
                     status = VolunteerStatus.PENDING,
                     message = message.trim(),
                     contact = contact.trim(),
-                    createdAt = Instant.now()
+                    createdAt = Clock.System.now()
                 )
                 volunteerRepository.applyToRide(volunteer, rideId)
             }

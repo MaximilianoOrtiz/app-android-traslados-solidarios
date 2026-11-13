@@ -3,10 +3,12 @@ package com.trasladossolidarios.createride
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import java.time.Instant
-import java.time.LocalDateTime
-import java.time.ZoneId
-import java.time.format.DateTimeFormatter
+import kotlin.time.Clock
+import kotlin.time.Instant
+import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.format.byUnicodePattern
+import kotlinx.datetime.toInstant
 import com.trasladossolidarios.domain.enum.AnimalSpecies
 import com.trasladossolidarios.domain.location.LocationTracker
 import com.trasladossolidarios.domain.model.Animal
@@ -23,6 +25,10 @@ import com.trasladossolidarios.domain.repository.FirebaseAuthRepository
 import com.trasladossolidarios.domain.repository.RidesRepository
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+
+private val transferDateTimeFormat = LocalDateTime.Format {
+    byUnicodePattern("dd/MM/yyyy HH:mm")
+}
 
 class CreateRideViewModel(
     private val locationTracker: LocationTracker,
@@ -219,11 +225,10 @@ class CreateRideViewModel(
 
                 val transferInstant: Instant = try {
                     val dateTimeString = "${state.date} ${state.time}"
-                    val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")
-                    val localDateTime = LocalDateTime.parse(dateTimeString, formatter)
-                    localDateTime.atZone(ZoneId.systemDefault()).toInstant()
+                    transferDateTimeFormat.parse(dateTimeString)
+                        .toInstant(TimeZone.currentSystemDefault())
                 } catch (e: Exception) {
-                    Instant.now()
+                    Clock.System.now()
                 }
 
                 val ride = Ride(

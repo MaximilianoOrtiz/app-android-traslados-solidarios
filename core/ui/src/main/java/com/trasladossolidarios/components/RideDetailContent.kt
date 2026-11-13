@@ -35,7 +35,8 @@ import com.trasladossolidarios.domain.model.User
 import com.trasladossolidarios.ui.theme.ApMobileTP2Theme
 import com.trasladossolidarios.ui.theme.AppTheme
 import com.ui.R
-import java.time.Instant
+import kotlin.time.Clock
+import kotlin.time.Duration.Companion.seconds
 
 /**
  * Pantalla de detalle del traslado, autocontenida:
@@ -168,7 +169,7 @@ private fun RideDetailContentPreview() {
                 ),
                 notes = "Necesita transportadora obligatoriamente. Está asustada, requiere manejo suave.",
                 acceptedApplicantId = null,
-                dateOfTransfer = Instant.now().plusSeconds(86_400)
+                dateOfTransfer = Clock.System.now() + 86_400.seconds
             ),
             onBack = {},
             owner = User(

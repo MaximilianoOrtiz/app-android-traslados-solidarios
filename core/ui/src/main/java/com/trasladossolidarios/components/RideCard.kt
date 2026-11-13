@@ -57,11 +57,17 @@ import com.trasladossolidarios.ui.theme.Success
 import com.trasladossolidarios.ui.theme.SuccessContainer
 import com.trasladossolidarios.ui.theme.Urgent
 import com.trasladossolidarios.ui.theme.UrgentContainer
-import java.time.Instant
-import java.time.LocalDate
-import java.time.ZoneId
-import java.time.format.DateTimeFormatter
-import java.util.Locale
+import kotlin.time.Clock
+import kotlin.time.Duration.Companion.seconds
+import kotlin.time.Instant
+import kotlinx.datetime.DateTimeUnit
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.format.MonthNames
+import kotlinx.datetime.format.byUnicodePattern
+import kotlinx.datetime.plus
+import kotlinx.datetime.toLocalDateTime
 
 @Composable
 fun RideCard(
@@ -290,22 +296,34 @@ fun RideStatus.contentColor(): Color = when (this) {
     RideStatus.UNKNOWN -> Outline
 }
 
+private val spanishMonthNames = MonthNames(
+    listOf("ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic")
+)
+private val dayMonthFormat = LocalDate.Format {
+    dayOfMonth()
+    chars(" ")
+    monthName(spanishMonthNames)
+}
+private val timeFormat = LocalDateTime.Format {
+    byUnicodePattern("HH:mm")
+}
+
 @Composable
 fun formatTransferDateTime(
     instant: Instant,
-    today: LocalDate = LocalDate.now(),
-    zoneId: ZoneId = ZoneId.systemDefault()
+    today: LocalDate = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date,
+    timeZone: TimeZone = TimeZone.currentSystemDefault()
 ): String {
     val todayLabel = stringResource(R.string.ride_card_date_today)
     val tomorrowLabel = stringResource(R.string.ride_card_date_tomorrow)
-    val dateTime = instant.atZone(zoneId)
-    val date = dateTime.toLocalDate()
+    val dateTime = instant.toLocalDateTime(timeZone)
+    val date = dateTime.date
     val dayLabel = when (date) {
         today -> todayLabel
-        today.plusDays(1) -> tomorrowLabel
-        else -> date.format(DateTimeFormatter.ofPattern("d MMM", Locale.getDefault()))
+        today.plus(1, DateTimeUnit.DAY) -> tomorrowLabel
+        else -> dayMonthFormat.format(date)
     }
-    val time = dateTime.format(DateTimeFormatter.ofPattern("HH:mm", Locale.getDefault()))
+    val time = timeFormat.format(dateTime)
     return "$dayLabel · $time"
 }
 
@@ -329,7 +347,7 @@ private fun RideCardPreview() {
                     destination = Location(latitude = null, longitude = null, address = "Clínica Veterinaria Mascotas"),
                     notes = "",
                     acceptedApplicantId = null,
-                    dateOfTransfer = Instant.now().plusSeconds(86_400)
+                    dateOfTransfer = Clock.System.now() + 86_400.seconds
                 ),
                 onClick = {}
             )
@@ -349,7 +367,7 @@ private fun RideCardPreview() {
                     destination = Location(latitude = null, longitude = null, address = "Refugio San Roque"),
                     notes = "",
                     acceptedApplicantId = "volunteer-1",
-                    dateOfTransfer = Instant.now()
+                    dateOfTransfer = Clock.System.now()
                 ),
                 onClick = {}
             )

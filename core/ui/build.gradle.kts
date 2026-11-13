@@ -23,8 +23,14 @@ android {
 
 }
 
+
+
+
 dependencies {
     implementation(project(":core:domain"))
+
+    // LocalDate/TimeZone/MonthNames: fechas en RideCard (kotlin.time no los cubre).
+    implementation(libs.kotlinx.datetime)
 
     implementation("androidx.activity:activity-compose:1.13.0")
     implementation(platform(libs.androidx.compose.bom))

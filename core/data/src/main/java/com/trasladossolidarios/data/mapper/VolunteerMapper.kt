@@ -6,7 +6,7 @@ import com.trasladossolidarios.network.firestore.dto.VolunteerDto
 import dev.gitlive.firebase.firestore.Timestamp
 import dev.gitlive.firebase.firestore.fromMilliseconds
 import dev.gitlive.firebase.firestore.toMilliseconds
-import java.time.Instant
+import kotlin.time.Instant
 
 fun VolunteerDto.toDomain(rideId: String): Volunteer {
     return Volunteer(
@@ -18,8 +18,8 @@ fun VolunteerDto.toDomain(rideId: String): Volunteer {
         contact = contact,
         createdAt = createdAt
             ?.toMilliseconds()
-            ?.let { Instant.ofEpochMilli(it.toLong()) }
-            ?: Instant.EPOCH
+            ?.let { Instant.fromEpochMilliseconds(it.toLong()) }
+            ?: Instant.fromEpochMilliseconds(0)
     )
 }
 
@@ -31,6 +31,6 @@ fun Volunteer.toDto(
         status = status.name,
         message = message,
         contact = contact,
-        createdAt = Timestamp.fromMilliseconds(createdAt.toEpochMilli().toDouble())
+        createdAt = Timestamp.fromMilliseconds(createdAt.toEpochMilliseconds().toDouble())
     )
 }

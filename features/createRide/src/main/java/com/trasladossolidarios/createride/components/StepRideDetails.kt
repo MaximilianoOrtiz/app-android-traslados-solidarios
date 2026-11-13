@@ -22,10 +22,15 @@ import androidx.compose.ui.unit.dp
 import com.trasladossolidarios.createride.CreateRideUiState
 import com.trasladossolidarios.domain.model.Location
 import com.trasladossolidarios.ui.theme.AppTheme
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
-import java.util.TimeZone
+import kotlin.time.Instant
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.format.byUnicodePattern
+import kotlinx.datetime.toLocalDateTime
+
+private val datePickerDateFormat = LocalDate.Format {
+    byUnicodePattern("dd/MM/yyyy")
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -288,9 +293,9 @@ fun StepRideDetails(
             confirmButton = {
                 TextButton(onClick = {
                     datePickerState.selectedDateMillis?.let { millis ->
-                        val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-                        sdf.timeZone = TimeZone.getTimeZone("UTC")
-                        onDateChange(sdf.format(Date(millis)))
+                        val date = Instant.fromEpochMilliseconds(millis)
+                            .toLocalDateTime(TimeZone.UTC).date
+                        onDateChange(datePickerDateFormat.format(date))
                     }
                     showDatePicker = false
                 }) { Text("Aceptar") }
@@ -310,7 +315,8 @@ fun StepRideDetails(
             onDismissRequest = { showTimePicker = false },
             confirmButton = {
                 TextButton(onClick = {
-                    val formattedTime = String.format(Locale.getDefault(), "%02d:%02d", timePickerState.hour, timePickerState.minute)
+                    val formattedTime = timePickerState.hour.toString().padStart(2, '0') +
+                        ":" + timePickerState.minute.toString().padStart(2, '0')
                     onTimeChange(formattedTime)
                     showTimePicker = false
                 }) { Text("Aceptar") }

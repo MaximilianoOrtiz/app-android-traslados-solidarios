@@ -19,7 +19,9 @@ import com.trasladossolidarios.domain.model.Location
 import com.trasladossolidarios.ui.theme.ApMobileTP2Theme
 import com.trasladossolidarios.ui.theme.AppTheme
 import com.ui.R
-import java.time.Instant
+import kotlin.time.Clock
+import kotlin.time.Duration.Companion.seconds
+import kotlin.time.Instant
 
 /**
  * Card "Información del traslado": timeline origen → destino
@@ -69,7 +71,7 @@ private fun TransferInfoCardPreview() {
                 longitude = null,
                 address = "Clínica Veterinaria Mascotas - Palermo"
             ),
-            dateOfTransfer = Instant.now().plusSeconds(86_400)
+            dateOfTransfer = Clock.System.now() + 86_400.seconds
         )
     }
 }

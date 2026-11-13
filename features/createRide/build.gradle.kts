@@ -28,6 +28,8 @@ dependencies {
     implementation(project(":core:data"))
     implementation(project(":core:network"))
     implementation(project(":core:ui"))
+    implementation(project(":core:domain"))
+
     implementation(libs.androidx.material3)
     implementation(libs.androidx.navigation3.runtime)
     implementation(libs.androidx.room.ktx)
@@ -38,12 +40,15 @@ dependencies {
     implementation("androidx.compose.material:material-icons-core")
     implementation("androidx.compose.material:material-icons-extended")
     implementation("androidx.activity:activity-compose:1.9.3")
+    implementation(libs.kotlinx.datetime)
 
-    implementation(project(":core:domain"))
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.core.ktx)
     implementation(libs.material)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.junit)
+
+
+
 }

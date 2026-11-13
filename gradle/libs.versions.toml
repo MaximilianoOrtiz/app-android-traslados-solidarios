@@ -6,7 +6,7 @@ junitVersion = "1.3.0"
 espressoCore = "3.7.0"
 lifecycleRuntimeKtx = "2.11.0"
 activityCompose = "1.13.0"
-kotlin = "2.2.10"
+kotlin = "2.4.21"
 composeBom = "2026.02.01"
 jetbrainsKotlinJvm = "2.2.10"
 appcompat = "1.8.0"
@@ -32,6 +32,8 @@ lifecycleRuntimeCompose = "2.11.0"
 # GitLive Firebase: SDK Kotlin Multiplatform que reemplaza al SDK de Android
 # (Firestore/Auth/... con API suspend + Flow, compilable para iOS).
 gitliveFirebase = "2.8.0"
+# kotlinx-datetime: LocalDate/TimeZone/formato multiplataforma (kotlin.time no los cubre).
+kotlinxDatetime = "0.7.1"
 transportRuntime = "5.0.0"
 media3CommonKtx = "1.11.1"
 # Coil 3.6.x compila con Kotlin 2.4 (trae stdlib 2.4, incompatible con el compilador 2.2 del proyecto).
@@ -63,6 +65,7 @@ kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serializa
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
 androidx-compose-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended" }
 kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
+kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "kotlinxDatetime" }
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinxCoroutines" }
 play-services-cast = { group = "com.google.android.gms", name = "play-services-cast", version.ref = "playServicesCast" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material3" }

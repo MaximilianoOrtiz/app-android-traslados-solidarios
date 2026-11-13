@@ -1,7 +1,7 @@
 package com.trasladossolidarios.domain.model
 
 import com.trasladossolidarios.domain.enum.VolunteerStatus
-import java.time.Instant
+import kotlin.time.Instant
 
 data class Volunteer(
     val volunteerId: String,      // uid del postulante
