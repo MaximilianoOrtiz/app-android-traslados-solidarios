@@ -1,40 +1,47 @@
+
 plugins {
-    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.multiplatform)
+    alias(libs.plugins.android.kotlin.multiplatform.library)
 }
 
-android {
-    namespace = "com.trasladossolidarios.location"
-    compileSdk {
-        version = release(37) {
-            minorApiLevel = 1
+kotlin {
+    android {
+        namespace = "com.trasladossolidarios.location"
+        compileSdk = 37
+        minSdk = 26
+
+        compilerOptions {
+            jvmTarget.set(
+                org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11
+            )
         }
     }
 
-    defaultConfig {
-        minSdk = 26
+    iosArm64()
+    iosSimulatorArm64()
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    jvmToolchain(11)
+
+    sourceSets {
+        commonMain.dependencies {
+            // Contratos y modelos de ubicación.
+            implementation(project(":core:domain"))
+        }
+
+        androidMain.dependencies {
+            // API nativa de ubicación de Android.
+            implementation("com.google.android.gms:play-services-location:21.3.0")
+
+            // Permite utilizar await() sobre Tasks de Google Play Services.
+            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.8.1")
+
+            // Koin con acceso a androidContext().
+            implementation(libs.koin.android)
+        }
+
+        commonTest.dependencies {
+            implementation(kotlin("test"))
+            implementation(libs.kotlinx.coroutines.test)
+        }
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-
-}
-
-dependencies {
-    implementation(project(":core:domain"))
-    // Servicios de Ubicación de Google Play Services
-    implementation("com.google.android.gms:play-services-location:21.3.0")
-    // Soporte para await() en tareas de Play Services
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.8.1")
-    // Koin: locationModule (LocationTracker + FusedLocationProviderClient) — usa androidContext()
-    implementation(libs.koin.android)
-
-    implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.material)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(libs.androidx.junit)
 }
