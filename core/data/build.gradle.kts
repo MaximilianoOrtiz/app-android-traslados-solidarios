@@ -1,41 +1,50 @@
+
 plugins {
-    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.multiplatform)
+    alias(libs.plugins.android.kotlin.multiplatform.library)
+    alias(libs.plugins.kotlin.serialization)
 }
 
-android {
-    namespace = "com.trasladossolidarios.data"
-    compileSdk {
-        version = release(37) {
-            minorApiLevel = 1
+kotlin {
+    android {
+        namespace = "com.trasladossolidarios.data"
+        compileSdk = 37
+        minSdk = 26
+
+        // GitLive requiere bytecode JVM 17 en esta configuración.
+        compilerOptions {
+            jvmTarget.set(
+                org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
+            )
         }
     }
 
-    defaultConfig {
-        minSdk = 26
+    iosArm64()
+    iosSimulatorArm64()
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    jvmToolchain(17)
+
+    sourceSets {
+        commonMain.dependencies {
+
+            implementation(project(":core:domain"))
+            implementation(project(":core:network"))
+
+            // Firebase multiplataforma.
+            implementation(libs.gitlive.firestore)
+            implementation(libs.gitlive.auth)
+
+            implementation(libs.kotlinx.serialization.json)
+            implementation(libs.koin.core)
+        }
+
+        androidMain.dependencies {
+
+        }
+
+        commonTest.dependencies {
+            implementation(kotlin("test"))
+            implementation(libs.kotlinx.coroutines.test)
+        }
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-
-}
-
-dependencies {
-    implementation(project(":core:domain"))
-    implementation(project(":core:network"))
-    implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.core.ktx)
-    // GitLive Firebase (KMP): Firestore y Auth con API multiplataforma
-    // (excepciones y Timestamp viven en estos artefactos).
-    implementation(libs.gitlive.firestore)
-    implementation(libs.gitlive.auth)
-    implementation(libs.material)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(libs.androidx.junit)
-
-    // Koin: dataModule (repositorios + FirebaseAuth)
-    implementation(libs.koin.core)
 }
