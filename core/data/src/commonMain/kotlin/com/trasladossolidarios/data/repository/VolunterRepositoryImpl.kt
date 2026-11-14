@@ -1,6 +1,5 @@
 package com.trasladossolidarios.data.repository
 
-import android.util.Log
 import com.trasladossolidarios.data.mapper.toDto
 import com.trasladossolidarios.domain.common.AppResult
 import com.trasladossolidarios.domain.common.DomainError
@@ -23,14 +22,11 @@ class VolunteerRepositoryImpl constructor(
                 rideId,
                 volunteer.toDto()
             )
-
             AppResult.Success(Unit)
 
         } catch (e: CancellationException) {
             throw e
         } catch (e: Exception) {
-            Log.e("Huella", "Fallo al queres postularse", e)
-
             AppResult.Error(DomainError.Unknow)
         }
     }
@@ -46,8 +42,6 @@ class VolunteerRepositoryImpl constructor(
         } catch (e: CancellationException) {
             throw e
         } catch (e: Exception) {
-            Log.e("Huella", "Fallo al verificar postulación", e)
-
             AppResult.Error(DomainError.Unknow)
         }
     }

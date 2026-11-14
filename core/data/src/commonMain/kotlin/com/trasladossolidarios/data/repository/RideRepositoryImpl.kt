@@ -9,6 +9,7 @@ import com.trasladossolidarios.domain.repository.RidesRepository
 import com.trasladossolidarios.network.firestore.datasourse.RideRemoteDataSource
 import dev.gitlive.firebase.firestore.FirebaseFirestoreException
 import dev.gitlive.firebase.firestore.FirestoreExceptionCode
+import dev.gitlive.firebase.firestore.code
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch

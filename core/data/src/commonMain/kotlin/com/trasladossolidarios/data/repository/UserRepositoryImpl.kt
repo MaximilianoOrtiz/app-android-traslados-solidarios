@@ -1,6 +1,6 @@
 package com.trasladossolidarios.data.repository
 
-import android.util.Log
+
 import com.trasladossolidarios.data.mapper.toDomain
 import com.trasladossolidarios.data.mapper.toDto
 import com.trasladossolidarios.domain.common.AppResult
@@ -16,36 +16,26 @@ class UserRepositoryImpl  constructor(
 
     override suspend fun saveUser(user: User): Result<Unit> {
         return try {
-            Log.d("Huella", "Guardando usuario uid=${user.uid}")
             userDataSourse.insert(user.uid, user.toDto())
-
-            Log.d("Huella", "Usuario guardado OK uid=${user.uid}")
             Result.success(Unit)
         } catch (e: CancellationException) {
             throw e
         } catch (e: Exception) {
-            Log.e("Huella", "Fallo al guardar usuario", e)
             Result.failure(e)
         }
     }
 
     override suspend fun getUserById(userId: String): AppResult<User> {
         return try {
-
-            Log.d("Huella", "Consultando usuario uid=$userId")
             val userDto = userDataSourse.getById(userId)
                 ?: return AppResult.Error(DomainError.NotFound)
 
             val user = userDto.toDomain(userId)
-            Log.d("Huella", "Usuario obtenido OK uid=$userId")
-
             AppResult.Success(user)
 
         } catch (e: CancellationException) {
             throw e
         } catch (e: Exception) {
-            Log.e("Huella", "Fallo al obtener usuario uid=$userId", e)
-
             AppResult.Error(DomainError.Unknow)
         }
     }
