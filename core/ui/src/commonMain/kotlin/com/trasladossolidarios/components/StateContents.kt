@@ -22,13 +22,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.stringResource
+import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.trasladossolidarios.ui.theme.ApMobileTP2Theme
-import com.ui.R
+import com.trasladossolidarios.ui.resources.Res
+import com.trasladossolidarios.ui.resources.core_ui_retry
 
 
 // Componentes reutilizables para los estados típicos de una pantalla.
@@ -79,7 +80,7 @@ fun ErrorContent(
                     modifier = Modifier.size(18.dp)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                Text(stringResource(R.string.core_ui_retry))
+                Text(stringResource(Res.string.core_ui_retry))
             }
             extraAction?.invoke()
         }

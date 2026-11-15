@@ -12,13 +12,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
+import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.trasladossolidarios.domain.model.Location
 import com.trasladossolidarios.ui.theme.ApMobileTP2Theme
 import com.trasladossolidarios.ui.theme.AppTheme
-import com.ui.R
+import com.trasladossolidarios.ui.resources.Res
+import com.trasladossolidarios.ui.resources.transfer_info_card_title
 import kotlin.time.Clock
 import kotlin.time.Duration.Companion.seconds
 import kotlin.time.Instant
@@ -35,7 +36,7 @@ fun TransferInfoCard(
     modifier: Modifier = Modifier
 ) {
     DetailSectionCard(
-        title = stringResource(R.string.transfer_info_card_title),
+        title = stringResource(Res.string.transfer_info_card_title),
         modifier = modifier
     ) {
         TransferTimeline(origin = origin, destination = destination)

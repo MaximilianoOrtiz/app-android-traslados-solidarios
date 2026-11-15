@@ -11,7 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
+import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -19,7 +19,8 @@ import com.trasladossolidarios.domain.model.User
 import com.trasladossolidarios.domain.model.getFullName
 import com.trasladossolidarios.ui.theme.ApMobileTP2Theme
 import com.trasladossolidarios.ui.theme.AppTheme
-import com.ui.R
+import com.trasladossolidarios.ui.resources.Res
+import com.trasladossolidarios.ui.resources.ride_detail_publisher
 
 /**
  * Avatar con inicial + "Publicado por {nombre}".
@@ -50,7 +51,7 @@ fun PublisherRow(
         }
 
         Text(
-            text = stringResource(R.string.ride_detail_publisher, owner.getFullName()),
+            text = stringResource(Res.string.ride_detail_publisher, owner.getFullName()),
             style = AppTheme.typography.bodyMedium,
             color = AppTheme.colors.onSurfaceVariant
         )

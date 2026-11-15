@@ -35,13 +35,23 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.stringResource
+import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
-import com.ui.R
+import com.trasladossolidarios.ui.resources.Res
+import com.trasladossolidarios.ui.resources.ride_card_address_fallback
+import com.trasladossolidarios.ui.resources.ride_card_animal_name_fallback
+import com.trasladossolidarios.ui.resources.ride_card_date_today
+import com.trasladossolidarios.ui.resources.ride_card_date_tomorrow
+import com.trasladossolidarios.ui.resources.ride_card_status_assigned
+import com.trasladossolidarios.ui.resources.ride_card_status_cancelled
+import com.trasladossolidarios.ui.resources.ride_card_status_completed
+import com.trasladossolidarios.ui.resources.ride_card_status_open
+import com.trasladossolidarios.ui.resources.ride_card_status_unknown
+import com.trasladossolidarios.ui.resources.ride_card_view_action
 import com.trasladossolidarios.domain.enum.AnimalSpecies
 import com.trasladossolidarios.domain.enum.RideStatus
 import com.trasladossolidarios.domain.model.Animal
@@ -107,7 +117,7 @@ fun RideCard(
                     Spacer(modifier = Modifier.width(AppTheme.spacing.xs))
 
                     Text(
-                        text = ride.animal.name.ifBlank { stringResource(R.string.ride_card_animal_name_fallback) },
+                        text = ride.animal.name.ifBlank { stringResource(Res.string.ride_card_animal_name_fallback) },
                         style = AppTheme.typography.titleMedium,
                         fontWeight = FontWeight.SemiBold,
                         maxLines = 1,
@@ -117,13 +127,13 @@ fun RideCard(
 
                 LocationLine(
                     icon = Icons.Outlined.TripOrigin,
-                    address = ride.origin.address ?: stringResource(R.string.ride_card_address_fallback),
+                    address = ride.origin.address ?: stringResource(Res.string.ride_card_address_fallback),
                     tint = AppTheme.colors.primary
                 )
 
                 LocationLine(
                     icon = Icons.Outlined.LocationOn,
-                    address = ride.destination.address ?: stringResource(R.string.ride_card_address_fallback),
+                    address = ride.destination.address ?: stringResource(Res.string.ride_card_address_fallback),
                     tint = AppTheme.colors.secondary
                 )
 
@@ -152,7 +162,7 @@ fun RideCard(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = stringResource(R.string.ride_card_view_action),
+                        text = stringResource(Res.string.ride_card_view_action),
                         style = AppTheme.typography.labelLarge,
                         fontWeight = FontWeight.SemiBold,
                         color = AppTheme.colors.primary
@@ -272,11 +282,11 @@ fun RideStatusChip(
 @Composable
 fun RideStatus.label(): String = stringResource(
     when (this) {
-        RideStatus.OPEN -> R.string.ride_card_status_open
-        RideStatus.ASSIGNED -> R.string.ride_card_status_assigned
-        RideStatus.COMPLETED -> R.string.ride_card_status_completed
-        RideStatus.CANCELLED -> R.string.ride_card_status_cancelled
-        RideStatus.UNKNOWN -> R.string.ride_card_status_unknown
+        RideStatus.OPEN -> Res.string.ride_card_status_open
+        RideStatus.ASSIGNED -> Res.string.ride_card_status_assigned
+        RideStatus.COMPLETED -> Res.string.ride_card_status_completed
+        RideStatus.CANCELLED -> Res.string.ride_card_status_cancelled
+        RideStatus.UNKNOWN -> Res.string.ride_card_status_unknown
     }
 )
 
@@ -314,8 +324,8 @@ fun formatTransferDateTime(
     today: LocalDate = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date,
     timeZone: TimeZone = TimeZone.currentSystemDefault()
 ): String {
-    val todayLabel = stringResource(R.string.ride_card_date_today)
-    val tomorrowLabel = stringResource(R.string.ride_card_date_tomorrow)
+    val todayLabel = stringResource(Res.string.ride_card_date_today)
+    val tomorrowLabel = stringResource(Res.string.ride_card_date_tomorrow)
     val dateTime = instant.toLocalDateTime(timeZone)
     val date = dateTime.date
     val dayLabel = when (date) {

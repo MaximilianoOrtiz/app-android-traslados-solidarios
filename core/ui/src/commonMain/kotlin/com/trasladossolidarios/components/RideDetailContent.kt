@@ -23,7 +23,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
+import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import com.trasladossolidarios.domain.enum.AnimalSpecies
@@ -34,7 +34,9 @@ import com.trasladossolidarios.domain.model.Ride
 import com.trasladossolidarios.domain.model.User
 import com.trasladossolidarios.ui.theme.ApMobileTP2Theme
 import com.trasladossolidarios.ui.theme.AppTheme
-import com.ui.R
+import com.trasladossolidarios.ui.resources.Res
+import com.trasladossolidarios.ui.resources.core_ui_back
+import com.trasladossolidarios.ui.resources.ride_card_animal_name_fallback
 import kotlin.time.Clock
 import kotlin.time.Duration.Companion.seconds
 
@@ -53,7 +55,7 @@ fun RideDetailContent(
 ) {
 
     val animalName = ride.animal.name.ifBlank {
-        stringResource(R.string.ride_card_animal_name_fallback)
+        stringResource(Res.string.ride_card_animal_name_fallback)
     }
 
     Column(
@@ -82,7 +84,7 @@ fun RideDetailContent(
             ) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = stringResource(R.string.core_ui_back),
+                    contentDescription = stringResource(Res.string.core_ui_back),
                     tint = Color.White
                 )
             }
