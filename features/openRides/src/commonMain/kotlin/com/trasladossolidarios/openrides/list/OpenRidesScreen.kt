@@ -21,13 +21,20 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
+import org.jetbrains.compose.resources.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import apmobiletp2.features.openrides.generated.resources.Res
+import apmobiletp2.features.openrides.generated.resources.open_rides_empty
+import apmobiletp2.features.openrides.generated.resources.open_rides_error_title
+import apmobiletp2.features.openrides.generated.resources.open_rides_loading
+import apmobiletp2.features.openrides.generated.resources.open_rides_subtitle
+import apmobiletp2.features.openrides.generated.resources.open_rides_title
+
 import com.trasladossolidarios.components.RideCard
 import com.trasladossolidarios.components.toMessage
-import com.trasladossolidarios.openrides.R
+
 import com.trasladossolidarios.ui.theme.AppTheme
 import com.trasladossolidarios.ui.theme.AppTheme.spacing
 import components.ErrorContent
@@ -70,13 +77,13 @@ fun OpenRidesScreen(
                         modifier = Modifier.fillMaxWidth(),
                     ){
                         Text(
-                            text = stringResource(R.string.open_rides_title),
+                            text = stringResource(Res.string.open_rides_title),
                             style = AppTheme.typography.headlineMedium,
                             fontWeight = FontWeight.Bold
                         )
                         Spacer(Modifier.height(spacing.xs))
                         Text(
-                            text = stringResource(R.string.open_rides_subtitle),
+                            text = stringResource(Res.string.open_rides_subtitle),
                             style = AppTheme.typography.bodyMedium,
                             textAlign = TextAlign.Center
                         )
@@ -97,13 +104,13 @@ fun OpenRidesScreen(
                     modifier = contentModifier.fillMaxSize(),
                     contentAlignment = Alignment.Center
                 ) {
-                    LoadingContent(stringResource(R.string.open_rides_loading))
+                    LoadingContent(stringResource(Res.string.open_rides_loading))
                 }
             }
 
             is OpenRidesState.Error -> {
                 ErrorContent(
-                    title = stringResource(R.string.open_rides_error_title),
+                    title = stringResource(Res.string.open_rides_error_title),
                     message = state.error.toMessage(),
                     onRetry = onRetry,
                     modifier = contentModifier
@@ -135,7 +142,7 @@ fun OpenRidesList(
             contentAlignment = Alignment.Center
         ) {
             Text(
-                text = stringResource(R.string.open_rides_empty),
+                text = stringResource(Res.string.open_rides_empty),
                 style = AppTheme.typography.bodyLarge,
                 color = AppTheme.colors.onSurfaceVariant
             )

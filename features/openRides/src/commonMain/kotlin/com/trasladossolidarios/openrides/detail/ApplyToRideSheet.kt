@@ -18,14 +18,21 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import com.trasladossolidarios.components.AppTextField
 import com.trasladossolidarios.components.PrimaryButton
-import com.trasladossolidarios.openrides.R
 import com.trasladossolidarios.ui.theme.ApMobileTP2Theme
 import com.trasladossolidarios.ui.theme.AppTheme
+import org.jetbrains.compose.resources.stringResource
+import apmobiletp2.features.openrides.generated.resources.Res
+import apmobiletp2.features.openrides.generated.resources.Res.string
+import apmobiletp2.features.openrides.generated.resources.ride_detail_apply_cancel
+import apmobiletp2.features.openrides.generated.resources.ride_detail_apply_contact_label
+import apmobiletp2.features.openrides.generated.resources.ride_detail_apply_message_label
+import apmobiletp2.features.openrides.generated.resources.ride_detail_apply_sheet_subtitle
+import apmobiletp2.features.openrides.generated.resources.ride_detail_apply_sheet_title
+import apmobiletp2.features.openrides.generated.resources.ride_detail_apply_submit
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -54,7 +61,7 @@ fun ApplyToRideSheet(
                 .navigationBarsPadding()
         ) {
             Text(
-                text = stringResource(R.string.ride_detail_apply_sheet_title),
+                text = stringResource(string.ride_detail_apply_sheet_title),
                 style = AppTheme.typography.headlineSmall,
                 color = AppTheme.colors.onSurface
             )
@@ -62,7 +69,7 @@ fun ApplyToRideSheet(
             Spacer(modifier = Modifier.height(AppTheme.spacing.xs))
 
             Text(
-                text = stringResource(R.string.ride_detail_apply_sheet_subtitle),
+                text = stringResource(Res.string.ride_detail_apply_sheet_subtitle),
                 style = AppTheme.typography.bodyMedium,
                 color = AppTheme.colors.onSurfaceVariant
             )
@@ -72,7 +79,7 @@ fun ApplyToRideSheet(
             AppTextField(
                 value = contact,
                 onValueChange = { contact = it },
-                label = stringResource(R.string.ride_detail_apply_contact_label),
+                label = stringResource(Res.string.ride_detail_apply_contact_label),
                 keyboardType = KeyboardType.Phone
             )
 
@@ -81,14 +88,14 @@ fun ApplyToRideSheet(
             AppTextField(
                 value = message,
                 onValueChange = { message = it },
-                label = stringResource(R.string.ride_detail_apply_message_label),
+                label = stringResource(Res.string.ride_detail_apply_message_label),
                 keyboardType = KeyboardType.Text
             )
 
             Spacer(modifier = Modifier.height(AppTheme.spacing.lg))
 
             PrimaryButton(
-                text = stringResource(R.string.ride_detail_apply_submit),
+                text = stringResource(Res.string.ride_detail_apply_submit),
                 onClick = { onSubmit(message, contact) },
                 enabled = contact.isNotBlank(),
                 isLoading = isSubmitting,
@@ -102,7 +109,7 @@ fun ApplyToRideSheet(
                     .align(Alignment.CenterHorizontally)
             ) {
                 Text(
-                    text = stringResource(R.string.ride_detail_apply_cancel),
+                    text = stringResource(Res.string.ride_detail_apply_cancel),
                     style = AppTheme.typography.labelLarge,
                     color = AppTheme.colors.onSurfaceVariant
                 )

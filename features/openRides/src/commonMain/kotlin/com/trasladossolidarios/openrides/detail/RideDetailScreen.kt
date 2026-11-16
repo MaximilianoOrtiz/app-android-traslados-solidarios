@@ -18,7 +18,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -32,13 +31,22 @@ import com.trasladossolidarios.domain.model.Location
 import com.trasladossolidarios.domain.model.Ride
 import com.trasladossolidarios.domain.model.RideDetail
 import com.trasladossolidarios.domain.model.User
-import com.trasladossolidarios.openrides.R
 import com.trasladossolidarios.ui.theme.ApMobileTP2Theme
 import com.trasladossolidarios.ui.theme.AppTheme
 import components.ErrorContent
 import components.LoadingContent
 import kotlin.time.Clock
 import kotlin.time.Duration.Companion.seconds
+import org.jetbrains.compose.resources.stringResource
+import apmobiletp2.features.openrides.generated.resources.Res
+import apmobiletp2.features.openrides.generated.resources.ride_detail_accept_action
+import apmobiletp2.features.openrides.generated.resources.ride_detail_applied_action
+import apmobiletp2.features.openrides.generated.resources.ride_detail_apply_error
+import apmobiletp2.features.openrides.generated.resources.ride_detail_apply_success_message
+import apmobiletp2.features.openrides.generated.resources.ride_detail_apply_success_ok
+import apmobiletp2.features.openrides.generated.resources.ride_detail_apply_success_title
+import apmobiletp2.features.openrides.generated.resources.ride_detail_error_title
+import apmobiletp2.features.openrides.generated.resources.ride_detail_loading
 
 
 @Composable
@@ -73,14 +81,14 @@ fun RideDetailRoute(
     if (showSuccessDialog) {
         AlertDialog(
             onDismissRequest = { showSuccessDialog = false },
-            title = { Text(stringResource(R.string.ride_detail_apply_success_title)) },
-            text = { Text(stringResource(R.string.ride_detail_apply_success_message)) },
+            title = { Text(stringResource(Res.string.ride_detail_apply_success_title)) },
+            text = { Text(stringResource(Res.string.ride_detail_apply_success_message)) },
             confirmButton = {
                 TextButton(onClick = {
                     showSuccessDialog = false
                     onApplied()
                 }) {
-                    Text(stringResource(R.string.ride_detail_apply_success_ok))
+                    Text(stringResource(Res.string.ride_detail_apply_success_ok))
                 }
             }
         )
@@ -89,10 +97,10 @@ fun RideDetailRoute(
     if (showErrorDialog) {
         AlertDialog(
             onDismissRequest = { showErrorDialog = false },
-            title = { Text(stringResource(R.string.ride_detail_apply_error)) },
+            title = { Text(stringResource(Res.string.ride_detail_apply_error)) },
             confirmButton = {
                 TextButton(onClick = { showErrorDialog = false }) {
-                    Text(stringResource(R.string.ride_detail_apply_success_ok))
+                    Text(stringResource(Res.string.ride_detail_apply_success_ok))
                 }
             }
         )
@@ -127,9 +135,9 @@ fun RideDetailScreen(
                     ) {
                         PrimaryButton(
                             text = if (uiState.hasApplied) {
-                                stringResource(R.string.ride_detail_applied_action)
+                                stringResource(Res.string.ride_detail_applied_action)
                             } else {
-                                stringResource(R.string.ride_detail_accept_action)
+                                stringResource(Res.string.ride_detail_accept_action)
                             },
                             onClick = onAccept,
                             enabled = !uiState.hasApplied,
@@ -144,12 +152,12 @@ fun RideDetailScreen(
     ) { paddingValues ->
         when (uiState) {
             is RideDetailState.Loading -> LoadingContent(
-                message = stringResource(R.string.ride_detail_loading),
+                message = stringResource(Res.string.ride_detail_loading),
                 modifier = Modifier.padding(paddingValues)
             )
 
             is RideDetailState.Error -> ErrorContent(
-                title = stringResource(R.string.ride_detail_error_title),
+                title = stringResource(Res.string.ride_detail_error_title),
                 message = uiState.error.toMessage(),
                 onRetry = onRetry,
                 modifier = Modifier.padding(paddingValues)

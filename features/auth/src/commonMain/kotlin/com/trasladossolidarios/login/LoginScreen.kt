@@ -33,6 +33,15 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.trasladossolidarios.auth.AuthMode
+import com.trasladossolidarios.auth.AuthUiState
+import com.trasladossolidarios.auth.AuthViewModel
+import com.trasladossolidarios.ui.theme.ApMobileTP2Theme
+import com.trasladossolidarios.components.AppTextField
+import com.trasladossolidarios.components.PrimaryButton
+import com.trasladossolidarios.ui.theme.AppTheme
+import androidx.compose.ui.tooling.preview.Preview
+import org.jetbrains.compose.resources.stringResource
 import apmobiletp2.features.auth.generated.resources.Res
 import apmobiletp2.features.auth.generated.resources.field_email
 import apmobiletp2.features.auth.generated.resources.field_name
@@ -51,15 +60,6 @@ import apmobiletp2.features.auth.generated.resources.register_subtitle
 import apmobiletp2.features.auth.generated.resources.register_toggle_login
 import apmobiletp2.features.auth.generated.resources.register_welcome_title
 import apmobiletp2.features.auth.generated.resources.separator_or
-import com.trasladossolidarios.auth.AuthMode
-import com.trasladossolidarios.auth.AuthUiState
-import com.trasladossolidarios.auth.AuthViewModel
-import com.trasladossolidarios.ui.theme.ApMobileTP2Theme
-import com.trasladossolidarios.components.AppTextField
-import com.trasladossolidarios.components.PrimaryButton
-import com.trasladossolidarios.ui.theme.AppTheme
-import org.jetbrains.compose.resources.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 
 
 @Composable
