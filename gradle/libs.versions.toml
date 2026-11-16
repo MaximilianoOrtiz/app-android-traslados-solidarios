@@ -8,8 +8,6 @@ lifecycleRuntimeKtx = "2.11.0"
 activityCompose = "1.13.0"
 kotlin = "2.4.21"
 composeBom = "2026.02.01"
-# Compose Multiplatform (CMP): gestiona compose.* y los resources multiplataforma.
-composeMultiplatform = "1.12.2"
 appcompat = "1.8.0"
 material = "1.14.0"
 nav3Core = "1.2.0"
@@ -40,6 +38,11 @@ media3CommonKtx = "1.11.1"
 # Coil 3.6.x compila con Kotlin 2.4 (trae stdlib 2.4, incompatible con el compilador 2.2 del proyecto).
 # 3.4.0 es la última versión compatible con metadata 2.3.
 coil = "3.4.0"
+# Compose Multiplatform (CMP):
+composeMultiplatform = "1.12.2"
+compose-multiplatform-material3 = "1.9.0"
+compose-multiplatform-material-icons = "1.7.3"
+androidx-lifecycle = "2.11.0"
 
 
 [libraries]
@@ -94,7 +97,16 @@ androidx-media3-common-ktx = { group = "androidx.media3", name = "media3-common-
 coil-compose = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil" }
 coil-network-okhttp = { group = "io.coil-kt.coil3", name = "coil-network-okhttp", version.ref = "coil" }
 
-
+#Se utilizan para las feacture que se migraran
+compose-multiplatform-runtime = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "composeMultiplatform" }
+compose-multiplatform-foundation = { module = "org.jetbrains.compose.foundation:foundation", version.ref = "composeMultiplatform" }
+compose-multiplatform-ui = { module = "org.jetbrains.compose.ui:ui", version.ref = "composeMultiplatform" }
+compose-multiplatform-ui-tooling-preview = { module = "org.jetbrains.compose.ui:ui-tooling-preview", version.ref = "composeMultiplatform" }
+compose-multiplatform-resources = { module = "org.jetbrains.compose.components:components-resources", version.ref = "composeMultiplatform" }
+compose-multiplatform-material3 = { module = "org.jetbrains.compose.material3:material3", version.ref = "compose-multiplatform-material3" }
+compose-multiplatform-material-icons-extended = { module = "org.jetbrains.compose.material:material-icons-extended", version.ref = "compose-multiplatform-material-icons" }
+androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel", version.ref = "androidx-lifecycle" }
+compose-multiplatform-ui-tooling = { module = "org.jetbrains.compose.ui:ui-tooling", version.ref = "composeMultiplatform" }
 
 
 [plugins]

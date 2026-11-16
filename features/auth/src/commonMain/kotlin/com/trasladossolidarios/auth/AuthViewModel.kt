@@ -2,8 +2,6 @@ package com.trasladossolidarios.auth
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.initializer
-import androidx.lifecycle.viewmodel.viewModelFactory
 import com.trasladossolidarios.domain.common.AppResult
 import com.trasladossolidarios.domain.common.DomainError
 import com.trasladossolidarios.domain.model.User

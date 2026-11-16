@@ -5,10 +5,6 @@ plugins {
     alias(libs.plugins.compose.multiplatform)
 }
 
-// Versión de Compose Multiplatform (coordenadas org.jetbrains.compose.* directas:
-// los accessors compose.* están deprecados en CMP 1.12).
-val composeMultiplatformVersion = libs.versions.composeMultiplatform.get()
-
 kotlin {
     android {
         namespace = "com.ui"
@@ -44,17 +40,13 @@ kotlin {
         commonMain.dependencies {
             implementation(project(":core:domain"))
 
-            // Compose Multiplatform: coordenadas directas (CMP las resuelve a androidx en Android).
-            implementation("org.jetbrains.compose.runtime:runtime:$composeMultiplatformVersion")
-            implementation("org.jetbrains.compose.foundation:foundation:$composeMultiplatformVersion")
-            implementation("org.jetbrains.compose.ui:ui:$composeMultiplatformVersion")
-            implementation("org.jetbrains.compose.ui:ui-tooling-preview:$composeMultiplatformVersion")
-            implementation("org.jetbrains.compose.components:components-resources:$composeMultiplatformVersion")
-            // Material3: la versión 1.9.0 de CMP envuelve androidx material3:1.4.0
-            // (misma versión estable del proyecto) y publica variantes iOS.
-            implementation("org.jetbrains.compose.material3:material3:1.9.0")
-            // material-icons-extended está congelado por CMP en la versión 1.7.3.
-            implementation("org.jetbrains.compose.material:material-icons-extended:1.7.3")
+            implementation(libs.compose.multiplatform.runtime)
+            implementation(libs.compose.multiplatform.foundation)
+            implementation(libs.compose.multiplatform.ui)
+            implementation(libs.compose.multiplatform.ui.tooling.preview)
+            implementation(libs.compose.multiplatform.resources)
+            implementation(libs.compose.multiplatform.material3)
+            implementation(libs.compose.multiplatform.material.icons.extended)
 
             // Coil 3: carga de imágenes multiplataforma.
             implementation(libs.coil.compose)

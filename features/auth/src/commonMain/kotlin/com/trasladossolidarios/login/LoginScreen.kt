@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Pets
@@ -29,21 +28,39 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import apmobiletp2.features.auth.generated.resources.Res
+import apmobiletp2.features.auth.generated.resources.field_email
+import apmobiletp2.features.auth.generated.resources.field_name
+import apmobiletp2.features.auth.generated.resources.field_password
+import apmobiletp2.features.auth.generated.resources.field_surname
+import apmobiletp2.features.auth.generated.resources.forgot_password
+import apmobiletp2.features.auth.generated.resources.login_button
+import apmobiletp2.features.auth.generated.resources.login_header_subtitle
+import apmobiletp2.features.auth.generated.resources.login_legal_notice
+import apmobiletp2.features.auth.generated.resources.login_subtitle
+import apmobiletp2.features.auth.generated.resources.login_toggle_register
+import apmobiletp2.features.auth.generated.resources.login_welcome_title
+import apmobiletp2.features.auth.generated.resources.name_app
+import apmobiletp2.features.auth.generated.resources.register_button
+import apmobiletp2.features.auth.generated.resources.register_subtitle
+import apmobiletp2.features.auth.generated.resources.register_toggle_login
+import apmobiletp2.features.auth.generated.resources.register_welcome_title
+import apmobiletp2.features.auth.generated.resources.separator_or
 import com.trasladossolidarios.auth.AuthMode
 import com.trasladossolidarios.auth.AuthUiState
 import com.trasladossolidarios.auth.AuthViewModel
-import com.trasladossolidarios.auth.R
 import com.trasladossolidarios.ui.theme.ApMobileTP2Theme
 import com.trasladossolidarios.components.AppTextField
 import com.trasladossolidarios.components.PrimaryButton
 import com.trasladossolidarios.ui.theme.AppTheme
+import org.jetbrains.compose.resources.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+
 
 @Composable
 fun LoginScrennRoute(
@@ -103,13 +120,13 @@ fun LoginScreen(
                         )
                         Spacer(Modifier.height(spacing.md))
                         Text(
-                            text = stringResource(R.string.name_app),
+                            text = stringResource(Res.string.name_app),
                             style = AppTheme.typography.headlineMedium,
                             fontWeight = FontWeight.Bold
                         )
                         Spacer(Modifier.height(spacing.md))
                         Text(
-                            text = stringResource(R.string.login_header_subtitle),
+                            text = stringResource(Res.string.login_header_subtitle),
                             style = AppTheme.typography.bodyMedium,
                             textAlign = TextAlign.Center
                         )
@@ -139,9 +156,9 @@ fun LoginScreen(
             Text(
                 text = stringResource(
                     if (isRegisterMode) {
-                        R.string.register_welcome_title
+                        Res.string.register_welcome_title
                     } else {
-                        R.string.login_welcome_title
+                        Res.string.login_welcome_title
                     }
                 ),
                 style = typography.titleLarge,
@@ -153,9 +170,9 @@ fun LoginScreen(
             Text(
                 text = stringResource(
                     if (isRegisterMode) {
-                        R.string.register_subtitle
+                        Res.string.register_subtitle
                     } else {
-                        R.string.login_subtitle
+                        Res.string.login_subtitle
                     }
                 ),
                 style = typography.bodyMedium,
@@ -169,7 +186,7 @@ fun LoginScreen(
                 AppTextField(
                     value = state.name,
                     onValueChange = onNameChange,
-                    label = stringResource(R.string.field_name)
+                    label = stringResource(Res.string.field_name)
                 )
 
                 Spacer(Modifier.height(spacing.sm + spacing.xs + spacing.xs))
@@ -177,7 +194,7 @@ fun LoginScreen(
                 AppTextField(
                     value = state.surname,
                     onValueChange = onSurnameChange,
-                    label = stringResource(R.string.field_surname)
+                    label = stringResource(Res.string.field_surname)
                 )
 
                 Spacer(Modifier.height(spacing.sm + spacing.xs + spacing.xs))
@@ -186,7 +203,7 @@ fun LoginScreen(
             AppTextField(
                 value = state.email,
                 onValueChange = onEmailChange,
-                label = stringResource(R.string.field_email),
+                label = stringResource(Res.string.field_email),
                 keyboardType = KeyboardType.Email
             )
 
@@ -195,7 +212,7 @@ fun LoginScreen(
             AppTextField(
                 value = state.password,
                 onValueChange = onPasswordChange,
-                label = stringResource(R.string.field_password),
+                label = stringResource(Res.string.field_password),
                 isPassword = true
             )
 
@@ -207,7 +224,7 @@ fun LoginScreen(
                     contentAlignment = Alignment.CenterEnd
                 ) {
                     Text(
-                        text = stringResource(R.string.forgot_password),
+                        text = stringResource(Res.string.forgot_password),
                         color = colors.primary,
                         style = typography.bodyMedium
                     )
@@ -229,9 +246,9 @@ fun LoginScreen(
             PrimaryButton(
                 text = stringResource(
                     if (isRegisterMode) {
-                        R.string.register_button
+                        Res.string.register_button
                     } else {
-                        R.string.login_button
+                        Res.string.login_button
                     }
                 ),
                 onClick = {
@@ -256,7 +273,7 @@ fun LoginScreen(
                 )
 
                 Text(
-                    text = "  ${stringResource(R.string.separator_or)}  ",
+                    text = "  ${stringResource(Res.string.separator_or)}  ",
                     color = colors.onSurfaceVariant,
                     style = typography.bodySmall
                 )
@@ -288,9 +305,9 @@ fun LoginScreen(
                 Text(
                     text = stringResource(
                         if (isRegisterMode) {
-                            R.string.register_toggle_login
+                            Res.string.register_toggle_login
                         } else {
-                            R.string.login_toggle_register
+                            Res.string.login_toggle_register
                         }
                     ),
                     style = typography.labelLarge
@@ -300,7 +317,7 @@ fun LoginScreen(
             Spacer(Modifier.height(spacing.lg))
 
             Text(
-                text = stringResource(R.string.login_legal_notice),
+                text = stringResource(Res.string.login_legal_notice),
                 style = typography.bodySmall,
                 color = colors.onSurfaceVariant,
                 textAlign = TextAlign.Center,
