@@ -1,6 +1,5 @@
 package com.trasladossolidarios.myrides
 
-import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,7 +15,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Tab
@@ -29,7 +27,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.trasladossolidarios.components.RideCard
@@ -39,6 +36,17 @@ import com.trasladossolidarios.ui.theme.AppTheme
 import com.trasladossolidarios.ui.theme.AppTheme.spacing
 import components.ErrorContent
 import components.LoadingContent
+import org.jetbrains.compose.resources.stringResource
+import apmobiletp2.features.myrides.generated.resources.Res
+import apmobiletp2.features.myrides.generated.resources.my_rides_coming_soon
+import apmobiletp2.features.myrides.generated.resources.my_rides_error_title
+import apmobiletp2.features.myrides.generated.resources.my_rides_loading
+import apmobiletp2.features.myrides.generated.resources.my_rides_published_empty
+import apmobiletp2.features.myrides.generated.resources.my_rides_subtitle
+import apmobiletp2.features.myrides.generated.resources.my_rides_tab_as_volunteer
+import apmobiletp2.features.myrides.generated.resources.my_rides_tab_published
+import apmobiletp2.features.myrides.generated.resources.my_rides_title
+import org.jetbrains.compose.resources.StringResource
 
 
 @Composable
@@ -77,13 +85,13 @@ fun MyRidesScreen(
                 title = {
                     Column(modifier = Modifier.fillMaxWidth()) {
                         Text(
-                            text = stringResource(R.string.my_rides_title),
+                            text = stringResource(Res.string.my_rides_title),
                             style = AppTheme.typography.headlineMedium,
                             fontWeight = FontWeight.Bold
                         )
                         Spacer(Modifier.height(spacing.xs))
                         Text(
-                            text = stringResource(R.string.my_rides_subtitle),
+                            text = stringResource(Res.string.my_rides_subtitle),
                             style = AppTheme.typography.bodyMedium
                         )
                     }
@@ -164,10 +172,10 @@ private fun CountBadge(count: Int) {
     }
 }
 
-@StringRes
-private fun MyRidesTab.labelRes(): Int = when (this) {
-    MyRidesTab.PUBLISHED -> R.string.my_rides_tab_published
-    MyRidesTab.AS_VOLUNTEER -> R.string.my_rides_tab_as_volunteer
+
+private fun MyRidesTab.labelRes(): StringResource = when (this) {
+    MyRidesTab.PUBLISHED -> Res.string.my_rides_tab_published
+    MyRidesTab.AS_VOLUNTEER -> Res.string.my_rides_tab_as_volunteer
 }
 
 @Composable
@@ -182,11 +190,11 @@ private fun PublishedRidesContent(
             modifier = modifier.fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
-            LoadingContent(stringResource(R.string.my_rides_loading))
+            LoadingContent(stringResource(Res.string.my_rides_loading))
         }
 
         is PublishedRidesState.Error -> ErrorContent(
-            title = stringResource(R.string.my_rides_error_title),
+            title = stringResource(Res.string.my_rides_error_title),
             message = state.error.toMessage(),
             onRetry = onRetry,
             modifier = modifier
@@ -216,7 +224,7 @@ private fun PublishedRidesList(
             contentAlignment = Alignment.Center
         ) {
             Text(
-                text = stringResource(R.string.my_rides_published_empty),
+                text = stringResource(Res.string.my_rides_published_empty),
                 style = AppTheme.typography.bodyLarge,
                 color = AppTheme.colors.onSurfaceVariant
             )
@@ -246,7 +254,7 @@ private fun VolunteerRidesPlaceholder(modifier: Modifier = Modifier) {
         contentAlignment = Alignment.Center
     ) {
         Text(
-            text = stringResource(R.string.my_rides_coming_soon),
+            text = stringResource(Res.string.my_rides_coming_soon),
             style = AppTheme.typography.bodyLarge,
             color = AppTheme.colors.onSurfaceVariant
         )
