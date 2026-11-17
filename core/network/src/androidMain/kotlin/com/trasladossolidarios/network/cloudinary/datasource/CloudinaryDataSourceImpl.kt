@@ -8,10 +8,12 @@ import com.cloudinary.android.callback.UploadCallback
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
-class CloudinaryDataSource constructor(
+
+class CloudinaryDataSourceImpl constructor(
     private val context: Context
-) {
-    suspend fun uploadImage(fileUri: Uri): String = suspendCancellableCoroutine { continuation ->
+) : CloudinaryDataSource {
+    override suspend fun uploadImage(imageUri: String): String = suspendCancellableCoroutine { continuation ->
+        val fileUri = Uri.parse(imageUri)
         val requestId = MediaManager.get().upload(fileUri)
             .unsigned("trasladossolidarios_preset") //fix?
             .callback(object : UploadCallback {

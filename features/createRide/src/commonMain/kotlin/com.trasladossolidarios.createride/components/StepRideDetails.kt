@@ -1,8 +1,5 @@
 package com.trasladossolidarios.createride.components
 
-import android.Manifest
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -20,6 +17,7 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.trasladossolidarios.createride.CreateRideUiState
+import com.trasladossolidarios.createride.platform.rememberLocationPermissionRequest
 import com.trasladossolidarios.domain.model.Location
 import com.trasladossolidarios.ui.theme.AppTheme
 import kotlin.time.Instant
@@ -63,13 +61,9 @@ fun StepRideDetails(
         onDispose { focusManager.clearFocus() }
     }
 
-    val locationPermissionLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.RequestMultiplePermissions()
-    ) { permissions ->
-        val isGranted = permissions[Manifest.permission.ACCESS_FINE_LOCATION] == true ||
-                permissions[Manifest.permission.ACCESS_COARSE_LOCATION] == true
-        if (isGranted) onFetchCurrentLocation()
-    }
+    val requestLocationPermission = rememberLocationPermissionRequest(
+        onGranted = onFetchCurrentLocation
+    )
 
     var isOriginDropdownExpanded by rememberSaveable { mutableStateOf(false) }
     var isDestinationDropdownExpanded by rememberSaveable { mutableStateOf(false) }
@@ -108,14 +102,7 @@ fun StepRideDetails(
                             strokeWidth = 2.dp
                         )
                     } else {
-                        IconButton(onClick = {
-                            locationPermissionLauncher.launch(
-                                arrayOf(
-                                    Manifest.permission.ACCESS_FINE_LOCATION,
-                                    Manifest.permission.ACCESS_COARSE_LOCATION
-                                )
-                            )
-                        }) {
+                        IconButton(onClick = { requestLocationPermission() }) {
                             Icon(Icons.Default.MyLocation, contentDescription = "Ubicación actual")
                         }
                     }

@@ -1,54 +1,82 @@
+
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
-    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.multiplatform)
+    alias(libs.plugins.android.kotlin.multiplatform.library)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.compose.multiplatform)
     alias(libs.plugins.kotlin.serialization)
 }
 
-android {
-    namespace = "com.trasladossolidarios.createride"
-    compileSdk {
-        version = release(37) {
-            minorApiLevel = 1
+kotlin {
+
+    android {
+        namespace = "com.trasladossolidarios.createride"
+        compileSdk = 37
+        minSdk = 26
+
+        androidResources {
+            enable = true
+        }
+
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_11)
         }
     }
 
-    defaultConfig {
-        minSdk = 26
+    iosArm64()
+    iosSimulatorArm64()
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
+    jvmToolchain(11)
 
+    sourceSets {
+
+        commonMain.dependencies {
+
+            // Módulos internos
+            implementation(project(":core:domain"))
+            implementation(project(":core:ui"))
+            implementation(project(":core:data"))
+            implementation(project(":core:network"))
+
+            // Compose Multiplatform
+            implementation(libs.compose.multiplatform.runtime)
+            implementation(libs.compose.multiplatform.foundation)
+            implementation(libs.compose.multiplatform.ui)
+            implementation(libs.compose.multiplatform.ui.tooling.preview)
+            implementation(libs.compose.multiplatform.material3)
+            implementation(libs.compose.multiplatform.material.icons.extended)
+            implementation(libs.compose.multiplatform.resources)
+
+            // Navigation 3 Runtime
+            implementation(libs.androidx.navigation3.runtime)
+
+            // Lifecycle multiplataforma
+            implementation(libs.androidx.lifecycle.viewmodel)
+
+            // Koin multiplataforma
+            implementation(libs.koin.core)
+            implementation(libs.koin.compose.viewmodel)
+
+            // Kotlinx DateTime
+            implementation(libs.kotlinx.datetime)
+        }
+
+        androidMain.dependencies {
+            implementation(libs.androidx.activity.compose)
+        }
+
+        commonTest.dependencies {
+            implementation(kotlin("test"))
+        }
+    }
 }
 
+// Compose Preview para Android Studio
 dependencies {
-    implementation(project(":core:data"))
-    implementation(project(":core:network"))
-    implementation(project(":core:ui"))
-    implementation(project(":core:domain"))
-
-    implementation(libs.androidx.material3)
-    implementation(libs.androidx.navigation3.runtime)
-    implementation(libs.androidx.room.ktx)
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.11.0")
-    // La feature registra su ViewModel con el DSL viewModel { } de Koin.
-    implementation(libs.koin.android)
-    implementation(platform(libs.androidx.compose.bom))
-    implementation("androidx.compose.material:material-icons-core")
-    implementation("androidx.compose.material:material-icons-extended")
-    implementation("androidx.activity:activity-compose:1.9.3")
-    implementation(libs.kotlinx.datetime)
-
-    implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.material)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(libs.androidx.junit)
-
-
-
+    add(
+        "androidRuntimeClasspath",
+        libs.compose.multiplatform.ui.tooling
+    )
 }

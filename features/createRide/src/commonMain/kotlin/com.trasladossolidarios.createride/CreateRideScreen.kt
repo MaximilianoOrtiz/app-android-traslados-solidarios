@@ -1,6 +1,5 @@
 package com.trasladossolidarios.createride
 
-import android.net.Uri
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -61,7 +60,7 @@ fun CreateRideScreen(
     uiState: CreateRideUiState,
     onBackClick: () -> Unit,
     onUpdateAnimalInfo: (String, AnimalSpecies, String) -> Unit,
-    onPhotoSelected: (Uri) -> Unit,
+    onPhotoSelected: (String) -> Unit,
     onUpdateRideDetails: (String, String, String, String, String) -> Unit,
     onOriginAddressChanged:(String) -> Unit,
     onOriginSuggestionSelected:(Location) -> Unit,

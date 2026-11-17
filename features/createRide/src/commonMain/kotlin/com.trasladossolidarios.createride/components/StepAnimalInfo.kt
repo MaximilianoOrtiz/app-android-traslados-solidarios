@@ -1,10 +1,5 @@
 package com.trasladossolidarios.createride.components
 
-import android.content.Context
-import android.net.Uri
-import android.os.Environment
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -13,45 +8,23 @@ import androidx.compose.material.icons.filled.CameraAlt
 import androidx.compose.material.icons.filled.PhotoLibrary
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.core.content.FileProvider
 import com.trasladossolidarios.createride.CreateRideUiState
+import com.trasladossolidarios.createride.platform.rememberImagePicker
 import com.trasladossolidarios.domain.enum.AnimalSpecies
 import com.trasladossolidarios.ui.theme.AppTheme
-import java.io.File
 
 @Composable
 fun StepAnimalInfo(
     uiState: CreateRideUiState,
     onUpdateInfo: (String, AnimalSpecies, String) -> Unit,
-    onPhotoSelected: (Uri) -> Unit,
+    onPhotoSelected: (String) -> Unit,
     onNext: () -> Unit
 ) {
-    val context = LocalContext.current
-    // Guardar la URI como String en rememberSaveable para que sobreviva a la recreación de la Activity
-    var tempCameraUriString by rememberSaveable { mutableStateOf<String?>(null) }
-
-    // Launcher para la cámara del sistema
-    val cameraLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.TakePicture()
-    ) { success ->
-        if (success && !tempCameraUriString.isNullOrEmpty()) {
-            val savedUri = Uri.parse(tempCameraUriString)
-            onPhotoSelected(savedUri)
-        }
-    }
-
-    // Launcher para la galería
-    val galleryLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.GetContent()
-    ) { uri: Uri? ->
-        uri?.let { onPhotoSelected(it) }
-    }
+    val imagePicker = rememberImagePicker(onImagePicked = onPhotoSelected)
 
     Column(
         modifier = Modifier
@@ -74,11 +47,7 @@ fun StepAnimalInfo(
         ) {
             // Botón Tomar Foto (Cámara)
             OutlinedCard(
-                onClick = {
-                    val uri = createImageUri(context)
-                    tempCameraUriString = uri.toString()
-                    cameraLauncher.launch(uri)
-                },
+                onClick = { imagePicker.launchCamera() },
                 modifier = Modifier.weight(1f).height(100.dp),
                 shape = AppTheme.shapes.medium
             ) {
@@ -98,7 +67,7 @@ fun StepAnimalInfo(
 
             // Botón Elegir de Galería
             OutlinedCard(
-                onClick = { galleryLauncher.launch("image/*") },
+                onClick = { imagePicker.launchGallery() },
                 modifier = Modifier.weight(1f).height(100.dp),
                 shape = AppTheme.shapes.medium
             ) {
@@ -209,18 +178,4 @@ fun StepAnimalInfo(
             )
         }
     }
-}
-
-// Función auxiliar para crear un archivo temporal y obtener su URI seguro
-private fun createImageUri(context: Context): Uri {
-    val file = File.createTempFile(
-        "animal_${System.currentTimeMillis()}",
-        ".jpg",
-        context.cacheDir
-    )
-    return FileProvider.getUriForFile(
-        context,
-        "${context.packageName}.fileprovider",
-        file
-    )
 }

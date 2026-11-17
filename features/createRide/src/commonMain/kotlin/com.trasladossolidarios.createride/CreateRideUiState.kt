@@ -1,15 +1,14 @@
 package com.trasladossolidarios.createride
 
-import android.net.Uri
-import androidx.annotation.StringRes
 import com.trasladossolidarios.domain.enum.AnimalSpecies
 import com.trasladossolidarios.domain.model.Location
+import org.jetbrains.compose.resources.StringResource
 
 data class CreateRideUiState(
     val currentStep: Int = 0, // 0: Animal, 1: Detalles del traslado, 2: Revisión
 
     // Información del Animal (Paso 0)
-    val animalPhotoUri: Uri? = null,
+    val animalPhotoUri: String? = null,
     val animalName: String = "",
     val animalSpecies: AnimalSpecies = AnimalSpecies.DOG, //revisar fix
     val animalDescription: String = "",
@@ -29,7 +28,7 @@ data class CreateRideUiState(
     val isLoadingLocation: Boolean = false,
     val isLoading: Boolean = false,
     val isSuccess: Boolean = false,
-    @StringRes val errorMessage: Int? = null
+    val errorMessage: StringResource? = null
 ) {
     val isStep0Valid: Boolean
         get() = animalName.isNotBlank() && animalDescription.isNotBlank()

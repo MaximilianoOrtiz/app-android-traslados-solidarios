@@ -1,6 +1,5 @@
 package com.trasladossolidarios.createride
 
-import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlin.time.Clock
@@ -14,13 +13,18 @@ import com.trasladossolidarios.domain.location.LocationTracker
 import com.trasladossolidarios.domain.model.Animal
 import com.trasladossolidarios.domain.model.Location
 import com.trasladossolidarios.domain.model.Ride
+import apmobiletp2.features.createride.generated.resources.Res
+import apmobiletp2.features.createride.generated.resources.error_auth_required
+import apmobiletp2.features.createride.generated.resources.error_fill_animal_name_and_description
+import apmobiletp2.features.createride.generated.resources.error_fill_origin_destination_date_time
+import apmobiletp2.features.createride.generated.resources.error_fill_required_fields
+import apmobiletp2.features.createride.generated.resources.error_unexpected
 import com.trasladossolidarios.network.cloudinary.datasource.CloudinaryDataSource
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import android.util.Log
 import com.trasladossolidarios.domain.repository.FirebaseAuthRepository
 import com.trasladossolidarios.domain.repository.RidesRepository
 import kotlinx.coroutines.Job
@@ -47,7 +51,7 @@ class CreateRideViewModel(
             0 -> {
                 if (!state.isStep0Valid) {
                     _uiState.update {
-                        it.copy(errorMessage = R.string.error_fill_animal_name_and_description)
+                        it.copy(errorMessage = Res.string.error_fill_animal_name_and_description)
                     }
                     return
                 }
@@ -55,7 +59,7 @@ class CreateRideViewModel(
             1 -> {
                 if (!state.isStep1Valid) {
                     _uiState.update {
-                        it.copy(errorMessage = R.string.error_fill_origin_destination_date_time)
+                        it.copy(errorMessage = Res.string.error_fill_origin_destination_date_time)
                     }
                     return
                 }
@@ -80,7 +84,7 @@ class CreateRideViewModel(
         }
     }
 
-    fun setAnimalPhoto(uri: Uri) {
+    fun setAnimalPhoto(uri: String) {
         _uiState.update { it.copy(animalPhotoUri = uri) }
     }
 
@@ -158,7 +162,6 @@ class CreateRideViewModel(
             if (address.length >= 3) {
                 delay(400) // Espera 400ms tras dejar de escribir antes de consultar
                 val suggestions = locationTracker.searchAddresses(address)
-                Log.d("CreateRideViewModel", "Sugerencias encontradas: ${suggestions.size}")//fix
                 _uiState.update { it.copy(destinationSuggestions = suggestions) }
             } else {
                 _uiState.update { it.copy(destinationSuggestions = emptyList()) }
@@ -189,14 +192,13 @@ class CreateRideViewModel(
                     _uiState.update {
                         it.copy(
                             isLoading = false,
-                            errorMessage = R.string.error_auth_required
+                            errorMessage = Res.string.error_auth_required
                         )
                     }
                     return@launch
                 }
 
                 val ownerId = currentUser.uid
-                Log.w("CreateRideViewModel", ownerId)
                 val state = _uiState.value
 
                 // 0. Validación de campos mínimos obligatorios
@@ -204,7 +206,7 @@ class CreateRideViewModel(
                     _uiState.update {
                         it.copy(
                             isLoading = false,
-                            errorMessage = R.string.error_fill_required_fields
+                            errorMessage = Res.string.error_fill_required_fields
                         )
                     }
                     return@launch
@@ -258,7 +260,7 @@ class CreateRideViewModel(
                 _uiState.update {
                     it.copy(
                         isLoading = false,
-                        errorMessage = R.string.error_unexpected
+                        errorMessage = Res.string.error_unexpected
                     )
                 }
             }
