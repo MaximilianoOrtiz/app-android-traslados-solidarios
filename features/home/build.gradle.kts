@@ -1,61 +1,71 @@
+
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
-    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.multiplatform)
+    alias(libs.plugins.android.kotlin.multiplatform.library)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.compose.multiplatform)
 }
 
-android {
-    namespace = "com.trasladossolidarios.home"
-    compileSdk {
-        version = release(37) {
-            minorApiLevel = 1
+kotlin {
+    android {
+        namespace = "com.trasladossolidarios.home"
+        compileSdk = 37
+        minSdk = 26
+
+        androidResources {
+            enable = true
+        }
+
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_11)
         }
     }
 
-    defaultConfig {
-        minSdk = 26
+    iosArm64()
+    iosSimulatorArm64()
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
+    jvmToolchain(11)
 
+    sourceSets {
+        commonMain.dependencies {
+            // Módulos internos
+            implementation(project(":core:domain"))
+            implementation(project(":core:ui"))
+
+            // Compose Multiplatform
+            implementation(libs.compose.multiplatform.runtime)
+            implementation(libs.compose.multiplatform.foundation)
+            implementation(libs.compose.multiplatform.ui)
+            implementation(libs.compose.multiplatform.ui.tooling.preview)
+            implementation(libs.compose.multiplatform.material3)
+            implementation(libs.compose.multiplatform.material.icons.extended)
+            implementation(libs.compose.multiplatform.resources)
+
+            // Lifecycle multiplataforma
+            implementation(libs.androidx.lifecycle.viewmodel)
+
+            // Koin multiplataforma
+            implementation(libs.koin.core)
+            implementation(libs.koin.compose.viewmodel)
+        }
+
+        androidMain.dependencies {
+            // Agregar únicamente dependencias Android
+            // que realmente utilicen las clases de androidMain.
+        }
+
+        commonTest.dependencies {
+            implementation(kotlin("test"))
+        }
+    }
 }
 
+// Tooling necesario para visualizar @Preview en Android Studio
 dependencies {
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.compose.material3)
-    implementation(libs.androidx.compose.ui)
-    implementation(libs.androidx.compose.ui.graphics)
-    implementation(libs.androidx.compose.ui.tooling.preview)
-    implementation(libs.androidx.activity.compose)
-    implementation(libs.androidx.room.ktx)
-    implementation(libs.play.services.cast)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
-    debugImplementation(libs.androidx.compose.ui.test.manifest)
-    debugImplementation(libs.androidx.compose.ui.tooling)
-
-    implementation(project(":core:domain"))
-    implementation(project(":core:ui"))
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.11.0")
-    implementation("androidx.compose.material:material-icons-core")
-    implementation("androidx.compose.material:material-icons-extended")
-
-
-    implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.compose.runtime)
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.compose)
-    implementation(libs.androidx.material3)
-    implementation(libs.material)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(libs.androidx.junit)
-
-    // La feature registra su ViewModel con viewModel { } y HomeRouter usa
-    // koinViewModel() como parámetro por defecto del composable.
-    implementation(libs.koin.android)
-    implementation(libs.koin.compose.viewmodel)
+    add(
+        "androidRuntimeClasspath",
+        libs.compose.multiplatform.ui.tooling
+    )
 }
