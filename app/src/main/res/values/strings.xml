@@ -1,20 +1,3 @@
 <resources>
     <string name="app_name">ApMobileTP2</string>
-    <string name="tab_profile">Perfil</string>
-
-
-    <string name="tab_inicio">Inicio</string>
-    <string name="tab_disponibles">Disponibles</string>
-    <string name="tab_mis_traslados">Mis Traslados</string>
-    <string name="tab_perfil">Perfil</string>
-
-    <!-- Placeholders de prueba -->
-    <string name="home_placeholder">Pantalla de Inicio</string>
-    <string name="profile_placeholder">Pantalla de Perfil</string>
-    <string name="my_rides_placeholder">Pantalla de Mis Traslados</string>
-    <string name="open_rides_placeholder">Pantalla de Traslados Disponibles</string>
-
-    <!-- CreateRideViewModel -->
-    <string name="error_fill_animal_name_and_description">Por favor completá el nombre y la descripción del animal.</string>
-
 </resources>

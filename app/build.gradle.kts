@@ -1,9 +1,8 @@
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
     id("com.google.gms.google-services")
-    // Genera el código de serialización de las rutas de navegación type-safe (@Serializable)
-    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -41,50 +40,14 @@ android {
 }
 
 dependencies {
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(project(":core:data"))
-    implementation(project(":core:database"))
-    implementation(project(":core:domain"))
-    implementation(project(":core:location"))
-    implementation(project(":core:network"))
-    implementation(project(":core:ui"))
-    implementation(project(":features:auth"))
-    implementation(project(":features:createRide"))
-    implementation(project(":features:home"))
-    implementation(project(":features:myRides"))
-    implementation(project(":features:openRides"))
-    implementation(project(":features:profile"))
+    // :shared concentra la app (navegación, UI, DI); :app es solo el entry point de Android
+    implementation(project(":shared"))
     implementation(libs.androidx.activity.compose)
-    implementation(libs.androidx.compose.material3)
-    implementation(libs.androidx.compose.material.icons.extended)
-    implementation(libs.androidx.compose.ui)
-    implementation(libs.androidx.compose.ui.graphics)
-    implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    // Navigation 3: el back stack es una lista que manejamos nosotros
-    implementation(libs.androidx.navigation3.runtime)
-    implementation(libs.androidx.navigation3.ui)
-    // Un ViewModelStore por pantalla del back stack (cada entrada tiene su propio ViewModel)
-    implementation(libs.androidx.lifecycle.viewmodel.navigation3)
-    implementation(libs.kotlinx.serialization.core)
-    implementation(libs.play.services.cast)
-
-    // Koin: startKoin() + androidContext() en la Application
-    implementation(libs.koin.android)
-    // koinViewModel(): puente entre Koin y los ViewModel de Compose
-    implementation(libs.koin.compose.viewmodel)
-
 
     testImplementation(libs.junit)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.junit)
-    debugImplementation(libs.androidx.compose.ui.test.manifest)
-    debugImplementation(libs.androidx.compose.ui.tooling)
-
-    implementation("com.cloudinary:cloudinary-android:2.5.0")
-
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.7")
 }

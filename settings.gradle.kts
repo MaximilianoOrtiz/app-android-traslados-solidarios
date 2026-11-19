@@ -24,6 +24,7 @@ dependencyResolutionManagement {
 
 rootProject.name = "ApMobileTP2"
 include(":app")
+include(":shared")
 include(":core:domain")
 include(":core:data")
 include(":features:auth")

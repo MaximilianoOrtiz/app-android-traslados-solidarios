@@ -14,7 +14,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
+import org.jetbrains.compose.resources.stringResource
 import com.trasladossolidarios.navigation.AppNavDisplay
 import com.trasladossolidarios.navigation.NavigationState
 import com.trasladossolidarios.navigation.TopLevelDestination
@@ -75,7 +75,7 @@ fun AppBottomBar(selected: TopLevelDestination, onSelect: (TopLevelDestination) 
                         contentDescription = null,
                     )
                 },
-                label = { Text(stringResource(tab.labelRes))},
+                label = { Text(stringResource(tab.label))},
 
             )
         }

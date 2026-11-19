@@ -10,6 +10,10 @@ import androidx.compose.runtime.setValue
 import androidx.navigation3.runtime.NavBackStack
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.rememberNavBackStack
+import androidx.savedstate.serialization.SavedStateConfiguration
+import kotlinx.serialization.modules.SerializersModule
+import kotlinx.serialization.modules.polymorphic
+import kotlinx.serialization.modules.subclass
 
 /**
 * Todo el estado de navegación de la app: qué tab está activo y el back stack de cada uno.
@@ -74,12 +78,32 @@ class NavigationState(
     }
 }
 
+/**
+ * SerializersModule polymórfico con todas las NavKey: fuera de Android, navigation3 exige
+ * registrarlo explícitamente para persistir el back stack (en Android hay un overload con
+ * reflexión, pero este camino único funciona en todas las plataformas).
+ */
+private val NavBackStackConfiguration = SavedStateConfiguration {
+    serializersModule = SerializersModule {
+        polymorphic(NavKey::class) {
+            subclass(ProfileDestination::class)
+            subclass(HomeDestination::class)
+            subclass(OpenRidesDestination::class)
+            subclass(RideDetailDestination::class)
+            subclass(MyRidesDestination::class)
+            subclass(CreateRideDestination::class)
+        }
+    }
+}
+
 @Composable
 fun rememberNavigationState(
     startTab: TopLevelDestination = TopLevelDestination.HOME
 ): NavigationState {
     // rememberSaveable / rememberNavBackStack: el tab actual y cada back stack sobreviven a la rotación.
     val currentTab = rememberSaveable { mutableStateOf(startTab) }
-    val backStacks = TopLevelDestination.entries.associateWith { tab -> rememberNavBackStack(tab.key) }
+    val backStacks = TopLevelDestination.entries.associateWith { tab ->
+        rememberNavBackStack(NavBackStackConfiguration, tab.key)
+    }
     return remember(backStacks) { NavigationState(startTab, currentTab, backStacks) }
 }

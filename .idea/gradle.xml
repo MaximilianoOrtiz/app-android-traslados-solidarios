@@ -24,6 +24,7 @@
             <option value="$PROJECT_DIR$/features/myRides" />
             <option value="$PROJECT_DIR$/features/openRides" />
             <option value="$PROJECT_DIR$/features/profile" />
+            <option value="$PROJECT_DIR$/shared" />
           </set>
         </option>
       </GradleProjectSettings>

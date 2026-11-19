@@ -8,7 +8,6 @@ import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberDecoratedNavEntries
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
-import androidx.navigation3.ui.NavDisplay
 import com.trasladossolidarios.createride.CreateRideRouter
 import com.trasladossolidarios.createride.CreateRideViewModel
 import com.trasladossolidarios.home.HomeRouter
@@ -103,7 +102,7 @@ fun AppNavDisplay(
 
     }
 
-    NavDisplay(
+    NavDisplayHost(
         entries = navigationState.toEntries(entryProvider),
         onBack = navigationState::goBack,
         modifier = modifier
