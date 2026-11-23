@@ -5,6 +5,8 @@ import com.trasladossolidarios.domain.usecase.auth.LoginUserUseCase
 import com.trasladossolidarios.domain.usecase.auth.LogoutUseCase
 import com.trasladossolidarios.domain.usecase.auth.ObserveAuthStateUseCase
 import com.trasladossolidarios.domain.usecase.auth.RegisterUserUseCase
+import com.trasladossolidarios.domain.usecase.location.GetCurrentLocationUseCase
+import com.trasladossolidarios.domain.usecase.location.SearchAddressesUseCase
 import com.trasladossolidarios.domain.usecase.ride.CreateRideUseCase
 import com.trasladossolidarios.domain.usecase.ride.GetRideDetailByIdUseCase
 import com.trasladossolidarios.domain.usecase.ride.ObserveAvailableRidesUseCase
@@ -32,4 +34,8 @@ val domainModule = module {
 
     factoryOf(::ApplyToRideUseCase)
     factoryOf(::HasAppliedToRideUseCase)
+
+    factoryOf(::GetCurrentLocationUseCase)
+    factoryOf(::SearchAddressesUseCase)
+
 }

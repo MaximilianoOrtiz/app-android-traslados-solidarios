@@ -9,7 +9,6 @@ import kotlinx.datetime.TimeZone
 import kotlinx.datetime.format.byUnicodePattern
 import kotlinx.datetime.toInstant
 import com.trasladossolidarios.domain.enum.AnimalSpecies
-import com.trasladossolidarios.domain.location.LocationTracker
 import com.trasladossolidarios.domain.model.Animal
 import com.trasladossolidarios.domain.model.Location
 import com.trasladossolidarios.domain.model.Ride
@@ -27,6 +26,8 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import com.trasladossolidarios.domain.repository.FirebaseAuthRepository
 import com.trasladossolidarios.domain.repository.RidesRepository
+import com.trasladossolidarios.domain.usecase.location.GetCurrentLocationUseCase
+import com.trasladossolidarios.domain.usecase.location.SearchAddressesUseCase
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 
@@ -35,7 +36,8 @@ private val transferDateTimeFormat = LocalDateTime.Format {
 }
 
 class CreateRideViewModel(
-    private val locationTracker: LocationTracker,
+    private val getCurrentLocationUseCase : GetCurrentLocationUseCase,
+    private val searchAddressesUseCase : SearchAddressesUseCase,
     private val cloudinaryDataSource: CloudinaryDataSource,
     private val rideRepository: RidesRepository,
     private val firebaseAuthRepository: FirebaseAuthRepository
@@ -110,7 +112,7 @@ class CreateRideViewModel(
     // Geolocalización: Obtener ubicación actual para el origen
     fun fetchCurrentLocation() {
         viewModelScope.launch {
-            val location = locationTracker.getCurrentLocation()
+            val location = getCurrentLocationUseCase.invoke()
             if (location != null) {
                 _uiState.update {
                     it.copy(
@@ -132,7 +134,7 @@ class CreateRideViewModel(
         originSearchJob = viewModelScope.launch {
             if (address.length >= 3) {
                 delay(400)
-                val suggestions = locationTracker.searchAddresses(address)
+                val suggestions = searchAddressesUseCase.invoke(address)
                 _uiState.update { it.copy(originSuggestions = suggestions) }
             } else {
                 _uiState.update { it.copy(originSuggestions = emptyList()) }
@@ -161,7 +163,7 @@ class CreateRideViewModel(
         searchJob = viewModelScope.launch {
             if (address.length >= 3) {
                 delay(400) // Espera 400ms tras dejar de escribir antes de consultar
-                val suggestions = locationTracker.searchAddresses(address)
+                val suggestions = searchAddressesUseCase.invoke(address)
                 _uiState.update { it.copy(destinationSuggestions = suggestions) }
             } else {
                 _uiState.update { it.copy(destinationSuggestions = emptyList()) }

@@ -76,8 +76,6 @@ kotlin {
             implementation(libs.androidx.navigation3.ui)
             // androidContext() para startKoin en initApp()
             implementation(libs.koin.android)
-            // locationModule (core:location es android-only)
-            implementation(project(":core:location"))
             // MediaManager.init() en initApp() (misma versión que core:network)
             implementation("com.cloudinary:cloudinary-android:3.1.3")
         }

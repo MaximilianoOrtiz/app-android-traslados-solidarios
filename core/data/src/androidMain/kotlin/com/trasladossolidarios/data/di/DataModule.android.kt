@@ -1,17 +1,17 @@
-package com.trasladossolidarios.location.di
+package com.trasladossolidarios.data.di
 
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import com.trasladossolidarios.domain.location.LocationTracker
-import com.trasladossolidarios.location.LocationTrackerImpl
+import com.trasladossolidarios.data.repository.LocationRepositoryImpl
+import com.trasladossolidarios.domain.repository.LocationRepository
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
-val locationModule = module {
+val locationModuleAndroid = module {
 
     single<FusedLocationProviderClient> {
         LocationServices.getFusedLocationProviderClient(androidContext())
     }
 
-    single<LocationTracker> { LocationTrackerImpl(androidContext(), get()) }
+    single<LocationRepository> { LocationRepositoryImpl(androidContext(), get()) }
 }

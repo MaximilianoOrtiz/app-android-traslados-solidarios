@@ -1,4 +1,4 @@
-package com.trasladossolidarios.location
+package com.trasladossolidarios.data.repository
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -6,8 +6,8 @@ import android.util.Log
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.Priority
 import com.google.android.gms.tasks.CancellationTokenSource
-import com.trasladossolidarios.domain.location.LocationTracker
 import com.trasladossolidarios.domain.model.Location
+import com.trasladossolidarios.domain.repository.LocationRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
@@ -17,10 +17,10 @@ import java.net.HttpURLConnection
 import java.net.URL
 import java.net.URLEncoder
 
-class LocationTrackerImpl constructor(
+class LocationRepositoryImpl constructor(
     private val context: Context,
     private val fusedLocationClient: FusedLocationProviderClient
-) : LocationTracker {
+)  : LocationRepository{
 
     // --- 1. Obtención de ubicación física GPS ---
     @SuppressLint("MissingPermission")

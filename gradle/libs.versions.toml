@@ -43,6 +43,8 @@ composeMultiplatform = "1.12.2"
 compose-multiplatform-material3 = "1.9.0"
 compose-multiplatform-material-icons = "1.7.3"
 androidx-lifecycle = "2.11.0"
+playServicesLocation = "21.4.0"
+kotlinx-coroutines-play-services = "1.8.1"
 
 
 [libraries]
@@ -107,7 +109,8 @@ compose-multiplatform-material3 = { module = "org.jetbrains.compose.material3:ma
 compose-multiplatform-material-icons-extended = { module = "org.jetbrains.compose.material:material-icons-extended", version.ref = "compose-multiplatform-material-icons" }
 androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel", version.ref = "androidx-lifecycle" }
 compose-multiplatform-ui-tooling = { module = "org.jetbrains.compose.ui:ui-tooling", version.ref = "composeMultiplatform" }
-
+play-services-location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "playServicesLocation" }
+kotlinx-coroutines-play-services = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services", version.ref = "kotlinx-coroutines-play-services" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

@@ -5,9 +5,9 @@ import com.cloudinary.android.MediaManager
 import com.trasladossolidarios.auth.di.authViewModelModule
 import com.trasladossolidarios.createride.di.createRideViewModelModule
 import com.trasladossolidarios.data.di.dataModule
+import com.trasladossolidarios.data.di.locationModuleAndroid
 import com.trasladossolidarios.domain.di.domainModule
 import com.trasladossolidarios.home.di.homeViewModelModule
-import com.trasladossolidarios.location.di.locationModule
 import com.trasladossolidarios.myrides.di.myRidesViewModelModule
 import com.trasladossolidarios.network.di.networkModule
 import com.trasladossolidarios.network.di.networkModuleAndroid
@@ -27,14 +27,14 @@ fun initApp(context: Context) {
             domainModule,
             dataModule,
             networkModule,
-            locationModule,
             authViewModelModule,
             homeViewModelModule,
             myRidesViewModelModule,
             openRidesViewModelModule,
             profileViewModelModule,
             createRideViewModelModule,
-            networkModuleAndroid
+            networkModuleAndroid,
+            locationModuleAndroid
         )
     }
 

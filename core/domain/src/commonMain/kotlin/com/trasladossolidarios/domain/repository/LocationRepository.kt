@@ -1,8 +1,9 @@
-package com.trasladossolidarios.domain.location
+package com.trasladossolidarios.domain.repository
 
 import com.trasladossolidarios.domain.model.Location
 
-interface LocationTracker {
+interface LocationRepository {
+
     suspend fun getCurrentLocation(): Location?
     suspend fun searchAddresses(query: String): List<Location>
 }

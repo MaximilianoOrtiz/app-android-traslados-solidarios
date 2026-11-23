@@ -39,7 +39,13 @@ kotlin {
         }
 
         androidMain.dependencies {
+            // API nativa de ubicación de Android.
+            implementation(libs.play.services.location)
 
+            // Permite utilizar await() sobre Tasks de Google Play Services.
+            implementation(libs.kotlinx.coroutines.play.services)
+            // Koin con acceso a androidContext().
+            implementation(libs.koin.android)
         }
 
         commonTest.dependencies {
