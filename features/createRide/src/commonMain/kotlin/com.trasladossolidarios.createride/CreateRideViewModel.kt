@@ -18,6 +18,7 @@ import apmobiletp2.features.createride.generated.resources.error_fill_animal_nam
 import apmobiletp2.features.createride.generated.resources.error_fill_origin_destination_date_time
 import apmobiletp2.features.createride.generated.resources.error_fill_required_fields
 import apmobiletp2.features.createride.generated.resources.error_unexpected
+import com.trasladossolidarios.domain.common.AppResult
 import com.trasladossolidarios.network.cloudinary.datasource.CloudinaryDataSource
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -26,6 +27,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import com.trasladossolidarios.domain.repository.FirebaseAuthRepository
 import com.trasladossolidarios.domain.repository.RidesRepository
+import com.trasladossolidarios.domain.usecase.image.UploadRidePhotoUseCase
 import com.trasladossolidarios.domain.usecase.location.GetCurrentLocationUseCase
 import com.trasladossolidarios.domain.usecase.location.SearchAddressesUseCase
 import kotlinx.coroutines.Job
@@ -38,7 +40,7 @@ private val transferDateTimeFormat = LocalDateTime.Format {
 class CreateRideViewModel(
     private val getCurrentLocationUseCase : GetCurrentLocationUseCase,
     private val searchAddressesUseCase : SearchAddressesUseCase,
-    private val cloudinaryDataSource: CloudinaryDataSource,
+    private val uploadRidePhotoUseCase : UploadRidePhotoUseCase,
     private val rideRepository: RidesRepository,
     private val firebaseAuthRepository: FirebaseAuthRepository
 ) : ViewModel() {
@@ -216,7 +218,15 @@ class CreateRideViewModel(
 
                 // 1. Subir imagen a Cloudinary si existe una Uri capturada
                 val photoUrl = state.animalPhotoUri?.let { uri ->
-                    cloudinaryDataSource.uploadImage(uri)
+
+                    when(val result = uploadRidePhotoUseCase.invoke(uri)){
+                        is AppResult.Success -> {
+                           result.data
+                        }
+                        else -> {
+                            //TODO: manejar el error cuando falla la subida de la imagen
+                        }
+                    }
                 }
 
                 // 2. Construir los modelos de Dominio (Animal e Instant de transferencia)
@@ -224,7 +234,7 @@ class CreateRideViewModel(
                     name = state.animalName,
                     species = state.animalSpecies,
                     description = state.animalDescription,
-                    photoUrl = photoUrl
+                    photoUrl = photoUrl as String
                 )
 
                 val transferInstant: Instant = try {
