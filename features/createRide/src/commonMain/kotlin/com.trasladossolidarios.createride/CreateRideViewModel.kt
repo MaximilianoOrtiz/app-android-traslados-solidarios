@@ -19,7 +19,6 @@ import apmobiletp2.features.createride.generated.resources.error_fill_origin_des
 import apmobiletp2.features.createride.generated.resources.error_fill_required_fields
 import apmobiletp2.features.createride.generated.resources.error_unexpected
 import com.trasladossolidarios.domain.common.AppResult
-import com.trasladossolidarios.network.cloudinary.datasource.CloudinaryDataSource
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
